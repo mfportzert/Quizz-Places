@@ -2,13 +2,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuActivity" >
-
-    <TextView
+    tools:context=".MenuActivity"
+    android:background="@drawable/sky_clean" >
+	
+    <ImageView 
+        android:id="@+id/clouds"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+    	android:layout_height="wrap_content"
+    	android:scaleType="matrix"
+    	android:src="@drawable/clouds" />
+     
+    <ImageView 
+        android:id="@+id/titleSign"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="-70dp"
+    	android:layout_marginLeft="-10dp"
+    	android:src="@drawable/title"
+    	android:visibility="gone" />
+    
+    <LinearLayout
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_centerVertical="true"
+    	android:layout_marginLeft="50dp"
+    	android:layout_marginRight="50dp"
+    	android:paddingTop="80dp"
+    	android:orientation="vertical" >
+    	
+        <Button 
+            android:id="@+id/buttonPlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_button_play" />
+        
+        <Button 
+            android:id="@+id/buttonFreeHints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_button_free_hints" />
+
+        <Button 
+            android:id="@+id/buttonStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_button_stats" />
+        
+        <Button 
+            android:id="@+id/buttonSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_button_settings" />
+        
+        <Button 
+            android:id="@+id/buttonQuit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_button_quit" />
+        
+    </LinearLayout>
 
 </RelativeLayout>
