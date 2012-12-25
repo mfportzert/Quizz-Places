@@ -2,9 +2,13 @@ package com.quizz.places.activities;
 	
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
@@ -37,7 +41,16 @@ public class MenuActivity extends BaseMenuActivity {
 		mButtonQuit = (Button) findViewById(R.id.buttonQuit);
 		mTitleSign = (ImageView) findViewById(R.id.titleSign);
 		mClouds = (ImageView) findViewById(R.id.clouds);
-
+		
+		HorizontalScrollView cloudsScrollView = (HorizontalScrollView) findViewById(R.id.cloudsContainer);
+		cloudsScrollView.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return true;
+			}
+		});
+		
 		startAnimations();
 	}
 	
@@ -58,8 +71,10 @@ public class MenuActivity extends BaseMenuActivity {
 		signAnimatorSet.setStartDelay(500);
 		signAnimatorSet.start();
 		
-		ObjectAnimator cloudMoving = ObjectAnimator.ofFloat(mClouds, "translationX", 100, -1000);
-		cloudMoving.setDuration(20000);
+		ObjectAnimator cloudMoving = ObjectAnimator.ofFloat(mClouds, "translationX", 500, -1700);
+		cloudMoving.setDuration(30000);
+		cloudMoving.setInterpolator(new LinearInterpolator());
+		cloudMoving.setRepeatCount(ObjectAnimator.INFINITE);
 		cloudMoving.start();
 	}
 
