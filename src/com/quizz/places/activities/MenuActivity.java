@@ -42,6 +42,9 @@ public class MenuActivity extends BaseMenuActivity {
 		mTitleSign = (ImageView) findViewById(R.id.titleSign);
 		mClouds = (ImageView) findViewById(R.id.clouds);
 		
+		// FIXME: May not be displayed correctly on bigger screen when looping (bad transition)
+		// TODO: Make an image with beginning left similar to right end
+		// TODO: Scroll the horizontalScrollView instead of translating the imageView
 		HorizontalScrollView cloudsScrollView = (HorizontalScrollView) findViewById(R.id.cloudsContainer);
 		cloudsScrollView.setOnTouchListener(new OnTouchListener() {
 			
