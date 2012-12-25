@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Quizz -Places</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+	
+    <!-- Menu -->
+    <string name="label_button_play">Jouer</string>
+    <string name="label_button_free_hints">Indices Gratuits</string>
+    <string name="label_button_stats">Statistiques</string>
+   	<string name="label_button_settings">Options</string>
+   	<string name="label_button_quit">Quitter</string>
+   	
+</resources>
