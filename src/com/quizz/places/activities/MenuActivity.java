@@ -4,20 +4,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
-import com.actionbarsherlock.internal.nineoldandroids.animation.Animator.AnimatorListener;
-import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorSet;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
-import com.actionbarsherlock.internal.nineoldandroids.animation.ValueAnimator;
-import com.actionbarsherlock.internal.nineoldandroids.animation.ValueAnimator.AnimatorUpdateListener;
 import com.quizz.core.activities.BaseMenuActivity;
+import com.quizz.core.listeners.VisibilityAnimatorListener;
+import com.quizz.core.utils.AnimatorUtils;
 import com.quizz.places.R;
 import com.quizz.places.widgets.MenuBackground;
 
@@ -28,6 +28,8 @@ public class MenuActivity extends BaseMenuActivity {
 	private Button mButtonStats;
 	private Button mButtonSettings;
 	private Button mButtonQuit;
+	private LinearLayout mMenuButtonsContainer;
+	
 	private ImageView mTitleSign;
 	private ImageView mClouds;
 	private ImageView mFooter;
@@ -47,7 +49,10 @@ public class MenuActivity extends BaseMenuActivity {
 		mTitleSign = (ImageView) findViewById(R.id.titleSign);
 		mClouds = (ImageView) findViewById(R.id.clouds);
 		mFooter = (ImageView) findViewById(R.id.footer);
+		mMenuButtonsContainer = (LinearLayout) findViewById(R.id.menuButtonsContainer);
 		//mHaloBackground = (MenuBackground) findViewById(R.id.haloBackground);
+		
+		mButtonPlay.setOnClickListener(mPlayOnClickListener);
 		
 		// FIXME: May not be displayed correctly on bigger screen when looping
 		// (bad transition)
@@ -63,30 +68,18 @@ public class MenuActivity extends BaseMenuActivity {
 			}
 		});
 
-		startAnimations();
+		showUi();
 	}
-
-	private void startAnimations() {
-
-		ObjectAnimator signPopup = ObjectAnimator.ofFloat(mTitleSign,
-				"translationY", -200, 0);
+	
+	private void showUi() {
+		
+		float[] signMovementValues = new float[] { -200, 0 };
+		ObjectAnimator signPopup = ObjectAnimator.ofFloat(mTitleSign, "translationY", signMovementValues);
 		signPopup.setDuration(300);
-		signPopup.addListener(mSignAnimatorListener);
-
-		ObjectAnimator signBounceUp = ObjectAnimator.ofFloat(mTitleSign,
-				"translationY", 0, -5);
-		signBounceUp.setDuration(100);
-
-		ObjectAnimator signBounceDown = ObjectAnimator.ofFloat(mTitleSign,
-				"translationY", -5, 0);
-		signBounceDown.setDuration(100);
-
-		AnimatorSet signAnimatorSet = new AnimatorSet();
-		signAnimatorSet.playSequentially(signPopup, signBounceUp,
-				signBounceDown);
-		signAnimatorSet.setStartDelay(500);
-		signAnimatorSet.start();
-
+		signPopup.setStartDelay(1200);
+		signPopup.setInterpolator(new AccelerateInterpolator());
+		signPopup.addListener(new VisibilityAnimatorListener(mTitleSign));
+		
 		ObjectAnimator cloudMoving = ObjectAnimator.ofFloat(mClouds,
 				"translationX", 500, -1700);
 		cloudMoving.setDuration(30000);
@@ -94,13 +87,23 @@ public class MenuActivity extends BaseMenuActivity {
 		cloudMoving.setRepeatCount(ObjectAnimator.INFINITE);
 		cloudMoving.start();
 
-		ObjectAnimator footerPopup = ObjectAnimator.ofFloat(mFooter,
-				"translationY", 500, 0);
-		footerPopup.setDuration(500);
+		float[] footerMovementValues = new float[] { 500, 0 };
+		ObjectAnimator footerPopup = ObjectAnimator.ofFloat(mFooter, "translationY", footerMovementValues);
+		footerPopup.setDuration(700);
 		footerPopup.setStartDelay(500);
-		footerPopup.addListener(mFooterAnimatorListener);
-		footerPopup.start();
-/*
+		footerPopup.setInterpolator(new AccelerateInterpolator());
+		footerPopup.addListener(new VisibilityAnimatorListener(mFooter));
+		
+		AnimatorUtils.bounceAnimator(signPopup, signMovementValues, 5, 100);
+		AnimatorUtils.bounceAnimator(footerPopup, footerMovementValues, 5, 100);
+		
+		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(mMenuButtonsContainer, "alpha", 0f, 1f);
+		buttonsDisplay.setDuration(500);
+		buttonsDisplay.setStartDelay(1700);
+		buttonsDisplay.addListener(new VisibilityAnimatorListener(mMenuButtonsContainer));
+		buttonsDisplay.start();
+		
+		/*
 		ValueAnimator animator = ValueAnimator.ofFloat(0, 360);
 		animator.addUpdateListener(new AnimatorUpdateListener() {
 			@Override
@@ -115,7 +118,37 @@ public class MenuActivity extends BaseMenuActivity {
 		animator.setDuration(8000);
 		animator.start();*/
 	}
+	
+	private void hideUi() {
+		
+		ObjectAnimator signHiding = ObjectAnimator.ofFloat(mTitleSign, "translationY", 0, -200);
+		signHiding.setDuration(300);
+		signHiding.start();
+		
+		ObjectAnimator footerHiding = ObjectAnimator.ofFloat(mFooter, "translationY", 0, 500);
+		footerHiding.setDuration(700);
+		footerHiding.start();
+		
+		ObjectAnimator buttonsHiding = ObjectAnimator.ofFloat(mMenuButtonsContainer, "alpha", 1f, 0f);
+		buttonsHiding.setDuration(500);
+		buttonsHiding.start();
+		
+		/*
+		ValueAnimator animator = ValueAnimator.ofFloat(0, 360);
+		animator.addUpdateListener(new AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator arg0) {
 
+				mHaloBackground.rotationDegrees = (Float) arg0.getAnimatedValue();
+				mHaloBackground.invalidate();
+			}
+		});
+		animator.setInterpolator(new LinearInterpolator());
+		animator.setRepeatCount(ValueAnimator.INFINITE);
+		animator.setDuration(8000);
+		animator.start();*/
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_menu, menu);
@@ -125,44 +158,12 @@ public class MenuActivity extends BaseMenuActivity {
 	// ===========================================================
 	// Listeners
 	// ===========================================================
-
-	AnimatorListener mSignAnimatorListener = new AnimatorListener() {
-
+	
+	OnClickListener mPlayOnClickListener = new OnClickListener() {
+		
 		@Override
-		public void onAnimationStart(Animator animation) {
-			mTitleSign.setVisibility(View.VISIBLE);
-		}
-
-		@Override
-		public void onAnimationEnd(Animator animation) {
-		}
-
-		@Override
-		public void onAnimationCancel(Animator animation) {
-		}
-
-		@Override
-		public void onAnimationRepeat(Animator animation) {
-		}
-	};
-
-	AnimatorListener mFooterAnimatorListener = new AnimatorListener() {
-
-		@Override
-		public void onAnimationStart(Animator animation) {
-			mFooter.setVisibility(View.VISIBLE);
-		}
-
-		@Override
-		public void onAnimationEnd(Animator animation) {
-		}
-
-		@Override
-		public void onAnimationCancel(Animator animation) {
-		}
-
-		@Override
-		public void onAnimationRepeat(Animator animation) {
+		public void onClick(View v) {
+			hideUi();
 		}
 	};
 }
