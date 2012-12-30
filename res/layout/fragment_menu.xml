@@ -1,25 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MenuActivity"
-    android:background="@drawable/sky_clean" >
+    android:layout_height="match_parent" >
 	
-    <HorizontalScrollView 
-        android:id="@+id/cloudsContainer"
-        android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_marginTop="20dp"
-	    android:scrollbars="none" >
-	    
-	    <ImageView 
-	        android:id="@+id/clouds"
-	        android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:scaleType="matrix"
-	    	android:src="@drawable/clouds" />
-    
-    </HorizontalScrollView>
     <!-- Marche pas pour l instant 
     <com.quizz.places.widgets.MenuBackground
         android:id="@+id/haloBackground"
