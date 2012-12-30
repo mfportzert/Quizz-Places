@@ -18,7 +18,10 @@ public class QuizzActivity extends BaseQuizzActivity {
 		super.onCreate(savedInstanceState);
 		
 		NavigationUtils.directNavigationTo(MenuFragment.class, getSupportFragmentManager(), this, false);
-		
+		/*
+		View confirmQuitDialog = getLayoutInflater().inflate(R.layout.dialog_confirm_quit, null);
+		setConfirmQuitDialogView(confirmQuitDialog);
+		*/
 		View quizzLayout = getQuizzLayout();
 		quizzLayout.setBackgroundResource(R.drawable.sky_clean);
 		
