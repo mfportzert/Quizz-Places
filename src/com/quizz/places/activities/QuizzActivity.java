@@ -17,7 +17,7 @@ public class QuizzActivity extends BaseQuizzActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		NavigationUtils.navigateTo(MenuFragment.class, getSupportFragmentManager(), this, false);
+		NavigationUtils.directNavigationTo(MenuFragment.class, getSupportFragmentManager(), this, false);
 		
 		View quizzLayout = getQuizzLayout();
 		quizzLayout.setBackgroundResource(R.drawable.sky_clean);

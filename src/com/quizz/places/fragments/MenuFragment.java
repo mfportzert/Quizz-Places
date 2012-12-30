@@ -20,10 +20,6 @@ import com.quizz.places.widgets.MenuBackground;
 
 public class MenuFragment extends BaseMenuFragment {
 	
-	public static MenuFragment newInstance() {
-		return new MenuFragment();
-	}
-	
 	private Button mButtonPlay;
 	private Button mButtonFreeHints;
 	private Button mButtonStats;
@@ -54,7 +50,7 @@ public class MenuFragment extends BaseMenuFragment {
 		//mHaloBackground = (MenuBackground) view.findViewById(R.id.haloBackground);
 		
 		mHideUiAnimatorSet = createHideUiAnimation();
-		linkButton(mButtonPlay, ListSectionsFragment.class, mHideUiAnimatorSet);
+		initMenuButton(mButtonPlay, ListSectionsFragment.class, mHideUiAnimatorSet);
 		
 		return view;
 	}
@@ -118,7 +114,7 @@ public class MenuFragment extends BaseMenuFragment {
 		buttonsHiding.start();
 		
 		AnimatorSet uiHidingAnimation = new AnimatorSet();
-		uiHidingAnimation.playSequentially(signHiding, footerHiding, buttonsHiding);
+		uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding);
 		return uiHidingAnimation;
 		
 		/*
