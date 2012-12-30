@@ -69,14 +69,13 @@ public class MenuFragment extends BaseMenuFragment {
 		float[] signMovementValues = new float[] { -200, 0 };
 		ObjectAnimator signPopup = ObjectAnimator.ofFloat(mTitleSign, "translationY", signMovementValues);
 		signPopup.setDuration(300);
-		signPopup.setStartDelay(1200);
+		signPopup.setStartDelay(700);
 		signPopup.setInterpolator(new AccelerateInterpolator());
 		signPopup.addListener(new VisibilityAnimatorListener(mTitleSign));
 		
 		float[] footerMovementValues = new float[] { 500, 0 };
 		ObjectAnimator footerPopup = ObjectAnimator.ofFloat(mFooter, "translationY", footerMovementValues);
 		footerPopup.setDuration(700);
-		footerPopup.setStartDelay(500);
 		footerPopup.setInterpolator(new AccelerateInterpolator());
 		footerPopup.addListener(new VisibilityAnimatorListener(mFooter));
 		
@@ -85,7 +84,7 @@ public class MenuFragment extends BaseMenuFragment {
 		
 		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(mMenuButtonsContainer, "alpha", 0f, 1f);
 		buttonsDisplay.setDuration(500);
-		buttonsDisplay.setStartDelay(1700);
+		buttonsDisplay.setStartDelay(700);
 		buttonsDisplay.addListener(new VisibilityAnimatorListener(mMenuButtonsContainer));
 		buttonsDisplay.start();
 		
