@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseListSectionsFragment;
 import com.quizz.core.models.Section;
+import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.adapters.SectionsItemAdapter;
 
@@ -32,7 +34,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
         View view = inflater.inflate(R.layout.fragment_list_sections, null);
 
         mSectionsListView = (ListView) view.findViewById(R.id.sectionsListView);
-		mSectionsListView.setAdapter(mAdapter);
+        mSectionsListView.setAdapter(mAdapter);
 		
         return view;
     }
@@ -40,6 +42,22 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+        if (getActivity() instanceof BaseQuizzActivity) {
+        	((BaseQuizzActivity) getActivity()).getQuizzActionBar().hide(QuizzActionBar.MOVE_NORMAL);
+        }
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		if (getActivity() instanceof BaseQuizzActivity) {
+			((BaseQuizzActivity) getActivity()).getQuizzActionBar().show(QuizzActionBar.MOVE_NORMAL);
+		}
 	}
 	
 	@Override
