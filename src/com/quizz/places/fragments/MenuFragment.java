@@ -1,21 +1,16 @@
 package com.quizz.places.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorSet;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.fragments.BaseMenuFragment;
 import com.quizz.core.listeners.VisibilityAnimatorListener;
@@ -37,9 +32,10 @@ public class MenuFragment extends BaseMenuFragment {
 	private LinearLayout mMenuButtonsContainer;
 	
 	private ImageView mTitleSign;
-	private ImageView mClouds;
 	private ImageView mFooter;
 	private MenuBackground mHaloBackground;
+	
+	private AnimatorSet mHideUiAnimatorSet;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,26 +49,12 @@ public class MenuFragment extends BaseMenuFragment {
 		mButtonSettings = (Button) view.findViewById(R.id.buttonSettings);
 		mButtonQuit = (Button) view.findViewById(R.id.buttonQuit);
 		mTitleSign = (ImageView) view.findViewById(R.id.titleSign);
-		mClouds = (ImageView) view.findViewById(R.id.clouds);
 		mFooter = (ImageView) view.findViewById(R.id.footer);
 		mMenuButtonsContainer = (LinearLayout) view.findViewById(R.id.menuButtonsContainer);
 		//mHaloBackground = (MenuBackground) view.findViewById(R.id.haloBackground);
 		
-		mButtonPlay.setOnClickListener(mPlayOnClickListener);
-		
-		// FIXME: May not be displayed correctly on bigger screen when looping
-		// (bad transition)
-		// TODO: Make an image with beginning left similar to right end
-		// TODO: Scroll the horizontalScrollView instead of translating the
-		// imageView
-		HorizontalScrollView cloudsView = (HorizontalScrollView) view.findViewById(R.id.cloudsContainer);
-		cloudsView.setOnTouchListener(new OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				return true;
-			}
-		});
+		mHideUiAnimatorSet = createHideUiAnimation();
+		linkButton(mButtonPlay, ListSectionsFragment.class, mHideUiAnimatorSet);
 		
 		return view;
 	}
@@ -84,7 +66,6 @@ public class MenuFragment extends BaseMenuFragment {
 	}
 	
 	private void showUi() {
-		
 		float[] signMovementValues = new float[] { -200, 0 };
 		ObjectAnimator signPopup = ObjectAnimator.ofFloat(mTitleSign, "translationY", signMovementValues);
 		signPopup.setDuration(300);
@@ -92,13 +73,6 @@ public class MenuFragment extends BaseMenuFragment {
 		signPopup.setInterpolator(new AccelerateInterpolator());
 		signPopup.addListener(new VisibilityAnimatorListener(mTitleSign));
 		
-		ObjectAnimator cloudMoving = ObjectAnimator.ofFloat(mClouds,
-				"translationX", 500, -1700);
-		cloudMoving.setDuration(30000);
-		cloudMoving.setInterpolator(new LinearInterpolator());
-		cloudMoving.setRepeatCount(ObjectAnimator.INFINITE);
-		cloudMoving.start();
-
 		float[] footerMovementValues = new float[] { 500, 0 };
 		ObjectAnimator footerPopup = ObjectAnimator.ofFloat(mFooter, "translationY", footerMovementValues);
 		footerPopup.setDuration(700);
@@ -131,8 +105,7 @@ public class MenuFragment extends BaseMenuFragment {
 		animator.start();*/
 	}
 	
-	private void hideUi() {
-		
+	private AnimatorSet createHideUiAnimation() {
 		ObjectAnimator signHiding = ObjectAnimator.ofFloat(mTitleSign, "translationY", 0, -200);
 		signHiding.setDuration(300);
 		signHiding.start();
@@ -144,6 +117,10 @@ public class MenuFragment extends BaseMenuFragment {
 		ObjectAnimator buttonsHiding = ObjectAnimator.ofFloat(mMenuButtonsContainer, "alpha", 1f, 0f);
 		buttonsHiding.setDuration(500);
 		buttonsHiding.start();
+		
+		AnimatorSet uiHidingAnimation = new AnimatorSet();
+		uiHidingAnimation.playSequentially(signHiding, footerHiding, buttonsHiding);
+		return uiHidingAnimation;
 		
 		/*
 		ValueAnimator animator = ValueAnimator.ofFloat(0, 360);
@@ -160,16 +137,4 @@ public class MenuFragment extends BaseMenuFragment {
 		animator.setDuration(8000);
 		animator.start();*/
 	}
-
-	// ===========================================================
-	// Listeners
-	// ===========================================================
-	
-	OnClickListener mPlayOnClickListener = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			hideUi();
-		}
-	};
 }
