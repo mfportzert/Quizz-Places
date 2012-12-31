@@ -73,11 +73,9 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	@Override
 	protected void onSectionsLoaded(ArrayList<Section> listSections) {
 		if (mAdapter != null) {
-			// TODO: Use list sections
 			mAdapter.clear();
-			for (int i = 0; i < 100; i++) {
-				Section section = new Section();
-				section.name = "Level "+i;
+			for (Section section : listSections) {
+				section.name = "Level "+section.number;
 				mAdapter.add(section);
 			}
 			mAdapter.notifyDataSetChanged();
