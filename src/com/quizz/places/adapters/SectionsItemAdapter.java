@@ -17,12 +17,22 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 
 	private int mLineLayout;
 	private LayoutInflater mInflater;
+	private int[] mProgressDrawables;
 	
 	public SectionsItemAdapter(Context context, int lineLayout) {
         super(context, lineLayout);
         
-        this.mLineLayout = lineLayout;
-        this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mLineLayout = lineLayout;
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mProgressDrawables = new int[] {
+        		R.drawable.fg_section_progress_blue,
+        		R.drawable.fg_section_progress_green,
+        		R.drawable.fg_section_progress_orange,
+        		R.drawable.fg_section_progress_pink,
+        		R.drawable.fg_section_progress_purple,
+        		R.drawable.fg_section_progress_yellow,
+        		R.drawable.fg_section_progress_red
+        };
     }
 
 	static class ViewHolder {
@@ -55,7 +65,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
         
         Section section = getItem(position);
        	holder.name.setText(section.name);
-       	holder.progress.setProgressRes(R.drawable.fg_section_progress_blue);
+       	holder.progress.setProgressRes(mProgressDrawables[position % mProgressDrawables.length]);
        	holder.progress.setProgressValue(34);
        	
        	int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f, getContext());
