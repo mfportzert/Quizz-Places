@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.quizz.core.models.Section;
+import com.quizz.core.utils.ConvertUtils;
+import com.quizz.core.widgets.SectionProgressView;
 import com.quizz.places.R;
 
 public class SectionsItemAdapter extends ArrayAdapter<Section> {
@@ -23,13 +26,15 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
     }
 
 	static class ViewHolder {
-		
         TextView name;
+        TextView points;
+        TextView levels;
+        Button buttonEnter;
+        SectionProgressView progress;
     }
 	
 	@Override
     public View getView(int position, View convertView, ViewGroup parent) {
-		
         ViewHolder holder;
         if (convertView == null) {
             
@@ -37,6 +42,10 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
         	
             holder = new ViewHolder();
             holder.name = (TextView) convertView.findViewById(R.id.sectionName);
+            holder.points = (TextView) convertView.findViewById(R.id.sectionNbPoints);
+            holder.levels = (TextView) convertView.findViewById(R.id.sectionNbLevels);
+            holder.buttonEnter = (Button) convertView.findViewById(R.id.sectionEnterButton);
+            holder.progress = (SectionProgressView) convertView.findViewById(R.id.sectionProgress);
             
             convertView.setTag(holder);
             
@@ -46,6 +55,13 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
         
         Section section = getItem(position);
        	holder.name.setText(section.name);
+       	holder.progress.setProgressRes(R.drawable.fg_section_progress_blue);
+       	holder.progress.setProgressValue(34);
+       	
+       	int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f, getContext());
+       	int horizontalPadding = (int) ConvertUtils.convertDpToPixels(3f, getContext());
+       	holder.progress.setPaddingProgress(horizontalPadding, verticalPadding, 
+       			horizontalPadding, verticalPadding);
        	
         return convertView;
     }
