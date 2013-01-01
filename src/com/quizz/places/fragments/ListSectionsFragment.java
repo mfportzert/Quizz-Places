@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseListSectionsFragment;
 import com.quizz.core.models.Section;
@@ -32,9 +33,13 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 		
         View view = inflater.inflate(R.layout.fragment_list_sections, null);
-
+        
         mSectionsListView = (ListView) view.findViewById(R.id.sectionsListView);
         mSectionsListView.setAdapter(mAdapter);
+		
+        ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSectionsListView, "alpha", 0f, 1f);
+        listDisplay.setDuration(300);
+        listDisplay.start();
 		
         return view;
     }
