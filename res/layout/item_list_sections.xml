@@ -2,9 +2,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 	
-    <TextView
-        android:id="@+id/sectionName"
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content" />
+   	<RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_margin="20dp"
+    	android:background="@drawable/bg_section_rounded" >
+        
+   	    <TextView
+	        android:id="@+id/sectionName"
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textSize="24sp"
+	    	android:text="Level 1" />
+   	    
+   	    <TextView
+   	        android:id="@+id/sectionNbLevels"
+   	        android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:textSize="22sp"
+    		android:layout_below="@+id/sectionName"
+    		android:layout_margin="20dp"
+    		android:text="10 / 22" />
+
+   	    <TextView
+   	        android:id="@+id/sectionNbPoints"
+   	        android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+			android:textSize="18sp"
+			android:layout_alignBottom="@+id/sectionName"
+			android:layout_alignTop="@+id/sectionName"
+			android:gravity="center_vertical"
+			android:layout_alignParentRight="true"
+    		android:text="123 pts" />
+
+   	    <Button 
+   	        android:id="@+id/sectionEnterButton"
+   	        android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_alignBottom="@+id/sectionNbLevels"
+    		android:layout_alignParentRight="true"
+    		android:text="Enter" />
+ 
+   	    <com.quizz.core.widgets.SectionProgressView
+   	        android:id="@+id/sectionProgress"
+   	        android:layout_width="match_parent"
+  	        android:layout_height="19dp"
+   	        android:layout_below="@+id/sectionEnterButton"
+   	        android:src="@drawable/bg_section_progress"
+   	        android:scaleType="fitXY"
+   	        android:adjustViewBounds="true"
+   	        android:layout_marginTop="10dp" />
+   	  	
+    </RelativeLayout>
     
 </RelativeLayout>
