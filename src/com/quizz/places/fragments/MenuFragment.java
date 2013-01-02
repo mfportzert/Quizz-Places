@@ -1,9 +1,10 @@
 package com.quizz.places.fragments;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
@@ -37,7 +38,7 @@ public class MenuFragment extends BaseMenuFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		
-		View view = inflater.inflate(R.layout.fragment_menu, null);
+		View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
 		mButtonPlay = (Button) view.findViewById(R.id.buttonPlay);
 		mButtonFreeHints = (Button) view.findViewById(R.id.buttonFreeHints);
@@ -51,7 +52,14 @@ public class MenuFragment extends BaseMenuFragment {
 		
 		mHideUiAnimatorSet = createHideUiAnimation();
 		initMenuButton(mButtonPlay, ListSectionsFragment.class, mHideUiAnimatorSet);
-		
+		initMenuButton(mButtonStats, GridLevelsFragment.class, mHideUiAnimatorSet);
+		mButtonSettings.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
 		return view;
 	}
 	

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
@@ -32,11 +34,12 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		
-        View view = inflater.inflate(R.layout.fragment_list_sections, null);
+        View view = inflater.inflate(R.layout.fragment_list_sections, container, false);
         
         mSectionsListView = (ListView) view.findViewById(R.id.sectionsListView);
         mSectionsListView.setAdapter(mAdapter);
-		
+		mSectionsListView.setOnItemClickListener(mSectionItemClickListener);
+        
         ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSectionsListView, "alpha", 0f, 1f);
         listDisplay.setDuration(300);
         listDisplay.start();
@@ -86,4 +89,16 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 			mAdapter.notifyDataSetChanged();
 		}
 	}
+	
+	// ===========================================================
+    // Listeners
+    // ===========================================================
+	
+	OnItemClickListener mSectionItemClickListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			
+		}
+	};
 }
