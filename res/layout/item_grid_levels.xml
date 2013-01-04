@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+	
+	<ImageView
+        android:id="@+id/levelPicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/photo_border_white"
+        android:paddingBottom="11dp"
+        android:paddingLeft="9dp"
+        android:paddingRight="12dp"
+        android:paddingTop="8dp"
+        android:rotation="12"
+        android:scaleType="centerInside"
+        android:layout_margin="10dp" />
+   	
+	<ImageView
+       	android:id="@+id/levelDifficulty"
+       	android:layout_width="wrap_content"
+	   	android:layout_height="wrap_content" />
+	
+	<ImageView
+       	android:id="@+id/levelStatusIcon"
+       	android:layout_width="wrap_content"
+	   	android:layout_height="wrap_content"
+		android:src="@drawable/ic_check"
+		android:visibility="gone" />
+    
+</RelativeLayout>
