@@ -9,24 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.quizz.core.activities.BaseQuizzActivity;
-import com.quizz.core.fragments.BaseListSectionsFragment;
-import com.quizz.core.models.Section;
+import com.quizz.core.fragments.BaseListLevelsFragment;
+import com.quizz.core.models.Level;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
-import com.quizz.places.adapters.SectionsItemAdapter;
+import com.quizz.places.adapters.LevelsItemAdapter;
 
-public class GridLevelsFragment extends BaseListSectionsFragment {
+public class GridLevelsFragment extends BaseListLevelsFragment {
 	
-	private SectionsItemAdapter mAdapter;
-	private ListView mSectionsListView;
+	private LevelsItemAdapter mAdapter;
+	private GridView mLevelsListView;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        mAdapter = new SectionsItemAdapter(getActivity(), R.layout.item_list_sections);
+        mAdapter = new LevelsItemAdapter(getActivity(), R.layout.item_grid_levels);
 	}
 	
 	@Override
@@ -34,6 +35,10 @@ public class GridLevelsFragment extends BaseListSectionsFragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 		
         View view = inflater.inflate(R.layout.fragment_grid_levels, container, false);
+        
+        mLevelsListView = (GridView) view.findViewById(R.id.gridLevels);
+        mLevelsListView.setAdapter(mAdapter);
+        
         return view;
     }
 	
@@ -45,17 +50,6 @@ public class GridLevelsFragment extends BaseListSectionsFragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-        if (getActivity() instanceof BaseQuizzActivity) {
-        	((BaseQuizzActivity) getActivity()).getQuizzActionBar().hide(QuizzActionBar.MOVE_NORMAL);
-        }
-	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		if (getActivity() instanceof BaseQuizzActivity) {
-			((BaseQuizzActivity) getActivity()).getQuizzActionBar().show(QuizzActionBar.MOVE_NORMAL);
-		}
 	}
 	
 	@Override
@@ -69,12 +63,11 @@ public class GridLevelsFragment extends BaseListSectionsFragment {
     }
 
 	@Override
-	protected void onSectionsLoaded(ArrayList<Section> listSections) {
+	protected void onLevelsLoaded(ArrayList<Level> listLevels) {
 		if (mAdapter != null) {
 			mAdapter.clear();
-			for (Section section : listSections) {
-				section.name = "Level "+section.number;
-				mAdapter.add(section);
+			for (Level level : listLevels) {
+				mAdapter.add(level);
 			}
 			mAdapter.notifyDataSetChanged();
 		}
