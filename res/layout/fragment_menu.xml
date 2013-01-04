@@ -30,41 +30,59 @@
         android:id="@+id/menuButtonsContainer"
     	android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-    	android:layout_centerVertical="true"
-    	android:layout_marginLeft="50dp"
-    	android:layout_marginRight="50dp"
+    	android:layout_centerInParent="true"
+    	android:layout_marginBottom="20dp"
     	android:orientation="vertical"
+    	android:gravity="center_horizontal"
     	android:visibility="gone" >
     	
         <Button 
             android:id="@+id/buttonPlay"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_button_play" />
+            android:text="@string/label_button_play"
+            android:textColor="#FFF"
+            android:shadowColor="#000"
+            android:shadowRadius="2"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:background="@drawable/but_blue" />
         
         <Button 
             android:id="@+id/buttonFreeHints"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_button_free_hints" />
+            android:text="@string/label_button_free_hints"
+            android:textColor="#FFF"
+            android:shadowColor="#000"
+            android:shadowRadius="2"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/but_magenta" />
 
         <Button 
             android:id="@+id/buttonStats"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_button_stats" />
+            android:text="@string/label_button_stats"
+            android:textColor="#FFF"
+            android:shadowColor="#000"
+            android:shadowRadius="2"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/but_orange" />
         
         <Button 
             android:id="@+id/buttonSettings"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_button_settings" />
-        
-        <Button 
-            android:id="@+id/buttonQuit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_button_quit" />
+            android:text="@string/label_button_settings"
+            android:textColor="#FFF"
+            android:shadowColor="#000"
+            android:shadowRadius="2"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/but_green" />
         
     </LinearLayout>
 
