@@ -25,7 +25,6 @@ public class MenuFragment extends BaseMenuFragment {
 	private Button mButtonFreeHints;
 	private Button mButtonStats;
 	private Button mButtonSettings;
-	private Button mButtonQuit;
 	private LinearLayout mMenuButtonsContainer;
 	
 	private ImageView mTitleSign;
@@ -44,7 +43,6 @@ public class MenuFragment extends BaseMenuFragment {
 		mButtonFreeHints = (Button) view.findViewById(R.id.buttonFreeHints);
 		mButtonStats = (Button) view.findViewById(R.id.buttonStats);
 		mButtonSettings = (Button) view.findViewById(R.id.buttonSettings);
-		mButtonQuit = (Button) view.findViewById(R.id.buttonQuit);
 		mTitleSign = (ImageView) view.findViewById(R.id.titleSign);
 		mFooter = (ImageView) view.findViewById(R.id.footer);
 		mMenuButtonsContainer = (LinearLayout) view.findViewById(R.id.menuButtonsContainer);

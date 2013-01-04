@@ -30,8 +30,7 @@
         android:id="@+id/menuButtonsContainer"
     	android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-    	android:layout_centerInParent="true"
-    	android:layout_marginBottom="20dp"
+    	android:layout_below="@+id/titleSign"
     	android:orientation="vertical"
     	android:gravity="center_horizontal"
     	android:visibility="gone" >
