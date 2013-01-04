@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.quizz.core.models.Section;
@@ -39,7 +39,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
         TextView name;
         TextView points;
         TextView levels;
-        Button buttonEnter;
+        ImageView buttonEnter;
         SectionProgressView progress;
     }
 	
@@ -54,7 +54,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
             holder.name = (TextView) convertView.findViewById(R.id.sectionName);
             holder.points = (TextView) convertView.findViewById(R.id.sectionNbPoints);
             holder.levels = (TextView) convertView.findViewById(R.id.sectionNbLevels);
-            holder.buttonEnter = (Button) convertView.findViewById(R.id.sectionEnterButton);
+            holder.buttonEnter = (ImageView) convertView.findViewById(R.id.sectionEnterButton);
             holder.progress = (SectionProgressView) convertView.findViewById(R.id.sectionProgress);
             
             convertView.setTag(holder);

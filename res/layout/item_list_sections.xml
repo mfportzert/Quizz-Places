@@ -35,13 +35,14 @@
 			android:layout_alignParentRight="true"
     		android:text="123 pts" />
 
-   	    <Button 
+   	    <ImageView 
    	        android:id="@+id/sectionEnterButton"
-   	        android:layout_width="wrap_content"
+   	        android:layout_width="60dp"
     		android:layout_height="wrap_content"
+    		android:layout_below="@+id/sectionNbPoints"
     		android:layout_alignBottom="@+id/sectionNbLevels"
     		android:layout_alignParentRight="true"
-    		android:text="Enter" />
+    		android:src="@drawable/but_enter" />
  
    	    <com.quizz.core.widgets.SectionProgressView
    	        android:id="@+id/sectionProgress"
