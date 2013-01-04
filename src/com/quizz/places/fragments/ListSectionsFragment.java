@@ -14,7 +14,9 @@ import android.widget.ListView;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseListSectionsFragment;
+import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.models.Section;
+import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.adapters.SectionsItemAdapter;
@@ -23,6 +25,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	
 	private SectionsItemAdapter mAdapter;
 	private ListView mSectionsListView;
+	private boolean mHideActionBarOnDestroyView = true;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,16 +58,19 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-        if (getActivity() instanceof BaseQuizzActivity) {
-        	((BaseQuizzActivity) getActivity()).getQuizzActionBar().hide(QuizzActionBar.MOVE_NORMAL);
-        }
+		if (mHideActionBarOnDestroyView) {
+			if (getActivity() instanceof BaseQuizzActivity) {
+				((BaseQuizzActivity) getActivity()).getQuizzActionBar().hide(QuizzActionBar.MOVE_NORMAL);
+			}
+		}
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		mHideActionBarOnDestroyView = true;
 		if (getActivity() instanceof BaseQuizzActivity) {
-			((BaseQuizzActivity) getActivity()).getQuizzActionBar().show(QuizzActionBar.MOVE_NORMAL);
+			((BaseQuizzActivity) getActivity()).getQuizzActionBar().showIfNecessary(QuizzActionBar.MOVE_NORMAL);
 		}
 	}
 	
@@ -98,7 +104,10 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-			
+			mHideActionBarOnDestroyView = false;
+			FragmentContainer container = (FragmentContainer) getActivity();
+			NavigationUtils.directNavigationTo(GridLevelsFragment.class, 
+					getActivity().getSupportFragmentManager(), container, true);
 		}
 	};
 }
