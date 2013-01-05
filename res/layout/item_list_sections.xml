@@ -12,7 +12,9 @@
 	        android:id="@+id/sectionName"
 	        android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
-	    	android:textSize="24sp"
+	    	android:textSize="26sp"
+	    	android:layout_marginLeft="10dp"
+	    	android:textColor="#444"
 	    	android:text="Level 1" />
    	    
    	    <TextView
@@ -20,28 +22,34 @@
    	        android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:textSize="22sp"
-    		android:layout_below="@+id/sectionName"
-    		android:layout_margin="20dp"
+    		android:layout_below="@+id/section_inner_separator"
+    		android:layout_marginTop="12dp"
+    		android:layout_marginLeft="30dp"
+    		android:textStyle="bold"
+    		android:textColor="#444"
     		android:text="10 / 22" />
-
+    		
+   	    
    	    <TextView
    	        android:id="@+id/sectionNbPoints"
    	        android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
 			android:textSize="18sp"
 			android:layout_alignBottom="@+id/sectionName"
-			android:layout_alignTop="@+id/sectionName"
 			android:gravity="center_vertical"
 			android:layout_alignParentRight="true"
+			android:layout_marginRight="5dp"
     		android:text="123 pts" />
 
    	    <ImageView 
    	        android:id="@+id/sectionEnterButton"
    	        android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:layout_below="@+id/sectionNbPoints"
+    		android:layout_below="@+id/section_inner_separator"
     		android:layout_alignBottom="@+id/sectionNbLevels"
-    		android:layout_margin="6dp"
+    		android:layout_marginTop="12dp"
+    		android:layout_marginRight="12dp"
+    		android:scaleType="fitEnd"
     		android:layout_alignParentRight="true"
     		android:src="@drawable/but_enter" />
  
@@ -54,6 +62,14 @@
    	        android:scaleType="fitXY"
    	        android:adjustViewBounds="true"
    	        android:layout_marginTop="10dp" />
+
+   	    <View
+   	        android:id="@+id/section_inner_separator"
+   	        android:layout_width="match_parent"
+   	        android:layout_height="1dp"
+   	        android:layout_below="@+id/sectionName"
+   	        android:layout_margin="5dp"
+   	        android:background="#AAA" />
    	  	
     </RelativeLayout>
     
