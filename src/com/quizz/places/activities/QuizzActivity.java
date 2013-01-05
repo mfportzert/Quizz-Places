@@ -17,7 +17,7 @@ public class QuizzActivity extends BaseQuizzActivity {
 		super.onCreate(savedInstanceState);
 		
 		if (savedInstanceState == null) {
-			// First launch of the activity, not a rotation
+			// First launch of the activity, not a rotation change
 			getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
 			NavigationUtils.directNavigationTo(MenuFragment.class, getSupportFragmentManager(), 
 					this, false);			
