@@ -53,13 +53,15 @@ public class MenuFragment extends BaseMenuFragment {
 		mHideUiAnimatorSet = createHideUiAnimation();
 		initMenuButton(mButtonPlay, ListSectionsFragment.class, mHideUiAnimatorSet);
 		initMenuButton(mButtonStats, GridLevelsFragment.class, mHideUiAnimatorSet);
-		mButtonSettings.setOnClickListener(new OnClickListener() {
+		
+		mButtonHomeExit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
+				getActivity().onBackPressed();
 			}
 		});
+		
 		return view;
 	}
 	
