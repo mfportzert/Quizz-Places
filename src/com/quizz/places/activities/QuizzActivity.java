@@ -27,7 +27,7 @@ public class QuizzActivity extends BaseQuizzActivity {
 		*/
 		
 		getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
-		getQuizzActionBar().getBackButton().setImageResource(R.drawable.back_but_3);
+		getQuizzActionBar().getBackButton().setImageResource(R.drawable.back_but_5);
 		getQuizzActionBar().getMiddleText().setText("22 / 30");
 		getQuizzActionBar().getRightText().setText("345 pts");
 		
