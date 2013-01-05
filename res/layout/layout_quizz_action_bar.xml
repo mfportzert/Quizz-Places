@@ -17,10 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:shadowColor="#000"
+        android:shadowColor="#FFF"
+        android:shadowDx="1"
+        android:shadowDy="1"
         android:shadowRadius="2"
-        android:textColor="#FFF"
-        android:textSize="22sp"
+        android:textColor="#636363"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
@@ -30,17 +32,29 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:shadowColor="#000"
+        android:shadowColor="#FFF"
+        android:shadowDx="1"
+        android:shadowDy="1"
         android:shadowRadius="2"
-        android:textColor="#FFF"
+        android:textColor="#616161"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="normal" />
 
     <View
         android:id="@+id/ab_separator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="#000" />
+        android:background="#777" />
+    
+    <View
+        android:id="@+id/ab_back_but_separator"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/ab_back_button"
+        android:layout_marginLeft="-6.5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_actionbar_separator" />
 
 </RelativeLayout>
