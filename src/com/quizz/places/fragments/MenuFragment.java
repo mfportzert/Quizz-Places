@@ -1,6 +1,5 @@
 package com.quizz.places.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +7,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -29,7 +29,7 @@ public class MenuFragment extends BaseMenuFragment {
 	
 	private ImageView mTitleSign;
 	private ImageView mFooter;
-	private ImageView mHomeExit;
+	private ImageButton mButtonHomeExit;
 	private MenuBackground mHaloBackground;
 	
 	private AnimatorSet mHideUiAnimatorSet;
@@ -47,7 +47,7 @@ public class MenuFragment extends BaseMenuFragment {
 		mTitleSign = (ImageView) view.findViewById(R.id.titleSign);
 		mFooter = (ImageView) view.findViewById(R.id.footer);
 		mMenuButtonsContainer = (LinearLayout) view.findViewById(R.id.menuButtonsContainer);
-		mHomeExit = (ImageView) view.findViewById(R.id.homeExit);
+		mButtonHomeExit = (ImageButton) view.findViewById(R.id.buttonHomeExit);
 		//mHaloBackground = (MenuBackground) view.findViewById(R.id.haloBackground);
 		
 		mHideUiAnimatorSet = createHideUiAnimation();
@@ -92,10 +92,10 @@ public class MenuFragment extends BaseMenuFragment {
 		buttonsDisplay.addListener(new VisibilityAnimatorListener(mMenuButtonsContainer));
 		buttonsDisplay.start();
 		
-		ObjectAnimator homeExitDisplay = ObjectAnimator.ofFloat(mHomeExit, "alpha", 0f, 1f);
+		ObjectAnimator homeExitDisplay = ObjectAnimator.ofFloat(mButtonHomeExit, "alpha", 0f, 1f);
 		homeExitDisplay.setDuration(500);
 		homeExitDisplay.setStartDelay(700);
-		homeExitDisplay.addListener(new VisibilityAnimatorListener(mHomeExit));
+		homeExitDisplay.addListener(new VisibilityAnimatorListener(mButtonHomeExit));
 		homeExitDisplay.start();
 		
 		/*
