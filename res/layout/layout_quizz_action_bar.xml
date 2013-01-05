@@ -4,42 +4,48 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_actionbar" >
 
-  		    <ImageView 
-	        android:id="@id/ab_back_button"
-	       	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:scaleType="fitStart"
-	    	android:layout_alignParentLeft="true"
-	    	android:layout_margin="8dp" />
-		
-		<TextView
-	        android:id="@id/ab_middle_text"
-	       	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:layout_centerInParent="true"
-	    	android:textColor="#FFF"
-	        android:shadowColor="#000"
-	        android:shadowRadius="2"
-	        android:textStyle="bold"
-	    	android:textSize="22sp" />
-	    
-		<TextView 
-	        android:id="@id/ab_right_text"
-	       	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:textColor="#FFF"
-	        android:shadowColor="#000"
-	        android:shadowRadius="2"
-	        android:textStyle="bold"
-	    	android:textSize="20sp"
-	    	android:layout_marginRight="10dp"
-	    	android:layout_centerVertical="true"
-	    	android:layout_alignParentRight="true" />
+    <ImageView
+        android:id="@id/ab_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="8dp"
+        android:scaleType="fitStart" />
 
-<!-- 	<View  -->
-<!-- 		android:layout_width="match_parent" -->
-<!--     	android:layout_height="1dp" -->
-<!--     	android:layout_alignParentBottom="true" -->
-<!--     	android:background="#000"/> -->
-	
+    <TextView
+        android:id="@id/ab_middle_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:shadowColor="#000"
+        android:shadowRadius="2"
+        android:textColor="#FFF"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@id/ab_right_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:shadowColor="#000"
+        android:shadowRadius="2"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/separator_shadow" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000" />
+    </LinearLayout>
+
 </RelativeLayout>
