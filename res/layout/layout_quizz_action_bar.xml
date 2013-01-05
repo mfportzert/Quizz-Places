@@ -4,12 +4,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_actionbar" >
 
-    <ImageView
+    <ImageButton
         android:id="@id/ab_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_margin="8dp"
+        android:background="@drawable/ab_back_button_selector"
+        android:padding="8dp"
         android:scaleType="fitStart" />
 
     <TextView
@@ -52,7 +53,6 @@
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/ab_back_button"
-        android:layout_marginLeft="-6.5dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bg_actionbar_separator" />

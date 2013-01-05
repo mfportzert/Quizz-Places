@@ -83,7 +83,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
     public void onResume() {
         super.onResume();
     }
-
+	
 	@Override
 	protected void onSectionsLoaded(ArrayList<Section> listSections) {
 		if (mAdapter != null) {

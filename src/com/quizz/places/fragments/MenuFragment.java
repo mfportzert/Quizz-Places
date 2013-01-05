@@ -1,5 +1,6 @@
 package com.quizz.places.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,13 @@ import android.widget.LinearLayout;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorSet;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseMenuFragment;
 import com.quizz.core.listeners.VisibilityAnimatorListener;
 import com.quizz.core.utils.AnimatorUtils;
+import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
+import com.quizz.places.activities.QuizzActivity;
 import com.quizz.places.widgets.MenuBackground;
 
 public class MenuFragment extends BaseMenuFragment {
@@ -34,6 +38,7 @@ public class MenuFragment extends BaseMenuFragment {
 	
 	private AnimatorSet mHideUiAnimatorSet;
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -54,6 +59,7 @@ public class MenuFragment extends BaseMenuFragment {
 		initMenuButton(mButtonPlay, ListSectionsFragment.class, mHideUiAnimatorSet);
 		initMenuButton(mButtonStats, GridLevelsFragment.class, mHideUiAnimatorSet);
 		
+		mButtonHomeExit.setAlpha(220);
 		mButtonHomeExit.setOnClickListener(new OnClickListener() {
 			
 			@Override

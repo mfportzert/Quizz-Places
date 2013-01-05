@@ -17,8 +17,10 @@ public class QuizzActivity extends BaseQuizzActivity {
 		super.onCreate(savedInstanceState);
 		
 		if (savedInstanceState == null) {
+			// First launch of the activity, not a rotation
+			getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
 			NavigationUtils.directNavigationTo(MenuFragment.class, getSupportFragmentManager(), 
-					this, false);
+					this, false);			
 		}
 		
 		/*
@@ -26,7 +28,6 @@ public class QuizzActivity extends BaseQuizzActivity {
 		setConfirmQuitDialogView(confirmQuitDialog);
 		*/
 		
-		getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
 		getQuizzActionBar().getBackButton().setImageResource(R.drawable.back_but_5);
 		getQuizzActionBar().getMiddleText().setText("22 / 30");
 		getQuizzActionBar().getRightText().setText("345 pts");
