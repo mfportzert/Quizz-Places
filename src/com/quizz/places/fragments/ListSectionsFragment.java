@@ -4,6 +4,8 @@ package com.quizz.places.fragments;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,11 +44,11 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
         mSectionsListView = (ListView) view.findViewById(R.id.sectionsListView);
         mSectionsListView.setAdapter(mAdapter);
 		mSectionsListView.setOnItemClickListener(mSectionItemClickListener);
-        
-        ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSectionsListView, "alpha", 0f, 1f);
+		
+		ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSectionsListView, "alpha", 0f, 1f);
         listDisplay.setDuration(300);
         listDisplay.start();
-		
+        
         return view;
     }
 	
@@ -106,8 +108,14 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			mHideActionBarOnDestroyView = false;
 			FragmentContainer container = (FragmentContainer) getActivity();
-			NavigationUtils.directNavigationTo(GridLevelsFragment.class, 
-					getActivity().getSupportFragmentManager(), container, true);
+			FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+			
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+	    	transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+	    			R.anim.slide_in_left, R.anim.slide_out_right);
+	    	
+			NavigationUtils.directNavigationTo(GridLevelsFragment.class, fragmentManager, container, 
+					true, transaction);
 		}
 	};
 }
