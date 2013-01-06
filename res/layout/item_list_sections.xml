@@ -23,12 +23,11 @@
     		android:layout_height="wrap_content"
     		android:textSize="22sp"
     		android:layout_below="@+id/section_inner_separator"
-    		android:layout_marginTop="12dp"
-    		android:layout_marginLeft="30dp"
+    		android:layout_marginTop="10dp"
+    		android:layout_marginLeft="25dp"
     		android:textStyle="bold"
     		android:textColor="#444"
     		android:text="10 / 22" />
-    		
    	    
    	    <TextView
    	        android:id="@+id/sectionNbPoints"
@@ -48,7 +47,7 @@
     		android:layout_below="@+id/section_inner_separator"
     		android:layout_alignBottom="@+id/sectionNbLevels"
     		android:layout_marginTop="12dp"
-    		android:layout_marginRight="12dp"
+    		android:layout_marginRight="10dp"
     		android:scaleType="fitEnd"
     		android:layout_alignParentRight="true"
     		android:src="@drawable/but_enter" />
