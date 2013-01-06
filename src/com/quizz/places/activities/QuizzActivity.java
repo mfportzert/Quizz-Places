@@ -1,6 +1,7 @@
 package com.quizz.places.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.animation.LinearInterpolator;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
@@ -19,8 +20,9 @@ public class QuizzActivity extends BaseQuizzActivity {
 		if (savedInstanceState == null) {
 			// First launch of the activity, not a rotation
 			getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 			NavigationUtils.directNavigationTo(MenuFragment.class, getSupportFragmentManager(), 
-					this, false);			
+					this, false, transaction);			
 		}
 		
 		/*
