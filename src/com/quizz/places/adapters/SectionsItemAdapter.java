@@ -43,6 +43,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
         SectionProgressView progress;
     }
 	
+	@SuppressWarnings("deprecation")
 	@Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -56,6 +57,8 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
             holder.levels = (TextView) convertView.findViewById(R.id.sectionNbLevels);
             holder.buttonEnter = (ImageView) convertView.findViewById(R.id.sectionEnterButton);
             holder.progress = (SectionProgressView) convertView.findViewById(R.id.sectionProgress);
+            
+            holder.buttonEnter.setAlpha(225);
             
             convertView.setTag(holder);
             
