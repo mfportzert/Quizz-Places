@@ -1,12 +1,17 @@
 package com.quizz.places.adapters;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
@@ -17,6 +22,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 
 	private int mLineLayout;
 	private LayoutInflater mInflater;
+	private SparseArray<Drawable> mPictures = new SparseArray<Drawable>();
 	
 	public LevelsItemAdapter(Context context, int lineLayout) {
         super(context, lineLayout);
@@ -26,6 +32,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
     }
 
 	static class ViewHolder {
+		int position;
         ImageView picture;
         ImageView difficulty;
         ImageView statusIcon;
@@ -42,6 +49,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
             holder.picture = (ImageView) convertView.findViewById(R.id.levelPicture);
             holder.difficulty = (ImageView) convertView.findViewById(R.id.levelDifficulty);
             holder.statusIcon = (ImageView) convertView.findViewById(R.id.levelStatusIcon);
+            holder.picture.setVisibility(View.GONE);
             
             convertView.setTag(holder);
             
@@ -50,14 +58,46 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
         }
         
         Level level = getItem(position);
-        Drawable d;
-		try {
-			d = Drawable.createFromStream(getContext().getAssets().open("pictures/big_ben.jpg"), null);
-			holder.picture.setImageDrawable(d);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        holder.position = position;
+        if (mPictures.get(position) != null) {
+        	holder.picture.setImageDrawable(mPictures.get(position));
+        } else {
+        	// FIXME: position system is probably not working
+        	new ThumbnailTask(position, holder).execute();
+        }
         
         return convertView;
     }
+	
+	private class ThumbnailTask extends AsyncTask<Void, Void, Drawable> {
+	    private int mPosition;
+	    private ViewHolder mHolder;
+
+	    public ThumbnailTask(int position, ViewHolder holder) {
+	        mPosition = position;
+	        mHolder = holder;
+	    }
+
+	    @Override
+	    protected Drawable doInBackground(Void... arg0) {
+	    	try {
+	    		return Drawable.createFromStream(getContext().getAssets().open("pictures/big_ben.jpg"), null);
+		    } catch (IOException e) {
+				e.printStackTrace();
+			}
+	    	return null;
+	    }
+
+	    @Override
+	    protected void onPostExecute(Drawable drawable) {
+	        if (mHolder.position == mPosition) {
+	        	mPictures.append(mPosition, drawable);
+	            mHolder.picture.setImageDrawable(drawable);
+	            mHolder.picture.setVisibility(View.VISIBLE);
+	            
+/*	            Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
+	    		mHolder.picture.startAnimation(animation);*/
+	        }
+	    }
+	}
 }
