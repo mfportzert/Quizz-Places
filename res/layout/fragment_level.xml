@@ -3,7 +3,7 @@
     android:layout_height="wrap_content" >
 	
 	<ImageView
-        android:id="@+id/levelPicture"
+        android:id="@+id/levelPictureBig"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/photo_border_white"
@@ -14,18 +14,13 @@
         android:scaleType="fitCenter"
         android:rotation="12"
         android:layout_margin="15dp"
-        android:adjustViewBounds="true" />"
-   	
-	<ImageView
-       	android:id="@+id/levelDifficulty"
-       	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content" />
+        android:adjustViewBounds="true"
+        android:src="@drawable/title" />
 	
-	<ImageView
-       	android:id="@+id/levelStatusIcon"
-       	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content"
-		android:src="@drawable/ic_check"
-		android:visibility="gone" />
-    
+	<EditText
+        android:id="@+id/levelInputResponse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/levelPictureBig" />
+	
 </RelativeLayout>

@@ -4,6 +4,8 @@ package com.quizz.places.fragments;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,9 @@ import android.widget.ListView;
 
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseListLevelsFragment;
+import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.models.Level;
+import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.adapters.LevelsItemAdapter;
@@ -38,6 +42,7 @@ public class GridLevelsFragment extends BaseListLevelsFragment {
         
         mLevelsListView = (GridView) view.findViewById(R.id.gridLevels);
         mLevelsListView.setAdapter(mAdapter);
+        mLevelsListView.setOnItemClickListener(mLevelItemClickListener);
         
         return view;
     }
@@ -77,11 +82,21 @@ public class GridLevelsFragment extends BaseListLevelsFragment {
     // Listeners
     // ===========================================================
 	
-	OnItemClickListener mSectionItemClickListener = new OnItemClickListener() {
+	OnItemClickListener mLevelItemClickListener = new OnItemClickListener() {
 
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			FragmentContainer container = (FragmentContainer) getActivity();
+			FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 			
+			// TODO: Faire le Scale animation avant la transaction!!
+			// TODO: Faire le Zoom out animation dans le onResume(?)
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+	    	transaction.setCustomAnimations(R.anim.fade_in_delay, R.anim.zoom_out,
+	    			R.anim.unzoom_out, R.anim.fade_out);
+	    	
+			NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager, container, 
+					true, transaction);
 		}
 	};
 }
