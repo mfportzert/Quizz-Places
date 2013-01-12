@@ -1,7 +1,7 @@
 package com.quizz.places.fragments;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -85,7 +85,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
     }
 	
 	@Override
-	protected void onSectionsLoaded(ArrayList<Section> listSections) {
+	protected void onSectionsLoaded(List<Section> listSections) {
 		if (mAdapter != null) {
 			mAdapter.clear();
 			for (Section section : listSections) {
