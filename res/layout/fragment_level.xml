@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+	
+	<ImageView
+        android:id="@+id/levelPictureBig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/photo_border_white"
+        android:paddingBottom="11dp"
+        android:paddingLeft="9dp"
+        android:paddingRight="12dp"
+        android:paddingTop="8dp"
+        android:scaleType="fitCenter"
+        android:layout_margin="15dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/title" />
+	
+	<EditText
+        android:id="@+id/levelInputResponse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/levelPictureBig" />
+	
+</RelativeLayout>

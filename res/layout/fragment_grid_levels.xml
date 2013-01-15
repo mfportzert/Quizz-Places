@@ -10,4 +10,10 @@
     	android:columnWidth="120dp"
     	android:numColumns="auto_fit" />
     
+    <include layout="@layout/item_grid_levels"
+        android:id="@+id/transitionLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    
 </RelativeLayout>
