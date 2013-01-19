@@ -16,62 +16,71 @@ import com.quizz.core.listeners.LoadAdapterPictureListener;
 import com.quizz.core.models.Level;
 import com.quizz.core.tasks.LoadAdapterPictureTask;
 import com.quizz.places.R;
+import com.quizz.places.application.QuizzPlacesApplication;
 
-public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapterPictureListener {
+public class LevelsItemAdapter extends ArrayAdapter<Level> implements
+		LoadAdapterPictureListener {
 
 	private int mLineLayout;
 	private LayoutInflater mInflater;
 	private SparseArray<WeakReference<Drawable>> mPictures = new SparseArray<WeakReference<Drawable>>();
-	
+
 	public LevelsItemAdapter(Context context, int lineLayout) {
-        super(context, lineLayout);
-        
-        mLineLayout = lineLayout;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
+		super(context, lineLayout);
+
+		mLineLayout = lineLayout;
+		mInflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
 
 	static class ViewHolder {
 		int position;
-        ImageView picture;
-        LinearLayout difficulty;
-        ImageView statusIcon;
-    }
-	
+		ImageView picture;
+		LinearLayout difficulty;
+		ImageView statusIcon;
+	}
+
 	@Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-        	convertView = this.mInflater.inflate(this.mLineLayout, null);
-        	
-            holder = new ViewHolder();
-            holder.picture = (ImageView) convertView.findViewById(R.id.levelPicture);
-            holder.difficulty = (LinearLayout) convertView.findViewById(R.id.levelDifficulty);
-            holder.statusIcon = (ImageView) convertView.findViewById(R.id.levelStatusIcon);
-            //holder.picture.setAlpha(0);
-            holder.picture.setVisibility(View.GONE);
-            holder.difficulty.setVisibility(View.GONE);
-            
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        
-        Level level = getItem(position);
-        holder.position = position;
-        
-        Drawable picture = null;
-        WeakReference<Drawable> pictureRef = mPictures.get(position);
-        if (pictureRef != null) picture = pictureRef.get();
-        
-        if (picture != null) {
-        	holder.picture.setImageDrawable(picture);
-            holder.difficulty.setVisibility(View.VISIBLE);
-        } else {
-        	new LoadAdapterPictureTask(getContext(), position, holder, this).execute();
-        }
-        
-        return convertView;
-    }
+	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder holder;
+		if (convertView == null) {
+			convertView = this.mInflater.inflate(this.mLineLayout, null);
+
+			holder = new ViewHolder();
+			holder.picture = (ImageView) convertView
+					.findViewById(R.id.levelPicture);
+			holder.difficulty = (LinearLayout) convertView
+					.findViewById(R.id.levelDifficulty);
+			holder.statusIcon = (ImageView) convertView
+					.findViewById(R.id.levelStatusIcon);
+			// holder.picture.setAlpha(0);
+			holder.picture.setVisibility(View.GONE);
+			holder.difficulty.setVisibility(View.GONE);
+
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
+
+		Level level = getItem(position);
+		holder.position = position;
+
+		Drawable picture = null;
+		WeakReference<Drawable> pictureRef = mPictures.get(position);
+		if (pictureRef != null) {
+			picture = pictureRef.get();
+		}
+		
+		if (picture != null) {
+			holder.picture.setImageDrawable(picture);
+			holder.difficulty.setVisibility(View.VISIBLE);
+		} else {
+			new LoadAdapterPictureTask(getContext(), QuizzPlacesApplication.IMAGES_DIR
+					+ "colisee.jpg", position, holder, this).execute();
+		}
+
+		return convertView;
+	}
 
 	@Override
 	public void onPictureLoaded(Drawable drawable, int position, Object tag) {

@@ -4,7 +4,6 @@ package com.quizz.places.fragments;
 import java.util.ArrayList;
 
 import android.content.res.Configuration;
-import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,14 +27,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-import com.quizz.core.fragments.BaseListLevelsFragment;
+import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.models.Level;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.places.R;
 import com.quizz.places.adapters.LevelsItemAdapter;
 
-public class GridLevelsFragment extends BaseListLevelsFragment {
+public class GridLevelsFragment extends BaseGridLevelsFragment {
 	
 	private LevelsItemAdapter mAdapter;
 	private GridView mLevelsGridView;
