@@ -1,25 +1,23 @@
 package com.quizz.places.adapters;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.quizz.core.listeners.LoadAdapterPictureListener;
 import com.quizz.core.models.Level;
+import com.quizz.core.tasks.LoadAdapterPictureTask;
 import com.quizz.places.R;
 
-public class LevelsItemAdapter extends ArrayAdapter<Level> {
+public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapterPictureListener {
 
 	private int mLineLayout;
 	private LayoutInflater mInflater;
@@ -69,42 +67,24 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
         	holder.picture.setImageDrawable(picture);
             holder.difficulty.setVisibility(View.VISIBLE);
         } else {
-        	new ThumbnailTask(position, holder).execute();
+        	new LoadAdapterPictureTask(getContext(), position, holder, this).execute();
         }
         
         return convertView;
     }
-	
-	private class ThumbnailTask extends AsyncTask<Void, Void, Drawable> {
-	    private int mPosition;
-	    private ViewHolder mHolder;
 
-	    public ThumbnailTask(int position, ViewHolder holder) {
-	        mPosition = position;
-	        mHolder = holder;
-	    }
-
-	    @Override
-	    protected Drawable doInBackground(Void... arg0) {
-	    	try {
-	    		return Drawable.createFromStream(getContext().getAssets().open("pictures/big_ben.jpg"), null);
-		    } catch (IOException e) {
-				e.printStackTrace();
-			}
-	    	return null;
-	    }
-
-	    @Override
-	    protected void onPostExecute(Drawable drawable) {
-	        if (mHolder.position == mPosition) {
-	        	mPictures.append(mPosition, new WeakReference<Drawable>(drawable));
-	            mHolder.picture.setImageDrawable(drawable);
-	            /*
-	            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-	    		mHolder.picture.startAnimation(animation);*/
-	    		mHolder.picture.setVisibility(View.VISIBLE);
-	    		mHolder.difficulty.setVisibility(View.VISIBLE);
-	        }
-	    }
+	@Override
+	public void onPictureLoaded(Drawable drawable, int position, Object tag) {
+		ViewHolder viewHolder = (ViewHolder) tag;
+		if (viewHolder.position == position) {
+			mPictures.append(position, new WeakReference<Drawable>(drawable));
+			viewHolder.picture.setImageDrawable(drawable);
+			/*
+			 * Animation animation = AnimationUtils.loadAnimation(getContext(),
+			 * R.anim.fade_in); mHolder.picture.startAnimation(animation);
+			 */
+			viewHolder.picture.setVisibility(View.VISIBLE);
+			viewHolder.difficulty.setVisibility(View.VISIBLE);
+		}
 	}
 }
