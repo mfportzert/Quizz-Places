@@ -125,19 +125,15 @@ public class MenuFragment extends BaseMenuFragment {
 	private AnimatorSet createHideUiAnimation() {
 		ObjectAnimator signHiding = ObjectAnimator.ofFloat(mTitleSign, "translationY", 0, -200);
 		signHiding.setDuration(300);
-		signHiding.start();
 		
 		ObjectAnimator footerHiding = ObjectAnimator.ofFloat(mFooter, "translationY", 0, 500);
 		footerHiding.setDuration(700);
-		footerHiding.start();
 		
 		ObjectAnimator buttonsHiding = ObjectAnimator.ofFloat(mMenuButtonsContainer, "alpha", 1f, 0f);
 		buttonsHiding.setDuration(500);
-		buttonsHiding.start();
 		
 		ObjectAnimator homeExitHiding = ObjectAnimator.ofFloat(mButtonHomeExit, "alpha", 1f, 0f);
 		homeExitHiding.setDuration(500);
-		homeExitHiding.start();
 		
 		AnimatorSet uiHidingAnimation = new AnimatorSet();
 		uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding, homeExitHiding);
