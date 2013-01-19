@@ -1,21 +1,21 @@
 package com.quizz.places.fragments;
 
 
-import java.util.ArrayList;
-
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.quizz.core.fragments.BaseLevelFragment;
-import com.quizz.core.models.Level;
+import com.quizz.core.listeners.LoadPictureListener;
+import com.quizz.core.tasks.LoadPictureTask;
 import com.quizz.places.R;
 
-public class LevelFragment extends BaseLevelFragment {
+public class LevelFragment extends BaseLevelFragment implements LoadPictureListener {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,16 @@ public class LevelFragment extends BaseLevelFragment {
 		
         View view = inflater.inflate(R.layout.fragment_level, container, false);
         
+        ImageView pictureBig = (ImageView) view.findViewById(R.id.levelPictureBig);
+        new LoadPictureTask(getActivity(), pictureBig, this).execute();
+        
         return view;
     }
+	
+	@Override
+	public void onPictureLoaded(Drawable drawable, ImageView imageView) {
+		imageView.setImageDrawable(drawable);
+	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
