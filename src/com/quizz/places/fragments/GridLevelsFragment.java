@@ -17,7 +17,6 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,18 +25,22 @@ import android.widget.RelativeLayout.LayoutParams;
 
 import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.interfaces.FragmentContainer;
-import com.quizz.core.models.Level;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.places.R;
 import com.quizz.places.adapters.LevelsItemAdapter;
 
 public class GridLevelsFragment extends BaseGridLevelsFragment {
 
-    private LevelsItemAdapter mAdapter;
     private GridView mLevelsGridView;
     private View mTransitionLevel;
     private ImageView mTransitionLevelImage;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	mAdapter = new LevelsItemAdapter(getActivity(), R.layout.item_grid_levels);
+        super.onCreate(savedInstanceState);
+    }
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	super.onCreateView(inflater, container, savedInstanceState);
@@ -57,11 +60,6 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 	mAdapter.notifyDataSetChanged();
 	
 	return view;
-    }
-
-    @Override
-    protected void initAdapter(ArrayAdapter<Level> adapter) {
-	adapter = new LevelsItemAdapter(getActivity(), R.layout.item_grid_levels);
     }
 
     // ===========================================================
