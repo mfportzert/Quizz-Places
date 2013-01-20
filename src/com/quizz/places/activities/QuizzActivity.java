@@ -12,7 +12,9 @@ import com.quizz.places.R;
 import com.quizz.places.fragments.MenuFragment;
 
 public class QuizzActivity extends BaseQuizzActivity {
-
+    
+    private static final String JSON_FILE = "places.json";
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -37,7 +39,12 @@ public class QuizzActivity extends BaseQuizzActivity {
 
 	initBackground();
     }
-
+    
+    @Override
+    protected String getJsonFilePath() {
+	return JSON_FILE;
+    }
+    
     private void initBackground() {
 	getQuizzLayout().setBackgroundResource(R.drawable.sky_clean);
 	getBackgroundAnimatedImage().setBackgroundResource(R.drawable.clouds);
