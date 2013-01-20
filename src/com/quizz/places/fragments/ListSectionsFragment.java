@@ -1,7 +1,5 @@
 package com.quizz.places.fragments;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
@@ -24,16 +23,9 @@ import com.quizz.places.adapters.SectionsItemAdapter;
 
 public class ListSectionsFragment extends BaseListSectionsFragment {
 
-    private SectionsItemAdapter mAdapter;
     private ListView mSectionsListView;
     private boolean mHideActionBarOnDestroyView = true;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	mAdapter = new SectionsItemAdapter(getActivity(), R.layout.item_list_sections);
-    }
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	super.onCreateView(inflater, container, savedInstanceState);
@@ -44,18 +36,20 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	mSectionsListView.setAdapter(mAdapter);
 	mSectionsListView.setOnItemClickListener(mSectionItemClickListener);
 
+	mLoadingView = view.findViewById(R.id.loadingView);
+
 	ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSectionsListView, "alpha", 0f, 1f);
 	listDisplay.setDuration(300);
 	listDisplay.start();
 
 	return view;
     }
-
+    
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-	super.onSaveInstanceState(outState);
+    protected void initAdapter(ArrayAdapter<Section> adapter) {
+	adapter = new SectionsItemAdapter(getActivity(), R.layout.item_list_sections);
     }
-
+    
     @Override
     public void onDestroyView() {
 	super.onDestroyView();
@@ -74,32 +68,6 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	if (getActivity() instanceof BaseQuizzActivity) {
 	    ((BaseQuizzActivity) getActivity()).getQuizzActionBar().showIfNecessary(
 		    QuizzActionBar.MOVE_NORMAL);
-	}
-    }
-
-    @Override
-    public void onPause() {
-	super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-	super.onResume();
-    }
-
-    @Override
-    protected void onSectionsLoading() {
-    }
-
-    @Override
-    protected void onSectionsLoaded(List<Section> listSections) {
-	if (mAdapter != null) {
-	    mAdapter.clear();
-	    for (Section section : listSections) {
-		section.name = "Level " + section.number;
-		mAdapter.add(section);
-	    }
-	    mAdapter.notifyDataSetChanged();
 	}
     }
 

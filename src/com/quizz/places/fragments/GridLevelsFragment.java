@@ -1,13 +1,10 @@
 package com.quizz.places.fragments;
 
-import java.util.ArrayList;
-
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +17,7 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,12 +39,6 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
     private ImageView mTransitionLevelImage;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	mAdapter = new LevelsItemAdapter(getActivity(), R.layout.item_grid_levels);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	super.onCreateView(inflater, container, savedInstanceState);
 
@@ -62,38 +54,14 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 	mLevelsGridView.setAdapter(mAdapter);
 	mLevelsGridView.setOnItemClickListener(mLevelItemClickListener);
 
+	mAdapter.notifyDataSetChanged();
+	
 	return view;
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-	super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onDestroyView() {
-	super.onDestroyView();
-    }
-
-    @Override
-    public void onPause() {
-	super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-	super.onResume();
-    }
-
-    @Override
-    protected void onLevelsLoaded(ArrayList<Level> listLevels) {
-	if (mAdapter != null) {
-	    mAdapter.clear();
-	    for (Level level : listLevels) {
-		mAdapter.add(level);
-	    }
-	    mAdapter.notifyDataSetChanged();
-	}
+    protected void initAdapter(ArrayAdapter<Level> adapter) {
+	adapter = new LevelsItemAdapter(getActivity(), R.layout.item_grid_levels);
     }
 
     // ===========================================================
@@ -108,6 +76,10 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 	}
     };
 
+    // ===========================================================
+    // Inner classes
+    // ===========================================================
+    
     /**
      * Transition Animation
      * 
