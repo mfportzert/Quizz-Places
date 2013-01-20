@@ -1,25 +1,108 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
-	
-	<ImageView
+
+    <ImageView
         android:id="@+id/levelPictureBig"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/photo_border_white"
-        android:paddingBottom="11dp"
-        android:paddingLeft="9dp"
-        android:paddingRight="12dp"
-        android:paddingTop="8dp"
-        android:scaleType="fitCenter"
         android:layout_margin="15dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/title" />
-	
-	<EditText
-        android:id="@+id/levelInputResponse"
+        android:background="@drawable/photo_border_white"
+        android:paddingBottom="22dp"
+        android:paddingLeft="18dp"
+        android:paddingRight="24dp"
+        android:paddingTop="16dp"
+        android:scaleType="centerInside" />
+
+    <RelativeLayout
+        android:id="@+id/levelOpenedlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/levelPictureBig" />
-	
+        android:layout_alignLeft="@+id/levelPictureBig"
+        android:layout_alignRight="@+id/levelPictureBig"
+        android:layout_below="@+id/levelPictureBig" >
+
+        <EditText
+            android:id="@+id/levelInputResponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/levelHints" />
+
+        <ImageButton
+            android:id="@+id/levelHints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:maxHeight="75dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/ic_hints" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/levelHints"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/levelInputResponse"
+            android:layout_toLeftOf="@+id/levelHints"
+            android:minHeight="40dp"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/levelCheckButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/but_grey"
+                android:maxHeight="75dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#484848"
+                android:shadowColor="#FFF"
+            	android:shadowRadius="2"
+                android:text="Check" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/levelClosedlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/levelPictureBig"
+        android:layout_alignRight="@+id/levelPictureBig"
+        android:layout_below="@+id/levelPictureBig"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/levelTextResponse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/levelInfo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/levelInfo"
+            android:gravity="center"
+            android:text="Big Ben"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/levelInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_info" />
+    </RelativeLayout>
+
 </RelativeLayout>
