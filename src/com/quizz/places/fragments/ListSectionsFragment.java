@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
+import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.fragments.BaseListSectionsFragment;
 import com.quizz.core.interfaces.FragmentContainer;
-import com.quizz.core.models.Section;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
@@ -33,21 +32,18 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	View view = inflater.inflate(R.layout.fragment_list_sections, container, false);
 
 	mSectionsListView = (ListView) view.findViewById(R.id.sectionsListView);
-	mSectionsListView.setAdapter(mAdapter);
 	mSectionsListView.setOnItemClickListener(mSectionItemClickListener);
 
 	mLoadingView = view.findViewById(R.id.loadingView);
 
+	mAdapter = new SectionsItemAdapter(getActivity(), R.layout.item_list_sections);
+	mSectionsListView.setAdapter(mAdapter);
+	
 	ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSectionsListView, "alpha", 0f, 1f);
 	listDisplay.setDuration(300);
 	listDisplay.start();
 
 	return view;
-    }
-    
-    @Override
-    protected void initAdapter(ArrayAdapter<Section> adapter) {
-	adapter = new SectionsItemAdapter(getActivity(), R.layout.item_list_sections);
     }
     
     @Override
@@ -78,7 +74,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
     OnItemClickListener mSectionItemClickListener = new OnItemClickListener() {
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 	    mHideActionBarOnDestroyView = false;
 	    FragmentContainer container = (FragmentContainer) getActivity();
 	    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -86,9 +82,11 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	    FragmentTransaction transaction = fragmentManager.beginTransaction();
 	    transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
 		    R.anim.slide_in_left, R.anim.slide_out_right);
-
+	    
+	    Bundle args = new Bundle();
+	    args.putParcelable(BaseGridLevelsFragment.ARG_SECTION, mAdapter.getItem(position));
 	    NavigationUtils.directNavigationTo(GridLevelsFragment.class, fragmentManager,
-		    container, true, transaction);
+		    container, true, transaction, args);
 	}
     };
 }
