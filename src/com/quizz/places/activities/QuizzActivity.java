@@ -12,40 +12,41 @@ import com.quizz.places.R;
 import com.quizz.places.fragments.MenuFragment;
 
 public class QuizzActivity extends BaseQuizzActivity {
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		if (savedInstanceState == null) {
-			// First launch of the activity, not a rotation change
-			getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
-			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-			NavigationUtils.directNavigationTo(MenuFragment.class, getSupportFragmentManager(), 
-					this, false, transaction);			
-		}
-		
-		/*
-		View confirmQuitDialog = getLayoutInflater().inflate(R.layout.dialog_confirm_quit, null);
-		setConfirmQuitDialogView(confirmQuitDialog);
-		*/
-		
-		getQuizzActionBar().getBackButton().setImageResource(R.drawable.back_but_5);
-		getQuizzActionBar().getMiddleText().setText("22 / 30");
-		getQuizzActionBar().getRightText().setText("345 pts");
-		
-		initBackground();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+
+	if (savedInstanceState == null) {
+	    // First launch of the activity, not a rotation change
+	    getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
+	    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+	    NavigationUtils.directNavigationTo(MenuFragment.class, getSupportFragmentManager(),
+		    this, false, transaction);
 	}
-	
-	private void initBackground() {
-		getQuizzLayout().setBackgroundResource(R.drawable.sky_clean);
-		getBackgroundAnimatedImage().setBackgroundResource(R.drawable.clouds);
-		
-		ObjectAnimator bgAnimation = ObjectAnimator.ofFloat(getBackgroundAnimatedImage(), 
-				"translationX", 500, -1700);
-		bgAnimation.setDuration(30000);
-		bgAnimation.setInterpolator(new LinearInterpolator());
-		bgAnimation.setRepeatCount(ObjectAnimator.INFINITE);
-		bgAnimation.start();
-	}
+
+	/*
+	 * View confirmQuitDialog =
+	 * getLayoutInflater().inflate(R.layout.dialog_confirm_quit, null);
+	 * setConfirmQuitDialogView(confirmQuitDialog);
+	 */
+
+	getQuizzActionBar().getBackButton().setImageResource(R.drawable.back_but_5);
+	getQuizzActionBar().getMiddleText().setText("22 / 30");
+	getQuizzActionBar().getRightText().setText("345 pts");
+
+	initBackground();
+    }
+
+    private void initBackground() {
+	getQuizzLayout().setBackgroundResource(R.drawable.sky_clean);
+	getBackgroundAnimatedImage().setBackgroundResource(R.drawable.clouds);
+
+	ObjectAnimator bgAnimation = ObjectAnimator.ofFloat(getBackgroundAnimatedImage(),
+		"translationX", 500, -1700);
+	bgAnimation.setDuration(30000);
+	bgAnimation.setInterpolator(new LinearInterpolator());
+	bgAnimation.setRepeatCount(ObjectAnimator.INFINITE);
+	bgAnimation.start();
+    }
 }
