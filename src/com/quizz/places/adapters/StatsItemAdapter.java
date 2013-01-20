@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.quizz.core.models.Section;
 import com.quizz.core.models.Stat;
 import com.quizz.core.utils.ConvertUtils;
 import com.quizz.core.widgets.SectionProgressView;
