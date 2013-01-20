@@ -71,7 +71,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapte
 	    holder.difficulty.setVisibility(View.VISIBLE);
 	} else {
 	    new LoadAdapterPictureTask(getContext(), QuizzPlacesApplication.IMAGES_DIR
-		    + "colisee.jpg", position, holder, this).execute();
+		    + level.imageName, position, holder, this).execute();
 	}
 
 	return convertView;
