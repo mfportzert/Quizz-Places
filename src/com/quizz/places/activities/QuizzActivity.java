@@ -15,6 +15,8 @@ public class QuizzActivity extends BaseQuizzActivity {
     
     private static final String JSON_FILE = "places.json";
     
+    private ObjectAnimator mBgAnimation;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -41,6 +43,12 @@ public class QuizzActivity extends BaseQuizzActivity {
     }
     
     @Override
+    protected void onDestroy() {
+	 super.onDestroy();
+	 mBgAnimation.end();
+    }
+    
+    @Override
     protected String getJsonFilePath() {
 	return JSON_FILE;
     }
@@ -49,11 +57,11 @@ public class QuizzActivity extends BaseQuizzActivity {
 	getQuizzLayout().setBackgroundResource(R.drawable.sky_clean);
 	getBackgroundAnimatedImage().setBackgroundResource(R.drawable.clouds);
 
-	ObjectAnimator bgAnimation = ObjectAnimator.ofFloat(getBackgroundAnimatedImage(),
+	mBgAnimation = ObjectAnimator.ofFloat(getBackgroundAnimatedImage(),
 		"translationX", 500, -1700);
-	bgAnimation.setDuration(30000);
-	bgAnimation.setInterpolator(new LinearInterpolator());
-	bgAnimation.setRepeatCount(ObjectAnimator.INFINITE);
-	bgAnimation.start();
+	mBgAnimation.setDuration(30000);
+	mBgAnimation.setInterpolator(new LinearInterpolator());
+	mBgAnimation.setRepeatCount(ObjectAnimator.INFINITE);
+	mBgAnimation.start();
     }
 }
