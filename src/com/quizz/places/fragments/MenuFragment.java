@@ -59,7 +59,7 @@ public class MenuFragment extends BaseMenuFragment {
 	fadeTransaction.setCustomAnimations(R.anim.none, R.anim.none, R.anim.none, R.anim.fade_out);
 
 	initMenuButton(mButtonPlay, ListSectionsFragment.class, fadeTransaction, mHideUiAnimatorSet);
-	initMenuButton(mButtonStats, GridLevelsFragment.class, fadeTransaction, mHideUiAnimatorSet);
+	initMenuButton(mButtonStats, StatsFragment.class, fadeTransaction, mHideUiAnimatorSet);
 
 	mButtonHomeExit.setAlpha(220);
 	mButtonHomeExit.setOnClickListener(new OnClickListener() {
