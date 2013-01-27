@@ -3,18 +3,19 @@
     android:layout_height="wrap_content" >
 
     <LinearLayout
+        android:id="@+id/levelPicturelayout"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:id="@+id/levelPicturelayout" >
+        android:gravity="center" >
 
         <ImageView
             android:id="@+id/levelPicture"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:adjustViewBounds="true"
             android:background="@drawable/photo_border_white"
             android:paddingBottom="11dp"
@@ -29,9 +30,9 @@
         android:id="@+id/levelDifficulty"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_below="@+id/levelPicturelayout"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_below="@+id/levelPicturelayout"
         android:background="@drawable/bg_difficulty_rounded"
         android:gravity="center" >
 

@@ -7,7 +7,7 @@
         android:id="@+id/gridLevels"
         android:layout_width="match_parent"
     	android:layout_height="match_parent" 
-    	android:columnWidth="120dp"
+    	android:columnWidth="140dp"
     	android:numColumns="auto_fit" />
     
     <include layout="@layout/item_grid_levels"
