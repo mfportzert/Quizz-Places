@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/levellayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
@@ -21,43 +22,50 @@
             android:paddingBottom="11dp"
             android:paddingLeft="9dp"
             android:paddingRight="12dp"
-            android:paddingTop="8dp"
-            android:rotation="12"
-            android:scaleType="fitCenter" />
+            android:paddingTop="8dp" />
     </LinearLayout>
-
+    
+    <ImageView
+       	android:id="@+id/levelStatusIcon"
+       	android:layout_width="wrap_content"
+	   	android:layout_height="wrap_content"
+		android:src="@drawable/ic_check"
+		android:layout_marginTop="20dp"
+		android:layout_marginRight="15dp" />
+    
     <LinearLayout
         android:id="@+id/levelDifficulty"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@+id/levelPicturelayout"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/bg_difficulty_rounded"
-        android:gravity="center" >
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3" >
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/levelStarEasy"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_star" />
+            android:layout_weight="1"
+            android:src="@drawable/star_selector" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/levelStarMedium"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_star" />
+            android:layout_weight="1"
+            android:src="@drawable/star_selector" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/levelStarHard"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_star" />
+            android:layout_weight="1"
+            android:src="@drawable/star_selector" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/levelStatusIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_check"
-        android:visibility="gone" />
 
     <View
         android:layout_width="wrap_content"
