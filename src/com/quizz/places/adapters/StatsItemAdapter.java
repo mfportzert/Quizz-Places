@@ -54,7 +54,6 @@ public class StatsItemAdapter extends ArrayAdapter<Stat> {
             holder = new ViewHolder();
             holder.label = (TextView) convertView.findViewById(R.id.StatLabel);
             holder.score = (TextView) convertView.findViewById(R.id.StatDoneOnTotal);
-            holder.average = (TextView) convertView.findViewById(R.id.StatPercentScore);
             holder.icon = (ImageView) convertView.findViewById(R.id.StatIcon);
             holder.progress = (SectionProgressView) convertView.findViewById(R.id.StatProgress);
                         

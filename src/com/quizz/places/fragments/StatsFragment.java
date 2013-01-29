@@ -32,9 +32,9 @@ public class StatsFragment extends BaseStatsFragment {
 
 	View view = inflater.inflate(R.layout.fragment_stats, container, false);
 
-	mAdapter.addAll(QuizzDAO.INSTANCE.getStats());
-	mStatsListView = (ListView) view.findViewById(R.id.StatsListView);
-	mStatsListView.setAdapter(mAdapter);
+//	mAdapter.addAll(QuizzDAO.INSTANCE.getStats());
+//	mStatsListView = (ListView) view.findViewById(R.id.StatsListView);
+//	mStatsListView.setAdapter(mAdapter);
 
 	ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mStatsListView, "alpha", 0f, 1f);
 	listDisplay.setDuration(300);
