@@ -4,6 +4,7 @@ import java.lang.ref.SoftReference;
 import java.util.Random;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
@@ -148,14 +149,18 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapte
 
     @Override
     public void onPictureLoaded(Drawable drawable, int position, Object tag) {
+	drawable = new BitmapDrawable(getContext().getResources(), Bitmap.createScaledBitmap(
+		((BitmapDrawable) drawable).getBitmap(), drawable.getIntrinsicWidth(),
+		drawable.getIntrinsicHeight(), true));
+
 	drawable.setFilterBitmap(true);
-	((BitmapDrawable)drawable).setAntiAlias(true);
-	
+	((BitmapDrawable) drawable).setAntiAlias(true);
+
 	ViewHolder viewHolder = (ViewHolder) tag;
 	if (viewHolder.position == position) {
 	    mPictures.append(position, new SoftReference<Drawable>(drawable));
 	    viewHolder.picture.setImageDrawable(drawable);
-	    
+
 	    if (viewHolder.hidden) {
 		viewHolder.alphaAnim = ObjectAnimator.ofFloat(viewHolder.levelLayout, "alpha", 0f,
 			1f).setDuration(200);
@@ -164,17 +169,21 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapte
 		Random random = new Random();
 		float rotationRatio = random.nextFloat() * DEFAULT_RANDOM_ROTATION_RANGE;
 		mRotations.append(position, rotationRatio - (DEFAULT_RANDOM_ROTATION_RANGE / 2));
-		
+
 		viewHolder.picture.getDrawable().setFilterBitmap(true);
-		((BitmapDrawable)viewHolder.picture.getDrawable()).setAntiAlias(true);
-		
+		((BitmapDrawable) viewHolder.picture.getDrawable()).setAntiAlias(true);
+
 		ObjectAnimator
 			.ofFloat(viewHolder.picture, "rotation", 0.0f, mRotations.get(position))
 			.setDuration(0).start();
-		
+
 		adjustIconStatusPosition(viewHolder, drawable);
 		viewHolder.hidden = false;
 	    }
 	}
+    }
+    
+    public Float getPictureRotation(int position) {
+	return mRotations.get(position);
     }
 }
