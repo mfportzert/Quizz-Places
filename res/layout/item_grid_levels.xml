@@ -33,39 +33,7 @@
 		android:layout_marginTop="20dp"
 		android:layout_marginRight="15dp" />
     
-    <LinearLayout
-        android:id="@+id/levelDifficulty"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@+id/levelPictureLayout"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/bg_difficulty_rounded"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="3" >
-
-        <ImageView
-            android:id="@+id/levelStarEasy"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/star_selector" />
-
-        <ImageView
-            android:id="@+id/levelStarMedium"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/star_selector" />
-
-        <ImageView
-            android:id="@+id/levelStarHard"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/star_selector" />
-    </LinearLayout>
+    <include layout="@layout/include_difficulty" />
 
     <View
         android:layout_width="wrap_content"

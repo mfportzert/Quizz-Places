@@ -4,6 +4,7 @@ import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageLoaderListener;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.models.Level;
+import com.quizz.core.utils.ConvertUtils;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
 
@@ -133,19 +135,27 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
     }
 
     private void adjustIconStatusPosition(ViewHolder viewHolder) {
-
 	float pictureCenterX = viewHolder.pictureLayout.getWidth() / 2;
 	float pictureCenterY = viewHolder.pictureLayout.getHeight() / 2;
-
+/*
+	if (pictureCenterX == 0 || pictureCenterY == 0) {
+	    viewHolder.pictureLayout.measure(ViewGroup.LayoutParams.MATCH_PARENT,
+		    (int) ConvertUtils.convertDpToPixels(170, viewHolder.picture.getContext()));
+	    pictureCenterX = viewHolder.pictureLayout.getMeasuredWidth() / 2;
+	    pictureCenterY = viewHolder.pictureLayout.getMeasuredHeight() / 2;
+	}
+*/
+	@SuppressWarnings("unused")
 	float statusIconWidth = viewHolder.statusIcon.getWidth();
 	float statusIconHeight = viewHolder.statusIcon.getHeight();
-
 	float drawableWidth = viewHolder.picture.getDrawable().getIntrinsicWidth();
 	float drawableHeight = viewHolder.picture.getDrawable().getIntrinsicHeight();
-
+/*
+	Log.e("LEVEL ADAPTER", "pictureCenterX: " + pictureCenterX);
+	Log.e("LEVEL ADAPTER", "pictureCenterY: " + pictureCenterY);
+*/
 	ObjectAnimator
-		.ofFloat(viewHolder.statusIcon, "x", 0.0f,
-			pictureCenterX + (drawableWidth / 4) /*- (statusIconWidth / 2)*/)
+		.ofFloat(viewHolder.statusIcon, "x", 0.0f, pictureCenterX + (drawableWidth / 4) /*- (statusIconWidth / 2)*/)
 		.setDuration(0).start();
 
 	ObjectAnimator
