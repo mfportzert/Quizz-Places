@@ -1,6 +1,5 @@
 package com.quizz.places.fragments;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +9,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 
 import com.quizz.core.fragments.BaseLevelFragment;
-import com.quizz.core.listeners.LoadPictureListener;
-import com.quizz.core.tasks.LoadPictureTask;
 import com.quizz.places.R;
-import com.quizz.places.application.QuizzPlacesApplication;
 
-public class LevelFragment extends BaseLevelFragment implements LoadPictureListener {
+public class LevelFragment extends BaseLevelFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,17 +25,17 @@ public class LevelFragment extends BaseLevelFragment implements LoadPictureListe
 	View view = inflater.inflate(R.layout.fragment_level, container, false);
 
 	ImageView pictureBig = (ImageView) view.findViewById(R.id.levelPictureBig);
-	new LoadPictureTask(getActivity(), QuizzPlacesApplication.IMAGES_DIR + "colisee.jpg",
-		pictureBig, this).execute();
+	/*new LoadPictureTask(getActivity(), QuizzPlacesApplication.IMAGES_DIR + "colisee.jpg",
+		pictureBig, this).execute();*/
 
 	return view;
     }
-
+/*
     @Override
     public void onPictureLoaded(Drawable drawable, ImageView imageView) {
 	imageView.setImageDrawable(drawable);
     }
-
+*/
     @Override
     public void onSaveInstanceState(Bundle outState) {
 	super.onSaveInstanceState(outState);

@@ -1,11 +1,9 @@
 package com.quizz.places.adapters;
 
-import java.lang.ref.SoftReference;
 import java.util.Random;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
-import com.quizz.core.listeners.LoadAdapterPictureListener;
+import com.quizz.core.imageloader.ImageLoader;
+import com.quizz.core.imageloader.ImageLoader.ImageLoaderListener;
+import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.models.Level;
-import com.quizz.core.tasks.LoadAdapterPictureTask;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
 
-public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapterPictureListener {
+public class LevelsItemAdapter extends ArrayAdapter<Level> {
 
     @SuppressWarnings("unused")
     private static final String DIFFICULTY_EASY = "easy";
@@ -33,19 +32,24 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapte
 
     private int mLineLayout;
     private LayoutInflater mInflater;
-    private SparseArray<SoftReference<Drawable>> mPictures = new SparseArray<SoftReference<Drawable>>();
     private SparseArray<Float> mRotations = new SparseArray<Float>();
+
+    private ImageLoader mImageLoader;
+
+    private enum PictureState {
+	NONE, LOADING, LOADED
+    }
 
     public LevelsItemAdapter(Context context, int lineLayout) {
 	super(context, lineLayout);
 
 	mLineLayout = lineLayout;
+	mImageLoader = new ImageLoader(context);
 	mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    static class ViewHolder {
+    class ViewHolder implements ImageLoaderListener {
 	int position;
-	boolean hidden;
 	RelativeLayout levelLayout;
 	ImageView picture;
 	LinearLayout difficulty;
@@ -54,10 +58,49 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapte
 	ImageView mediumStar;
 	ImageView hardStar;
 	ObjectAnimator alphaAnim;
+
+	@Override
+	public void onStartImageLoading(Bitmap bitmap, String url, ImageView imageView,
+		ImageType imageType) {
+
+	    if (alphaAnim != null && alphaAnim.isRunning()) {
+		alphaAnim.cancel();
+	    }
+
+	    ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(levelLayout, "alpha", 0f);
+	    alphaAnimator.setDuration(0);
+	    alphaAnimator.start();
+
+	    Random random = new Random();
+	    float rotationRatio = random.nextFloat() * DEFAULT_RANDOM_ROTATION_RANGE;
+	    mRotations.append(position, rotationRatio - (DEFAULT_RANDOM_ROTATION_RANGE / 2));
+	}
+
+	@Override
+	public void onImageLoaded(Bitmap bitmap, String url, ImageView imageView,
+		ImageType imageType, boolean fromCache) {
+
+	    if (!fromCache) {
+		alphaAnim = ObjectAnimator.ofFloat(levelLayout, "alpha", 0f, 1f).setDuration(200);
+		alphaAnim.start();
+	    }
+	    
+	    if (mRotations.get(position) == null) {
+		Random random = new Random();
+		float rotationRatio = random.nextFloat() * DEFAULT_RANDOM_ROTATION_RANGE;
+		mRotations.append(position, rotationRatio - (DEFAULT_RANDOM_ROTATION_RANGE / 2));
+	    }
+	    
+	    ObjectAnimator.ofFloat(imageView, "rotation", 0.0f, mRotations.get(position))
+		    .setDuration(0).start();
+
+	    adjustIconStatusPosition(this);
+	}
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
 	ViewHolder holder;
 	if (convertView == null) {
 	    convertView = this.mInflater.inflate(this.mLineLayout, null);
@@ -79,12 +122,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapte
 	Level level = getItem(position);
 	holder.position = position;
 
-	Drawable picture = null;
-	SoftReference<Drawable> pictureRef = mPictures.get(position);
-	if (pictureRef != null) {
-	    picture = pictureRef.get();
-	}
-
+	/* --- Difficulty stars management --- */
 	holder.mediumStar.setEnabled(true);
 	holder.hardStar.setEnabled(true);
 
@@ -95,33 +133,13 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapte
 	    holder.hardStar.setEnabled(false);
 	}
 
-	if (picture != null) {
-	    holder.picture.setImageDrawable(picture);
-	    if (mRotations.get(position) != null) {
-		ObjectAnimator.ofFloat(holder.picture, "rotation", 0.0f, mRotations.get(position))
-			.setDuration(0).start();
-	    }
-	    adjustIconStatusPosition(holder, picture);
-
-	} else {
-	    if (holder.alphaAnim != null && holder.alphaAnim.isRunning()) {
-		holder.alphaAnim.cancel();
-	    }
-
-	    ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(holder.levelLayout, "alpha", 0f);
-	    alphaAnimator.setDuration(0);
-	    alphaAnimator.start();
-
-	    holder.hidden = true;
-
-	    new LoadAdapterPictureTask(getContext(), QuizzPlacesApplication.IMAGES_DIR
-		    + level.imageName, position, holder, this).execute();
-	}
+	mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + level.imageName,
+		holder.picture, ImageType.LOCAL, holder);
 
 	return convertView;
     }
 
-    private void adjustIconStatusPosition(ViewHolder viewHolder, Drawable drawable) {
+    private void adjustIconStatusPosition(ViewHolder viewHolder) {
 
 	int[] pictureCoordinates = new int[2];
 	viewHolder.picture.getLocationOnScreen(pictureCoordinates);
@@ -135,7 +153,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapte
 			"x",
 			0.0f,
 			(pictureCoordinates[0] - statusIconCoordinates[0])
-				+ (drawable.getIntrinsicWidth() / 4)).setDuration(0).start();
+				+ (viewHolder.picture.getWidth() / 4)).setDuration(0).start();
 
 	ObjectAnimator
 		.ofFloat(
@@ -143,38 +161,10 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> implements LoadAdapte
 			"y",
 			0.0f,
 			(pictureCoordinates[1] - statusIconCoordinates[1])
-				- (drawable.getIntrinsicHeight() / 4)).setDuration(0).start();
+				- (viewHolder.picture.getHeight() / 4)).setDuration(0).start();
     }
 
-    @Override
-    public void onPictureLoaded(Drawable drawable, int position, Object tag) {
-	drawable.setFilterBitmap(true);
-	((BitmapDrawable)drawable).setAntiAlias(true);
-	
-	ViewHolder viewHolder = (ViewHolder) tag;
-	if (viewHolder.position == position) {
-	    mPictures.append(position, new SoftReference<Drawable>(drawable));
-	    viewHolder.picture.setImageDrawable(drawable);
-	    
-	    if (viewHolder.hidden) {
-		viewHolder.alphaAnim = ObjectAnimator.ofFloat(viewHolder.levelLayout, "alpha", 0f,
-			1f).setDuration(200);
-		viewHolder.alphaAnim.start();
-
-		Random random = new Random();
-		float rotationRatio = random.nextFloat() * DEFAULT_RANDOM_ROTATION_RANGE;
-		mRotations.append(position, rotationRatio - (DEFAULT_RANDOM_ROTATION_RANGE / 2));
-		
-		viewHolder.picture.getDrawable().setFilterBitmap(true);
-		((BitmapDrawable)viewHolder.picture.getDrawable()).setAntiAlias(true);
-		
-		ObjectAnimator
-			.ofFloat(viewHolder.picture, "rotation", 0.0f, mRotations.get(position))
-			.setDuration(0).start();
-		
-		adjustIconStatusPosition(viewHolder, drawable);
-		viewHolder.hidden = false;
-	    }
-	}
+    public Float getPictureRotation(int position) {
+	return mRotations.get(position);
     }
 }
