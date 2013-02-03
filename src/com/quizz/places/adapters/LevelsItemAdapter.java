@@ -33,12 +33,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
     private int mLineLayout;
     private LayoutInflater mInflater;
     private SparseArray<Float> mRotations = new SparseArray<Float>();
-
     private ImageLoader mImageLoader;
-
-    private enum PictureState {
-	NONE, LOADING, LOADED
-    }
 
     public LevelsItemAdapter(Context context, int lineLayout) {
 	super(context, lineLayout);
@@ -51,6 +46,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
     class ViewHolder implements ImageLoaderListener {
 	int position;
 	RelativeLayout levelLayout;
+	LinearLayout pictureLayout;
 	ImageView picture;
 	LinearLayout difficulty;
 	ImageView statusIcon;
@@ -70,10 +66,6 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	    ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(levelLayout, "alpha", 0f);
 	    alphaAnimator.setDuration(0);
 	    alphaAnimator.start();
-
-	    Random random = new Random();
-	    float rotationRatio = random.nextFloat() * DEFAULT_RANDOM_ROTATION_RANGE;
-	    mRotations.append(position, rotationRatio - (DEFAULT_RANDOM_ROTATION_RANGE / 2));
 	}
 
 	@Override
@@ -84,13 +76,13 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 		alphaAnim = ObjectAnimator.ofFloat(levelLayout, "alpha", 0f, 1f).setDuration(200);
 		alphaAnim.start();
 	    }
-	    
+
 	    if (mRotations.get(position) == null) {
 		Random random = new Random();
 		float rotationRatio = random.nextFloat() * DEFAULT_RANDOM_ROTATION_RANGE;
 		mRotations.append(position, rotationRatio - (DEFAULT_RANDOM_ROTATION_RANGE / 2));
 	    }
-	    
+
 	    ObjectAnimator.ofFloat(imageView, "rotation", 0.0f, mRotations.get(position))
 		    .setDuration(0).start();
 
@@ -108,6 +100,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	    holder = new ViewHolder();
 	    holder.levelLayout = (RelativeLayout) convertView;
 	    holder.picture = (ImageView) convertView.findViewById(R.id.levelPicture);
+	    holder.pictureLayout = (LinearLayout) convertView.findViewById(R.id.levelPictureLayout);
 	    holder.statusIcon = (ImageView) convertView.findViewById(R.id.levelStatusIcon);
 	    holder.difficulty = (LinearLayout) convertView.findViewById(R.id.levelDifficulty);
 	    holder.easyStar = (ImageView) convertView.findViewById(R.id.levelStarEasy);
@@ -141,27 +134,24 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 
     private void adjustIconStatusPosition(ViewHolder viewHolder) {
 
-	int[] pictureCoordinates = new int[2];
-	viewHolder.picture.getLocationOnScreen(pictureCoordinates);
+	float pictureCenterX = viewHolder.pictureLayout.getWidth() / 2;
+	float pictureCenterY = viewHolder.pictureLayout.getHeight() / 2;
 
-	int[] statusIconCoordinates = new int[2];
-	viewHolder.statusIcon.getLocationOnScreen(statusIconCoordinates);
+	float statusIconWidth = viewHolder.statusIcon.getWidth();
+	float statusIconHeight = viewHolder.statusIcon.getHeight();
 
-	ObjectAnimator
-		.ofFloat(
-			viewHolder.statusIcon,
-			"x",
-			0.0f,
-			(pictureCoordinates[0] - statusIconCoordinates[0])
-				+ (viewHolder.picture.getWidth() / 4)).setDuration(0).start();
+	float drawableWidth = viewHolder.picture.getDrawable().getIntrinsicWidth();
+	float drawableHeight = viewHolder.picture.getDrawable().getIntrinsicHeight();
 
 	ObjectAnimator
-		.ofFloat(
-			viewHolder.statusIcon,
-			"y",
-			0.0f,
-			(pictureCoordinates[1] - statusIconCoordinates[1])
-				- (viewHolder.picture.getHeight() / 4)).setDuration(0).start();
+		.ofFloat(viewHolder.statusIcon, "x", 0.0f,
+			pictureCenterX + (drawableWidth / 4) /*- (statusIconWidth / 2)*/)
+		.setDuration(0).start();
+
+	ObjectAnimator
+		.ofFloat(viewHolder.statusIcon, "y", 0.0f,
+			pictureCenterY - (drawableHeight / 4) - (statusIconHeight / 2))
+		.setDuration(0).start();
     }
 
     public Float getPictureRotation(int position) {

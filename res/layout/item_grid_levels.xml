@@ -1,10 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/levellayout"
+    android:id="@+id/levelLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
     <LinearLayout
-        android:id="@+id/levelPicturelayout"
+        android:id="@+id/levelPictureLayout"
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:gravity="center" >
@@ -37,7 +37,7 @@
         android:id="@+id/levelDifficulty"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/levelPicturelayout"
+        android:layout_below="@+id/levelPictureLayout"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/bg_difficulty_rounded"
