@@ -1,0 +1,45 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <include 
+        android:id="@+id/ab_level_difficulty"
+		layout="@layout/include_difficulty"
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/ab_section_right_text" />
+    
+    <TextView
+        android:id="@+id/ab_level_hints_nb"
+  	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:shadowColor="#FFF"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:text="48"
+        android:textColor="#636363"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/ab_level_hints_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:shadowColor="#FFF"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:text="hints"
+        android:textColor="#616161"
+        android:textSize="12sp"
+        android:textStyle="normal" />
+
+</merge>
