@@ -119,7 +119,7 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 	    float pivotY = picture.getTop() + (picture.getHeight() / 2);
 
 	    AnimationSet animationSet = new AnimationSet(false);
-	    animationSet.addAnimation(new ScaleAnimation(1f, 1.5f, 1f, 1.5f, pivotX, pivotY));
+	    animationSet.addAnimation(new ScaleAnimation(1f, 1.4f, 1f, 1.4f, pivotX, pivotY));
 	    animationSet.addAnimation(new AlphaAnimation(1f, 0f));
 	    animationSet.setInterpolator(new LinearInterpolator());
 	    animationSet.setFillAfter(true);
@@ -145,15 +145,17 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 
 	    @Override
 	    public void onAnimationEnd(Animation animation) {
-		FragmentContainer container = (FragmentContainer) getActivity();
-		FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+		if (isVisible()) {
+		    FragmentContainer container = (FragmentContainer) getActivity();
+		    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.setCustomAnimations(R.anim.fade_in, R.anim.none, R.anim.none,
-			R.anim.fade_out);
+		    FragmentTransaction transaction = fragmentManager.beginTransaction();
+		    transaction.setCustomAnimations(R.anim.fade_in, R.anim.none, R.anim.none,
+			    R.anim.fade_out);
 
-		NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager, container,
-			true, transaction);
+		    NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager,
+			    container, true, transaction);
+		}
 	    }
 
 	    @Override
