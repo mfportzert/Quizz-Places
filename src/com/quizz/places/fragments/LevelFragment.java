@@ -8,8 +8,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 
+import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseLevelFragment;
+import com.quizz.core.imageloader.ImageLoader;
+import com.quizz.core.imageloader.ImageLoader.ImageType;
+import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
+import com.quizz.places.application.QuizzPlacesApplication;
 
 public class LevelFragment extends BaseLevelFragment {
 
@@ -23,19 +28,18 @@ public class LevelFragment extends BaseLevelFragment {
 	super.onCreateView(inflater, container, savedInstanceState);
 
 	View view = inflater.inflate(R.layout.fragment_level, container, false);
-
 	ImageView pictureBig = (ImageView) view.findViewById(R.id.levelPictureBig);
-	/*new LoadPictureTask(getActivity(), QuizzPlacesApplication.IMAGES_DIR + "colisee.jpg",
-		pictureBig, this).execute();*/
+
+	ImageLoader imageLoader = new ImageLoader(getActivity());
+	imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + "colisee.jpg", pictureBig,
+		ImageType.LOCAL);
+
+	QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
+	actionBar.setCustomView(R.layout.ab_view_level);
 
 	return view;
     }
-/*
-    @Override
-    public void onPictureLoaded(Drawable drawable, ImageView imageView) {
-	imageView.setImageDrawable(drawable);
-    }
-*/
+    
     @Override
     public void onSaveInstanceState(Bundle outState) {
 	super.onSaveInstanceState(outState);

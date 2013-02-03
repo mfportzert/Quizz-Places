@@ -44,7 +44,7 @@ public class QuizzActivity extends BaseQuizzActivity {
 	View customView = getQuizzActionBar().getCustomViewContainer();
 	TextView middleText = (TextView) customView.findViewById(R.id.ab_section_middle_text);
 	TextView rightText = (TextView) customView.findViewById(R.id.ab_section_right_text);
-	middleText.setText("22/30");
+	middleText.setText("22 / 30");
 	rightText.setText("345 pts");
 	
 	initBackground();
