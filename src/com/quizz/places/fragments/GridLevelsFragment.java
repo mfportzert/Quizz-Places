@@ -164,9 +164,12 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 		    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
 		    FragmentTransaction transaction = fragmentManager.beginTransaction();
-		    transaction.setCustomAnimations(R.anim.fade_in, R.anim.none, R.anim.none,
-			    R.anim.fade_out);
+		    transaction.setCustomAnimations(R.anim.fade_in, R.anim.none, R.anim.slide_in_left,
+			    R.anim.slide_out_right);
 
+/*		    R.anim.slide_in_right, R.anim.slide_out_left,
+		    R.anim.slide_in_left, R.anim.slide_out_right
+*/		    
 		    Bundle args = new Bundle();
 		    args.putParcelable(BaseLevelFragment.ARG_LEVEL, mAdapter.getItem(mPosition));
 		    NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager,
