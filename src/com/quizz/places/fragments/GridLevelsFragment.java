@@ -24,6 +24,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseGridLevelsFragment;
+import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.widgets.QuizzActionBar;
@@ -166,8 +167,10 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 		    transaction.setCustomAnimations(R.anim.fade_in, R.anim.none, R.anim.none,
 			    R.anim.fade_out);
 
+		    Bundle args = new Bundle();
+		    args.putParcelable(BaseLevelFragment.ARG_LEVEL, mAdapter.getItem(mPosition));
 		    NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager,
-			    container, true, transaction);
+			    container, true, transaction, args);
 		}
 	    }
 

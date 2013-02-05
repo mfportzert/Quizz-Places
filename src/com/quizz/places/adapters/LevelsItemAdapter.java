@@ -24,12 +24,7 @@ import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
 
 public class LevelsItemAdapter extends ArrayAdapter<Level> {
-
-    @SuppressWarnings("unused")
-    private static final String DIFFICULTY_EASY = "easy";
-    private static final String DIFFICULTY_MEDIUM = "medium";
-    private static final String DIFFICULTY_HARD = "hard";
-
+    
     private static final float DEFAULT_RANDOM_ROTATION_RANGE = 12f;
 
     private int mLineLayout;
@@ -121,9 +116,9 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	holder.mediumStar.setEnabled(true);
 	holder.hardStar.setEnabled(true);
 
-	if (level.difficulty.equals(DIFFICULTY_MEDIUM)) {
+	if (level.difficulty.equals(Level.DIFFICULTY_MEDIUM)) {
 	    holder.hardStar.setEnabled(false);
-	} else if (!level.difficulty.equals(DIFFICULTY_HARD)) {
+	} else if (!level.difficulty.equals(Level.DIFFICULTY_HARD)) {
 	    holder.mediumStar.setEnabled(false);
 	    holder.hardStar.setEnabled(false);
 	}

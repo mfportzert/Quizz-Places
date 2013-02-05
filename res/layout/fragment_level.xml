@@ -40,7 +40,7 @@
                 android:paddingLeft="14dp"
                 android:paddingRight="17dp"
                 android:paddingTop="13dp"
-                android:rotation="6"
+                android:rotation="3"
                 android:scaleType="centerInside" />
         </LinearLayout>
 
