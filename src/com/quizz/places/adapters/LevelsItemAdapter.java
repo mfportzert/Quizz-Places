@@ -4,6 +4,7 @@ import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +19,12 @@ import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageLoaderListener;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.models.Level;
+import com.quizz.core.utils.ConvertUtils;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
 
 public class LevelsItemAdapter extends ArrayAdapter<Level> {
-
-    @SuppressWarnings("unused")
-    private static final String DIFFICULTY_EASY = "easy";
-    private static final String DIFFICULTY_MEDIUM = "medium";
-    private static final String DIFFICULTY_HARD = "hard";
-
+    
     private static final float DEFAULT_RANDOM_ROTATION_RANGE = 12f;
 
     private int mLineLayout;
@@ -46,7 +43,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
     class ViewHolder implements ImageLoaderListener {
 	int position;
 	RelativeLayout levelLayout;
-	LinearLayout pictureLayout;
+	View pictureLayout;
 	ImageView picture;
 	LinearLayout difficulty;
 	ImageView statusIcon;
@@ -86,7 +83,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	    ObjectAnimator.ofFloat(imageView, "rotation", 0.0f, mRotations.get(position))
 		    .setDuration(0).start();
 
-	    adjustIconStatusPosition(this);
+	    //adjustIconStatusPosition(this);
 	}
     }
 
@@ -100,7 +97,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	    holder = new ViewHolder();
 	    holder.levelLayout = (RelativeLayout) convertView;
 	    holder.picture = (ImageView) convertView.findViewById(R.id.levelPicture);
-	    holder.pictureLayout = (LinearLayout) convertView.findViewById(R.id.levelPictureLayout);
+	    holder.pictureLayout = convertView.findViewById(R.id.levelPictureLayout);
 	    holder.statusIcon = (ImageView) convertView.findViewById(R.id.levelStatusIcon);
 	    holder.difficulty = (LinearLayout) convertView.findViewById(R.id.levelDifficulty);
 	    holder.easyStar = (ImageView) convertView.findViewById(R.id.levelStarEasy);
@@ -119,9 +116,9 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	holder.mediumStar.setEnabled(true);
 	holder.hardStar.setEnabled(true);
 
-	if (level.difficulty.equals(DIFFICULTY_MEDIUM)) {
+	if (level.difficulty.equals(Level.DIFFICULTY_MEDIUM)) {
 	    holder.hardStar.setEnabled(false);
-	} else if (!level.difficulty.equals(DIFFICULTY_HARD)) {
+	} else if (!level.difficulty.equals(Level.DIFFICULTY_HARD)) {
 	    holder.mediumStar.setEnabled(false);
 	    holder.hardStar.setEnabled(false);
 	}
@@ -133,19 +130,27 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
     }
 
     private void adjustIconStatusPosition(ViewHolder viewHolder) {
-
 	float pictureCenterX = viewHolder.pictureLayout.getWidth() / 2;
 	float pictureCenterY = viewHolder.pictureLayout.getHeight() / 2;
-
+/*
+	if (pictureCenterX == 0 || pictureCenterY == 0) {
+	    viewHolder.pictureLayout.measure(ViewGroup.LayoutParams.MATCH_PARENT,
+		    (int) ConvertUtils.convertDpToPixels(170, viewHolder.picture.getContext()));
+	    pictureCenterX = viewHolder.pictureLayout.getMeasuredWidth() / 2;
+	    pictureCenterY = viewHolder.pictureLayout.getMeasuredHeight() / 2;
+	}
+*/
+	@SuppressWarnings("unused")
 	float statusIconWidth = viewHolder.statusIcon.getWidth();
 	float statusIconHeight = viewHolder.statusIcon.getHeight();
-
 	float drawableWidth = viewHolder.picture.getDrawable().getIntrinsicWidth();
 	float drawableHeight = viewHolder.picture.getDrawable().getIntrinsicHeight();
-
+/*
+	Log.e("LEVEL ADAPTER", "pictureCenterX: " + pictureCenterX);
+	Log.e("LEVEL ADAPTER", "pictureCenterY: " + pictureCenterY);
+*/
 	ObjectAnimator
-		.ofFloat(viewHolder.statusIcon, "x", 0.0f,
-			pictureCenterX + (drawableWidth / 4) /*- (statusIconWidth / 2)*/)
+		.ofFloat(viewHolder.statusIcon, "x", 0.0f, pictureCenterX + (drawableWidth / 4) /*- (statusIconWidth / 2)*/)
 		.setDuration(0).start();
 
 	ObjectAnimator

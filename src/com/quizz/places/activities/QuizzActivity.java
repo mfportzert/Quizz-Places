@@ -2,7 +2,9 @@ package com.quizz.places.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.TextView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
@@ -36,9 +38,15 @@ public class QuizzActivity extends BaseQuizzActivity {
 	 */
 
 	getQuizzActionBar().getBackButton().setImageResource(R.drawable.back_but_5);
-	getQuizzActionBar().getMiddleText().setText("22 / 30");
-	getQuizzActionBar().getRightText().setText("345 pts");
-
+	getQuizzActionBar().setCustomView(R.layout.ab_view_sections);
+	getQuizzActionBar().setBackgroundResource(R.drawable.bg_actionbar);
+	
+	View customView = getQuizzActionBar().getCustomViewContainer();
+	TextView middleText = (TextView) customView.findViewById(R.id.ab_section_middle_text);
+	TextView rightText = (TextView) customView.findViewById(R.id.ab_section_right_text);
+	middleText.setText("22 / 30");
+	rightText.setText("345 pts");
+	
 	initBackground();
     }
     

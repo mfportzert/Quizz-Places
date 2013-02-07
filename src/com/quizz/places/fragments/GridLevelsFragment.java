@@ -18,12 +18,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseGridLevelsFragment;
+import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.utils.NavigationUtils;
+import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.adapters.LevelsItemAdapter;
 
@@ -58,6 +62,16 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 
 	mAdapter.notifyDataSetChanged();
 
+	QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
+	actionBar.setCustomView(R.layout.ab_view_sections);
+	
+	// TODO: Use database values
+	View customView = actionBar.getCustomViewContainer();
+	TextView middleText = (TextView) customView.findViewById(R.id.ab_section_middle_text);
+	TextView rightText = (TextView) customView.findViewById(R.id.ab_section_right_text);
+	middleText.setText("22 / 30");
+	rightText.setText("345 pts");
+	
 	return view;
     }
 
@@ -150,11 +164,16 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 		    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
 		    FragmentTransaction transaction = fragmentManager.beginTransaction();
-		    transaction.setCustomAnimations(R.anim.fade_in, R.anim.none, R.anim.none,
-			    R.anim.fade_out);
+		    transaction.setCustomAnimations(R.anim.fade_in, R.anim.none, R.anim.slide_in_left,
+			    R.anim.slide_out_right);
 
+/*		    R.anim.slide_in_right, R.anim.slide_out_left,
+		    R.anim.slide_in_left, R.anim.slide_out_right
+*/		    
+		    Bundle args = new Bundle();
+		    args.putParcelable(BaseLevelFragment.ARG_LEVEL, mAdapter.getItem(mPosition));
 		    NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager,
-			    container, true, transaction);
+			    container, true, transaction, args);
 		}
 	    }
 
