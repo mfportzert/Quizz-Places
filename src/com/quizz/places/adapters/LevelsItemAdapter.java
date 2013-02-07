@@ -43,7 +43,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
     class ViewHolder implements ImageLoaderListener {
 	int position;
 	RelativeLayout levelLayout;
-	LinearLayout pictureLayout;
+	View pictureLayout;
 	ImageView picture;
 	LinearLayout difficulty;
 	ImageView statusIcon;
@@ -83,7 +83,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	    ObjectAnimator.ofFloat(imageView, "rotation", 0.0f, mRotations.get(position))
 		    .setDuration(0).start();
 
-	    adjustIconStatusPosition(this);
+	    //adjustIconStatusPosition(this);
 	}
     }
 
@@ -97,7 +97,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	    holder = new ViewHolder();
 	    holder.levelLayout = (RelativeLayout) convertView;
 	    holder.picture = (ImageView) convertView.findViewById(R.id.levelPicture);
-	    holder.pictureLayout = (LinearLayout) convertView.findViewById(R.id.levelPictureLayout);
+	    holder.pictureLayout = convertView.findViewById(R.id.levelPictureLayout);
 	    holder.statusIcon = (ImageView) convertView.findViewById(R.id.levelStatusIcon);
 	    holder.difficulty = (LinearLayout) convertView.findViewById(R.id.levelDifficulty);
 	    holder.easyStar = (ImageView) convertView.findViewById(R.id.levelStarEasy);
