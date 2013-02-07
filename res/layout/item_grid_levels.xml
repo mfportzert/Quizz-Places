@@ -3,39 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/levelPictureLayout"
         android:layout_width="wrap_content"
         android:layout_height="170dp"
         android:layout_centerHorizontal="true"
         android:gravity="center" >
 
+        <LinearLayout
+            android:id="@+id/levelAdjustedLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/levelPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/photo_border_white"
+                android:paddingBottom="11dp"
+                android:paddingLeft="9dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
+                android:scaleType="centerInside" />
+        </LinearLayout>
+
         <ImageView
-            android:id="@+id/levelPicture"
+            android:id="@+id/levelStatusIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="20dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/photo_border_white"
-            android:paddingBottom="11dp"
-            android:paddingLeft="9dp"
-            android:paddingRight="12dp"
-            android:paddingTop="8dp" />
-    </LinearLayout>
-    
-    <ImageView
-       	android:id="@+id/levelStatusIcon"
-       	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content"
-		android:src="@drawable/ic_check"
-		android:layout_alignTop="@+id/levelPictureLayout"
-		android:layout_alignRight="@+id/levelPictureLayout"
-		android:layout_marginTop="30dp"
-		android:layout_marginRight="18dp" />
-    
+            android:layout_alignRight="@+id/levelAdjustedLayout"
+            android:layout_alignTop="@+id/levelAdjustedLayout"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_check" />
+    </RelativeLayout>
+
     <include layout="@layout/include_difficulty" />
 
     <View
