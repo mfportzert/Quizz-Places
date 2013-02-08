@@ -82,8 +82,6 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 
 	    ObjectAnimator.ofFloat(imageView, "rotation", 0.0f, mRotations.get(position))
 		    .setDuration(0).start();
-
-	    //adjustIconStatusPosition(this);
 	}
     }
 
@@ -127,36 +125,6 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 		holder.picture, ImageType.LOCAL, holder);
 
 	return convertView;
-    }
-
-    private void adjustIconStatusPosition(ViewHolder viewHolder) {
-	float pictureCenterX = viewHolder.pictureLayout.getWidth() / 2;
-	float pictureCenterY = viewHolder.pictureLayout.getHeight() / 2;
-/*
-	if (pictureCenterX == 0 || pictureCenterY == 0) {
-	    viewHolder.pictureLayout.measure(ViewGroup.LayoutParams.MATCH_PARENT,
-		    (int) ConvertUtils.convertDpToPixels(170, viewHolder.picture.getContext()));
-	    pictureCenterX = viewHolder.pictureLayout.getMeasuredWidth() / 2;
-	    pictureCenterY = viewHolder.pictureLayout.getMeasuredHeight() / 2;
-	}
-*/
-	@SuppressWarnings("unused")
-	float statusIconWidth = viewHolder.statusIcon.getWidth();
-	float statusIconHeight = viewHolder.statusIcon.getHeight();
-	float drawableWidth = viewHolder.picture.getDrawable().getIntrinsicWidth();
-	float drawableHeight = viewHolder.picture.getDrawable().getIntrinsicHeight();
-/*
-	Log.e("LEVEL ADAPTER", "pictureCenterX: " + pictureCenterX);
-	Log.e("LEVEL ADAPTER", "pictureCenterY: " + pictureCenterY);
-*/
-	ObjectAnimator
-		.ofFloat(viewHolder.statusIcon, "x", 0.0f, pictureCenterX + (drawableWidth / 4) /*- (statusIconWidth / 2)*/)
-		.setDuration(0).start();
-
-	ObjectAnimator
-		.ofFloat(viewHolder.statusIcon, "y", 0.0f,
-			pictureCenterY - (drawableHeight / 4) - (statusIconHeight / 2))
-		.setDuration(0).start();
     }
 
     public Float getPictureRotation(int position) {
