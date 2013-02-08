@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
@@ -24,10 +25,6 @@ public class StatsFragment extends BaseStatsFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mAdapter = new StatsItemAdapter(getActivity());
-		((BaseQuizzActivity) getActivity()).getQuizzActionBar().getMiddleText()
-				.setText("Statistics");
-		((BaseQuizzActivity) getActivity()).getQuizzActionBar().getRightText()
-				.setText("");
 	}
 
 	@Override
@@ -37,6 +34,11 @@ public class StatsFragment extends BaseStatsFragment {
 
 		View view = inflater.inflate(R.layout.fragment_stats, container, false);
 
+		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
+		actionBar.setCustomView(R.layout.ab_view_stats);
+		View customView = actionBar.getCustomViewContainer();
+		((TextView) customView.findViewById(R.id.ab_stat_middle_text)).setText(R.string.ab_stats_title);
+		
 		PlacesDAO dao = new PlacesDAO(this.getActivity());
 
 		mAdapter.setItems(dao.getStats());
@@ -60,10 +62,10 @@ public class StatsFragment extends BaseStatsFragment {
 	public void onDestroyView() {
 		super.onDestroyView();
 		if (mHideActionBarOnDestroyView) {
-			if (getActivity() instanceof BaseQuizzActivity) {
-				((BaseQuizzActivity) getActivity()).getQuizzActionBar().hide(
-						QuizzActionBar.MOVE_NORMAL);
-			}
+		    if (getActivity() instanceof BaseQuizzActivity) {
+			((BaseQuizzActivity) getActivity()).getQuizzActionBar().hide(
+				QuizzActionBar.MOVE_NORMAL);
+		    }
 		}
 	}
 
@@ -72,8 +74,8 @@ public class StatsFragment extends BaseStatsFragment {
 		super.onActivityCreated(savedInstanceState);
 		mHideActionBarOnDestroyView = true;
 		if (getActivity() instanceof BaseQuizzActivity) {
-			((BaseQuizzActivity) getActivity()).getQuizzActionBar()
-					.showIfNecessary(QuizzActionBar.MOVE_NORMAL);
+		    ((BaseQuizzActivity) getActivity()).getQuizzActionBar().showIfNecessary(
+			    QuizzActionBar.MOVE_NORMAL);
 		}
 	}
 
