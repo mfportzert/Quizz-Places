@@ -47,9 +47,9 @@ public class LevelFragment extends BaseLevelFragment {
 	
 	mediumStar.setEnabled(true);
 	hardStar.setEnabled(true);
-	if (level.difficulty.equals(Level.DIFFICULTY_MEDIUM)) {
+	if (level.difficulty.equals(Level.LEVEL_MEDIUM)) {
 	    hardStar.setEnabled(false);
-	} else if (!level.difficulty.equals(Level.DIFFICULTY_HARD)) {
+	} else if (!level.difficulty.equals(Level.LEVEL_HARD)) {
 	    mediumStar.setEnabled(false);
 	    hardStar.setEnabled(false);
 	}

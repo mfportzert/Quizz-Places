@@ -114,9 +114,9 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	holder.mediumStar.setEnabled(true);
 	holder.hardStar.setEnabled(true);
 
-	if (level.difficulty.equals(Level.DIFFICULTY_MEDIUM)) {
+	if (level.difficulty.equals(Level.LEVEL_MEDIUM)) {
 	    holder.hardStar.setEnabled(false);
-	} else if (!level.difficulty.equals(Level.DIFFICULTY_HARD)) {
+	} else if (!level.difficulty.equals(Level.LEVEL_HARD)) {
 	    holder.mediumStar.setEnabled(false);
 	    holder.hardStar.setEnabled(false);
 	}
