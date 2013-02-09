@@ -51,20 +51,21 @@ public class MenuBackground extends View {
 	canvas.rotate(rotationDegrees, mCenterPoint.x, mCenterPoint.y);
     }
 
-    private void drawFoggyWindowWithTransparentCircle(Canvas canvas, Bitmap bitmap, float circleX,
-	    float circleY, float radius) {
+    private void drawFoggyWindowWithTransparentCircle(Canvas canvas,
+	    Bitmap bitmap, float circleX, float circleY, float radius) {
 
 	// Create a temporary bitmap
-	Bitmap tempBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(),
-		Bitmap.Config.ARGB_8888);
+	Bitmap tempBitmap = Bitmap.createBitmap(bitmap.getWidth(),
+		bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 	Canvas tempCanvas = new Canvas(tempBitmap);
 
 	// Copy bitmap into tempBitmap
 	tempCanvas.drawBitmap(bitmap, 0, 0, null);
 
 	// Create a radial gradient
-	RadialGradient gradient = new android.graphics.RadialGradient(circleX, circleY, radius,
-		0xFF000000, 0x00000000, android.graphics.Shader.TileMode.CLAMP);
+	RadialGradient gradient = new android.graphics.RadialGradient(circleX,
+		circleY, radius, 0xFF000000, 0x00000000,
+		android.graphics.Shader.TileMode.CLAMP);
 
 	// Draw transparent circle into tempBitmap
 	Paint p = new Paint();
@@ -87,10 +88,12 @@ public class MenuBackground extends View {
 	mCenterPoint.x = getWidth() / 2;
 	mCenterPoint.y = (int) (getHeight() * 0.3f);
 
-	Bitmap bitmap = Bitmap.createBitmap((int) getWidth(), (int) getHeight(), Config.RGB_565);
+	Bitmap bitmap = Bitmap.createBitmap((int) getWidth(),
+		(int) getHeight(), Config.RGB_565);
 	Canvas canvasTmp = new Canvas(bitmap);
 
-	int distance = (int) Math.sqrt(Math.pow(getWidth(), 2) + Math.pow(getHeight(), 2));
+	int distance = (int) Math.sqrt(Math.pow(getWidth(), 2)
+		+ Math.pow(getHeight(), 2));
 	for (int angle = 0; angle < 360; angle += 60) {
 
 	    double thetaB = Math.toRadians(angle);
@@ -120,8 +123,8 @@ public class MenuBackground extends View {
 
 	    mCenterPoint.x = getWidth() / 2;
 	    mCenterPoint.y = (int) (getHeight() * 0.3f);
-	    drawFoggyWindowWithTransparentCircle(canvas, bitmap, mCenterPoint.x, mCenterPoint.y,
-		    getWidth() / 1.6f);
+	    drawFoggyWindowWithTransparentCircle(canvas, bitmap,
+		    mCenterPoint.x, mCenterPoint.y, getWidth() / 1.6f);
 	}
     }
 }

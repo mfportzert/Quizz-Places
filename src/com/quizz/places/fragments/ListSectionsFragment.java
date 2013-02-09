@@ -24,28 +24,32 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 
     private ListView mSectionsListView;
     private boolean mHideActionBarOnDestroyView = true;
-    
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	    Bundle savedInstanceState) {
 	super.onCreateView(inflater, container, savedInstanceState);
 
-	View view = inflater.inflate(R.layout.fragment_list_sections, container, false);
+	View view = inflater.inflate(R.layout.fragment_list_sections,
+		container, false);
 
 	mSectionsListView = (ListView) view.findViewById(R.id.sectionsListView);
 	mSectionsListView.setOnItemClickListener(mSectionItemClickListener);
 
 	mLoadingView = view.findViewById(R.id.loadingView);
 
-	mAdapter = new SectionsItemAdapter(getActivity(), R.layout.item_list_sections);
+	mAdapter = new SectionsItemAdapter(getActivity(),
+		R.layout.item_list_sections);
 	mSectionsListView.setAdapter(mAdapter);
-	
-	ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSectionsListView, "alpha", 0f, 1f);
+
+	ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSectionsListView,
+		"alpha", 0f, 1f);
 	listDisplay.setDuration(300);
 	listDisplay.start();
 
 	return view;
     }
-    
+
     @Override
     public void onDestroyView() {
 	super.onDestroyView();
@@ -62,8 +66,8 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	super.onActivityCreated(savedInstanceState);
 	mHideActionBarOnDestroyView = true;
 	if (getActivity() instanceof BaseQuizzActivity) {
-	    ((BaseQuizzActivity) getActivity()).getQuizzActionBar().showIfNecessary(
-		    QuizzActionBar.MOVE_NORMAL);
+	    ((BaseQuizzActivity) getActivity()).getQuizzActionBar()
+		    .showIfNecessary(QuizzActionBar.MOVE_NORMAL);
 	}
     }
 
@@ -74,19 +78,24 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
     OnItemClickListener mSectionItemClickListener = new OnItemClickListener() {
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+		long arg3) {
 	    mHideActionBarOnDestroyView = false;
 	    FragmentContainer container = (FragmentContainer) getActivity();
-	    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+	    FragmentManager fragmentManager = getActivity()
+		    .getSupportFragmentManager();
 
-	    FragmentTransaction transaction = fragmentManager.beginTransaction();
-	    transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
-		    R.anim.slide_in_left, R.anim.slide_out_right);
-	    
+	    FragmentTransaction transaction = fragmentManager
+		    .beginTransaction();
+	    transaction.setCustomAnimations(R.anim.slide_in_right,
+		    R.anim.slide_out_left, R.anim.slide_in_left,
+		    R.anim.slide_out_right);
+
 	    Bundle args = new Bundle();
-	    args.putParcelable(BaseGridLevelsFragment.ARG_SECTION, mAdapter.getItem(position));
-	    NavigationUtils.directNavigationTo(GridLevelsFragment.class, fragmentManager,
-		    container, true, transaction, args);
+	    args.putParcelable(BaseGridLevelsFragment.ARG_SECTION,
+		    mAdapter.getItem(position));
+	    NavigationUtils.directNavigationTo(GridLevelsFragment.class,
+		    fragmentManager, container, true, transaction, args);
 	}
     };
 }

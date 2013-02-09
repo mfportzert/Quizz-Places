@@ -95,18 +95,28 @@ public class StatsItemAdapter extends BaseAdapter {
 	    holder = new ViewHolder();
 	    switch (type) {
 	    case TYPE_SIMPLE_ITEM:
-		convertView = mInflater.inflate(R.layout.item_simple_stat, null);
-		holder.label = (TextView) convertView.findViewById(R.id.StatLabel);
-		holder.score = (TextView) convertView.findViewById(R.id.StatDoneOnTotal);
-		holder.icon = (ImageView) convertView.findViewById(R.id.StatIcon);
+		convertView = mInflater
+			.inflate(R.layout.item_simple_stat, null);
+		holder.label = (TextView) convertView
+			.findViewById(R.id.StatLabel);
+		holder.score = (TextView) convertView
+			.findViewById(R.id.StatDoneOnTotal);
+		holder.icon = (ImageView) convertView
+			.findViewById(R.id.StatIcon);
 		break;
 	    case TYPE_ACHIEVEMENT_ITEM:
-		convertView = mInflater.inflate(R.layout.item_achievement_stat, null);
-		holder.label = (TextView) convertView.findViewById(R.id.StatLabel);
-		holder.score = (TextView) convertView.findViewById(R.id.StatDoneOnTotal);
-		holder.icon = (ImageView) convertView.findViewById(R.id.StatIcon);
-		holder.progress = (SectionProgressView) convertView.findViewById(R.id.StatProgress);
-		holder.trophy = (ImageView) convertView.findViewById(R.id.StatCupIcon);
+		convertView = mInflater.inflate(R.layout.item_achievement_stat,
+			null);
+		holder.label = (TextView) convertView
+			.findViewById(R.id.StatLabel);
+		holder.score = (TextView) convertView
+			.findViewById(R.id.StatDoneOnTotal);
+		holder.icon = (ImageView) convertView
+			.findViewById(R.id.StatIcon);
+		holder.progress = (SectionProgressView) convertView
+			.findViewById(R.id.StatProgress);
+		holder.trophy = (ImageView) convertView
+			.findViewById(R.id.StatCupIcon);
 		break;
 	    }
 	    convertView.setTag(holder);
@@ -115,17 +125,21 @@ public class StatsItemAdapter extends BaseAdapter {
 	}
 
 	if (stat.isAchievement() == true) {
-	    holder.icon.setImageDrawable(this.mContext.getResources().getDrawable(stat.getIcon()));
+	    holder.icon.setImageDrawable(this.mContext.getResources()
+		    .getDrawable(stat.getIcon()));
 	    holder.label.setText(String.valueOf(stat.getProgressInPercent())
 		    + "% - " + stat.getLabel());
 	    // holder.average.setText(String.valueOf(stat.getProgressInPercent())
 	    // + "%");
 	    holder.score.setText(String.valueOf(stat.getDone()) + " / "
 		    + String.valueOf(stat.getTotal()));
-	    holder.progress.setProgressRes(mProgressDrawables[position % mProgressDrawables.length]);
+	    holder.progress.setProgressRes(mProgressDrawables[position
+		    % mProgressDrawables.length]);
 	    holder.progress.setProgressValue(stat.getProgressInPercent());
-	    int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f, this.mContext);
-	    int horizontalPadding = (int) ConvertUtils.convertDpToPixels(3f, this.mContext);
+	    int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f,
+		    this.mContext);
+	    int horizontalPadding = (int) ConvertUtils.convertDpToPixels(3f,
+		    this.mContext);
 	    holder.progress.setPaddingProgress(horizontalPadding,
 		    verticalPadding, horizontalPadding, verticalPadding);
 	    if (stat.getDone() == stat.getTotal()) {
@@ -133,9 +147,11 @@ public class StatsItemAdapter extends BaseAdapter {
 			.getDrawable(R.drawable.gold_cup));
 	    }
 	} else {
-	    holder.icon.setImageDrawable(this.mContext.getResources().getDrawable(stat.getIcon()));
+	    holder.icon.setImageDrawable(this.mContext.getResources()
+		    .getDrawable(stat.getIcon()));
 	    holder.label.setText(stat.getLabel());
-	    holder.score.setText(String.valueOf(stat.getDone()) + " / " + String.valueOf(stat.getTotal()));
+	    holder.score.setText(String.valueOf(stat.getDone()) + " / "
+		    + String.valueOf(stat.getTotal()));
 	}
 	return convertView;
     }

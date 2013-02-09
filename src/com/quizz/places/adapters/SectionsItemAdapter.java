@@ -23,11 +23,15 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 	super(context, lineLayout);
 
 	mLineLayout = lineLayout;
-	mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	mInflater = (LayoutInflater) context
+		.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	mProgressDrawables = new int[] { R.drawable.fg_section_progress_blue,
-		R.drawable.fg_section_progress_green, R.drawable.fg_section_progress_orange,
-		R.drawable.fg_section_progress_pink, R.drawable.fg_section_progress_purple,
-		R.drawable.fg_section_progress_yellow, R.drawable.fg_section_progress_red };
+		R.drawable.fg_section_progress_green,
+		R.drawable.fg_section_progress_orange,
+		R.drawable.fg_section_progress_pink,
+		R.drawable.fg_section_progress_purple,
+		R.drawable.fg_section_progress_yellow,
+		R.drawable.fg_section_progress_red };
     }
 
     static class ViewHolder {
@@ -48,10 +52,14 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 
 	    holder = new ViewHolder();
 	    holder.name = (TextView) convertView.findViewById(R.id.sectionName);
-	    holder.points = (TextView) convertView.findViewById(R.id.sectionNbPoints);
-	    holder.levels = (TextView) convertView.findViewById(R.id.sectionNbLevels);
-	    holder.buttonEnter = (ImageView) convertView.findViewById(R.id.sectionEnterButton);
-	    holder.progress = (SectionProgressView) convertView.findViewById(R.id.sectionProgress);
+	    holder.points = (TextView) convertView
+		    .findViewById(R.id.sectionNbPoints);
+	    holder.levels = (TextView) convertView
+		    .findViewById(R.id.sectionNbLevels);
+	    holder.buttonEnter = (ImageView) convertView
+		    .findViewById(R.id.sectionEnterButton);
+	    holder.progress = (SectionProgressView) convertView
+		    .findViewById(R.id.sectionProgress);
 
 	    holder.buttonEnter.setAlpha(225);
 
@@ -63,13 +71,16 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 
 	Section section = getItem(position);
 	holder.name.setText(section.name);
-	holder.progress.setProgressRes(mProgressDrawables[position % mProgressDrawables.length]);
+	holder.progress.setProgressRes(mProgressDrawables[position
+		% mProgressDrawables.length]);
 	holder.progress.setProgressValue(34);
 
-	int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f, getContext());
-	int horizontalPadding = (int) ConvertUtils.convertDpToPixels(3f, getContext());
-	holder.progress.setPaddingProgress(horizontalPadding, verticalPadding, horizontalPadding,
-		verticalPadding);
+	int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f,
+		getContext());
+	int horizontalPadding = (int) ConvertUtils.convertDpToPixels(3f,
+		getContext());
+	holder.progress.setPaddingProgress(horizontalPadding, verticalPadding,
+		horizontalPadding, verticalPadding);
 
 	return convertView;
     }

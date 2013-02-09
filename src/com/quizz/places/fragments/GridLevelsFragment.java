@@ -39,18 +39,22 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-	mAdapter = new LevelsItemAdapter(getActivity(), R.layout.item_grid_levels);
+	mAdapter = new LevelsItemAdapter(getActivity(),
+		R.layout.item_grid_levels);
 	super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	    Bundle savedInstanceState) {
 	super.onCreateView(inflater, container, savedInstanceState);
 
-	View view = inflater.inflate(R.layout.fragment_grid_levels, container, false);
+	View view = inflater.inflate(R.layout.fragment_grid_levels, container,
+		false);
 
 	mTransitionLevel = (View) view.findViewById(R.id.transitionLevel);
-	mTransitionLevelImage = (ImageView) mTransitionLevel.findViewById(R.id.levelPicture);
+	mTransitionLevelImage = (ImageView) mTransitionLevel
+		.findViewById(R.id.levelPicture);
 	View difficulty = mTransitionLevel.findViewById(R.id.levelDifficulty);
 	View statusIcon = mTransitionLevel.findViewById(R.id.levelStatusIcon);
 	difficulty.setVisibility(View.GONE);
@@ -62,16 +66,19 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 
 	mAdapter.notifyDataSetChanged();
 
-	QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
+	QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity())
+		.getQuizzActionBar();
 	actionBar.setCustomView(R.layout.ab_view_sections);
-	
+
 	// TODO: Use database values
 	View customView = actionBar.getCustomViewContainer();
-	TextView middleText = (TextView) customView.findViewById(R.id.ab_section_middle_text);
-	TextView rightText = (TextView) customView.findViewById(R.id.ab_section_right_text);
+	TextView middleText = (TextView) customView
+		.findViewById(R.id.ab_section_middle_text);
+	TextView rightText = (TextView) customView
+		.findViewById(R.id.ab_section_right_text);
 	middleText.setText("22 / 30");
 	rightText.setText("345 pts");
-	
+
 	return view;
     }
 
@@ -82,7 +89,8 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
     OnItemClickListener mLevelItemClickListener = new OnItemClickListener() {
 
 	@Override
-	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+	public void onItemClick(AdapterView<?> adapter, View view,
+		int position, long id) {
 	    new LevelClickTransition(view, position).start();
 	}
     };
@@ -112,15 +120,17 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 
 	public void start() {
 	    /* Clone the clicked View inside the transition View */
-	    ImageView picture = (ImageView) mView.findViewById(R.id.levelPicture);
+	    ImageView picture = (ImageView) mView
+		    .findViewById(R.id.levelPicture);
 	    if (picture != null) {
 		mTransitionLevelImage.setImageDrawable(picture.getDrawable());
 	    }
 
-	    RelativeLayout.LayoutParams params = (LayoutParams) mTransitionLevel.getLayoutParams();
+	    RelativeLayout.LayoutParams params = (LayoutParams) mTransitionLevel
+		    .getLayoutParams();
 	    params.width = mView.getWidth();
-	    params.height = (mView.getHeight() < picture.getHeight()) ? picture.getHeight() : mView
-		    .getHeight();
+	    params.height = (mView.getHeight() < picture.getHeight()) ? picture
+		    .getHeight() : mView.getHeight();
 	    params.leftMargin = mView.getLeft();
 	    params.rightMargin = mView.getRight();
 	    params.topMargin = mView.getTop();
@@ -131,7 +141,8 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 	    float pivotY = picture.getTop() + (picture.getHeight() / 2);
 
 	    AnimationSet animationSet = new AnimationSet(false);
-	    animationSet.addAnimation(new ScaleAnimation(1f, 1.4f, 1f, 1.4f, pivotX, pivotY));
+	    animationSet.addAnimation(new ScaleAnimation(1f, 1.4f, 1f, 1.4f,
+		    pivotX, pivotY));
 	    animationSet.addAnimation(new AlphaAnimation(1f, 0f));
 	    animationSet.setInterpolator(new LinearInterpolator());
 	    animationSet.setFillAfter(true);
@@ -140,10 +151,12 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 	    LevelsItemAdapter adapter = (LevelsItemAdapter) mAdapter;
 	    ObjectAnimator
 		    .ofFloat(mTransitionLevelImage, "rotation", 0.0f,
-			    adapter.getPictureRotation(mPosition)).setDuration(0).start();
+			    adapter.getPictureRotation(mPosition))
+		    .setDuration(0).start();
 
 	    /* Fade out the grid */
-	    Animation alphaAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
+	    Animation alphaAnimation = AnimationUtils.loadAnimation(
+		    getActivity(), R.anim.fade_out);
 	    alphaAnimation.setFillAfter(true);
 	    alphaAnimation.setAnimationListener(mTransitionListener);
 	    mLevelsGridView.startAnimation(alphaAnimation);
@@ -159,19 +172,26 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 	    public void onAnimationEnd(Animation animation) {
 		if (isVisible()) {
 		    FragmentContainer container = (FragmentContainer) getActivity();
-		    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+		    FragmentManager fragmentManager = getActivity()
+			    .getSupportFragmentManager();
 
-		    FragmentTransaction transaction = fragmentManager.beginTransaction();
-		    transaction.setCustomAnimations(R.anim.fade_in, R.anim.none, R.anim.slide_in_left,
+		    FragmentTransaction transaction = fragmentManager
+			    .beginTransaction();
+		    transaction.setCustomAnimations(R.anim.fade_in,
+			    R.anim.none, R.anim.slide_in_left,
 			    R.anim.slide_out_right);
 
-/*		    R.anim.slide_in_right, R.anim.slide_out_left,
-		    R.anim.slide_in_left, R.anim.slide_out_right
-*/		    
+		    /*
+		     * R.anim.slide_in_right, R.anim.slide_out_left,
+		     * R.anim.slide_in_left, R.anim.slide_out_right
+		     */
 		    Bundle args = new Bundle();
-		    args.putParcelable(BaseLevelFragment.ARG_LEVEL, mAdapter.getItem(mPosition));
-		    NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager,
-			    container, true, transaction, args);
+		    args.putParcelable(BaseLevelFragment.ARG_LEVEL,
+			    mAdapter.getItem(mPosition));
+		    NavigationUtils
+			    .directNavigationTo(LevelFragment.class,
+				    fragmentManager, container, true,
+				    transaction, args);
 		}
 	    }
 

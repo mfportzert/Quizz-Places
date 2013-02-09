@@ -26,25 +26,30 @@ public class LevelFragment extends BaseLevelFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	    Bundle savedInstanceState) {
 	super.onCreateView(inflater, container, savedInstanceState);
 
 	View view = inflater.inflate(R.layout.fragment_level, container, false);
-	ImageView pictureBig = (ImageView) view.findViewById(R.id.levelPictureBig);
+	ImageView pictureBig = (ImageView) view
+		.findViewById(R.id.levelPictureBig);
 	TextView levelName = (TextView) view.findViewById(R.id.levelName);
-	
+
 	Level level = getArguments().getParcelable(ARG_LEVEL);
 	ImageLoader imageLoader = new ImageLoader(getActivity());
-	imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + level.imageName, pictureBig,
-		ImageType.LOCAL);
-	
-	QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
+	imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR
+		+ level.imageName, pictureBig, ImageType.LOCAL);
+
+	QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity())
+		.getQuizzActionBar();
 	actionBar.setCustomView(R.layout.ab_view_level);
 
 	View customView = actionBar.getCustomViewContainer();
-	ImageView mediumStar = (ImageView) customView.findViewById(R.id.levelStarMedium);
-	ImageView hardStar = (ImageView) customView.findViewById(R.id.levelStarHard);
-	
+	ImageView mediumStar = (ImageView) customView
+		.findViewById(R.id.levelStarMedium);
+	ImageView hardStar = (ImageView) customView
+		.findViewById(R.id.levelStarHard);
+
 	mediumStar.setEnabled(true);
 	hardStar.setEnabled(true);
 	if (level.difficulty.equals(Level.LEVEL_MEDIUM)) {
@@ -53,12 +58,12 @@ public class LevelFragment extends BaseLevelFragment {
 	    mediumStar.setEnabled(false);
 	    hardStar.setEnabled(false);
 	}
-	
+
 	levelName.setText("Le C _ _ _ _ _ _");
-	
+
 	return view;
     }
-    
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
 	super.onSaveInstanceState(outState);
@@ -86,7 +91,8 @@ public class LevelFragment extends BaseLevelFragment {
     OnItemClickListener mPictureClickListener = new OnItemClickListener() {
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+		long arg3) {
 
 	}
     };

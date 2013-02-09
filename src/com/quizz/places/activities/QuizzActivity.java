@@ -14,11 +14,11 @@ import com.quizz.places.R;
 import com.quizz.places.fragments.MenuFragment;
 
 public class QuizzActivity extends BaseQuizzActivity {
-    
+
     private static final String JSON_FILE = "places.json";
-    
+
     private ObjectAnimator mBgAnimation;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -26,9 +26,10 @@ public class QuizzActivity extends BaseQuizzActivity {
 	if (savedInstanceState == null) {
 	    // First launch of the activity, not a rotation change
 	    getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
-	    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-	    NavigationUtils.directNavigationTo(MenuFragment.class, getSupportFragmentManager(),
-		    this, false, transaction);
+	    FragmentTransaction transaction = getSupportFragmentManager()
+		    .beginTransaction();
+	    NavigationUtils.directNavigationTo(MenuFragment.class,
+		    getSupportFragmentManager(), this, false, transaction);
 	}
 
 	/*
@@ -37,30 +38,33 @@ public class QuizzActivity extends BaseQuizzActivity {
 	 * setConfirmQuitDialogView(confirmQuitDialog);
 	 */
 
-	getQuizzActionBar().getBackButton().setImageResource(R.drawable.back_but_5);
+	getQuizzActionBar().getBackButton().setImageResource(
+		R.drawable.back_but_5);
 	getQuizzActionBar().setCustomView(R.layout.ab_view_sections);
 	getQuizzActionBar().setBackgroundResource(R.drawable.bg_actionbar);
-	
+
 	View customView = getQuizzActionBar().getCustomViewContainer();
-	TextView middleText = (TextView) customView.findViewById(R.id.ab_section_middle_text);
-	TextView rightText = (TextView) customView.findViewById(R.id.ab_section_right_text);
+	TextView middleText = (TextView) customView
+		.findViewById(R.id.ab_section_middle_text);
+	TextView rightText = (TextView) customView
+		.findViewById(R.id.ab_section_right_text);
 	middleText.setText("22 / 30");
 	rightText.setText("345 pts");
-	
+
 	initBackground();
     }
-    
+
     @Override
     protected void onDestroy() {
-	 super.onDestroy();
-	 mBgAnimation.end();
+	super.onDestroy();
+	mBgAnimation.end();
     }
-    
+
     @Override
     protected String getJsonFilePath() {
 	return JSON_FILE;
     }
-    
+
     private void initBackground() {
 	getQuizzLayout().setBackgroundResource(R.drawable.sky_clean);
 	getBackgroundAnimatedImage().setBackgroundResource(R.drawable.clouds);
