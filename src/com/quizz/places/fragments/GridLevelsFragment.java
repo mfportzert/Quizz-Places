@@ -126,8 +126,6 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 	    params.topMargin = mView.getTop();
 	    params.bottomMargin = mView.getBottom();
 
-	    mTransitionLevel.setLayoutParams(params);
-
 	    /* Create scale & translate animations */
 	    float pivotX = picture.getLeft() + (picture.getWidth() / 2);
 	    float pivotY = picture.getTop() + (picture.getHeight() / 2);

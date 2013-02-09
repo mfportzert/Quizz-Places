@@ -82,6 +82,10 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 
 	    ObjectAnimator.ofFloat(imageView, "rotation", 0.0f, mRotations.get(position))
 		    .setDuration(0).start();
+	    
+	    statusIcon.setVisibility(View.VISIBLE);
+	    difficulty.setVisibility(View.VISIBLE);
+	    picture.setVisibility(View.VISIBLE);
 	}
     }
 
@@ -120,6 +124,10 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	    holder.mediumStar.setEnabled(false);
 	    holder.hardStar.setEnabled(false);
 	}
+	
+	holder.statusIcon.setVisibility(View.INVISIBLE);
+	holder.difficulty.setVisibility(View.INVISIBLE);
+	holder.picture.setVisibility(View.INVISIBLE);
 
 	mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + level.imageName,
 		holder.picture, ImageType.LOCAL, holder);
