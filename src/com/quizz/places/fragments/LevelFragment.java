@@ -3,12 +3,17 @@ package com.quizz.places.fragments;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.imageloader.ImageLoader;
@@ -33,12 +38,16 @@ public class LevelFragment extends BaseLevelFragment {
 	View view = inflater.inflate(R.layout.fragment_level, container, false);
 	ImageView pictureBig = (ImageView) view
 		.findViewById(R.id.levelPictureBig);
-	TextView levelName = (TextView) view.findViewById(R.id.levelName);
+	final TextView levelName = (TextView) view.findViewById(R.id.levelName);
 
+	float rotation = getArguments().getFloat(ARG_ROTATION);
 	Level level = getArguments().getParcelable(ARG_LEVEL);
 	ImageLoader imageLoader = new ImageLoader(getActivity());
 	imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR
 		+ level.imageName, pictureBig, ImageType.LOCAL);
+
+	ObjectAnimator.ofFloat(pictureBig, "rotation", 0.0f, rotation / 2)
+		.setDuration(0).start();
 
 	QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity())
 		.getQuizzActionBar();
@@ -50,6 +59,9 @@ public class LevelFragment extends BaseLevelFragment {
 	ImageView hardStar = (ImageView) customView
 		.findViewById(R.id.levelStarHard);
 
+	Button button = (Button) view.findViewById(R.id.levelCheckButton);
+	final EditText input = (EditText) view.findViewById(R.id.levelInputResponse);
+	
 	mediumStar.setEnabled(true);
 	hardStar.setEnabled(true);
 	if (level.difficulty.equals(Level.LEVEL_MEDIUM)) {
@@ -59,7 +71,14 @@ public class LevelFragment extends BaseLevelFragment {
 	    hardStar.setEnabled(false);
 	}
 
-	levelName.setText("Le C _ _ _ _ _ _");
+	levelName.setText(level.partialResponse);
+	button.setOnClickListener(new OnClickListener() {
+	    
+	    @Override
+	    public void onClick(View v) {
+		levelName.setText(input.getText());
+	    }
+	});
 
 	return view;
     }

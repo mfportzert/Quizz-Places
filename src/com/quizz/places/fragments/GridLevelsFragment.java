@@ -186,6 +186,8 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 		     * R.anim.slide_in_left, R.anim.slide_out_right
 		     */
 		    Bundle args = new Bundle();
+		    args.putFloat(BaseLevelFragment.ARG_ROTATION,
+			    ((LevelsItemAdapter) mAdapter).getPictureRotation(mPosition));
 		    args.putParcelable(BaseLevelFragment.ARG_LEVEL,
 			    mAdapter.getItem(mPosition));
 		    NavigationUtils

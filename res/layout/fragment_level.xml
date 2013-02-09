@@ -12,9 +12,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center"
-            android:text="Le C _ _ _ _ _ _"
+            android:text="STATUE  DE  LA  LIBERTE"
             android:textColor="#666"
-            android:textSize="38sp"
+            android:textSize="32sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -40,7 +40,6 @@
                 android:paddingLeft="14dp"
                 android:paddingRight="17dp"
                 android:paddingTop="13dp"
-                android:rotation="3"
                 android:scaleType="centerInside" />
         </LinearLayout>
 
