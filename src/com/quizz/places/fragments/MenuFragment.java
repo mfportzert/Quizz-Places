@@ -22,150 +22,150 @@ import com.quizz.places.widgets.MenuBackground;
 
 public class MenuFragment extends BaseMenuFragment {
 
-    private Button mButtonPlay;
-    private Button mButtonFreeHints;
-    private Button mButtonStats;
-    private Button mButtonSettings;
-    private LinearLayout mMenuButtonsContainer;
+	private Button mButtonPlay;
+	private Button mButtonFreeHints;
+	private Button mButtonStats;
+	private Button mButtonSettings;
+	private LinearLayout mMenuButtonsContainer;
 
-    private ImageView mTitleSign;
-    private ImageView mFooter;
-    private ImageButton mButtonHomeExit;
-    private MenuBackground mHaloBackground;
+	private ImageView mTitleSign;
+	private ImageView mFooter;
+	private ImageButton mButtonHomeExit;
+	private MenuBackground mHaloBackground;
 
-    private AnimatorSet mHideUiAnimatorSet;
+	private AnimatorSet mHideUiAnimatorSet;
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	    Bundle savedInstanceState) {
-	super.onCreateView(inflater, container, savedInstanceState);
+	@SuppressWarnings("deprecation")
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
 
-	View view = inflater.inflate(R.layout.fragment_menu, container, false);
+		View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-	mButtonPlay = (Button) view.findViewById(R.id.buttonPlay);
-	mButtonFreeHints = (Button) view.findViewById(R.id.buttonFreeHints);
-	mButtonStats = (Button) view.findViewById(R.id.buttonStats);
-	mButtonSettings = (Button) view.findViewById(R.id.buttonSettings);
-	mTitleSign = (ImageView) view.findViewById(R.id.titleSign);
-	mFooter = (ImageView) view.findViewById(R.id.footer);
-	mMenuButtonsContainer = (LinearLayout) view
-		.findViewById(R.id.menuButtonsContainer);
-	mButtonHomeExit = (ImageButton) view.findViewById(R.id.buttonHomeExit);
-	// mHaloBackground = (MenuBackground)
-	// view.findViewById(R.id.haloBackground);
+		mButtonPlay = (Button) view.findViewById(R.id.buttonPlay);
+		mButtonFreeHints = (Button) view.findViewById(R.id.buttonFreeHints);
+		mButtonStats = (Button) view.findViewById(R.id.buttonStats);
+		mButtonSettings = (Button) view.findViewById(R.id.buttonSettings);
+		mTitleSign = (ImageView) view.findViewById(R.id.titleSign);
+		mFooter = (ImageView) view.findViewById(R.id.footer);
+		mMenuButtonsContainer = (LinearLayout) view
+				.findViewById(R.id.menuButtonsContainer);
+		mButtonHomeExit = (ImageButton) view.findViewById(R.id.buttonHomeExit);
+		// mHaloBackground = (MenuBackground)
+		// view.findViewById(R.id.haloBackground);
 
-	mHideUiAnimatorSet = createHideUiAnimation();
-	FragmentTransaction fadeTransaction = getActivity()
-		.getSupportFragmentManager().beginTransaction();
-	fadeTransaction.setCustomAnimations(R.anim.none, R.anim.none,
-		R.anim.none, R.anim.fade_out);
+		mHideUiAnimatorSet = createHideUiAnimation();
+		FragmentTransaction fadeTransaction = getActivity()
+				.getSupportFragmentManager().beginTransaction();
+		fadeTransaction.setCustomAnimations(R.anim.none, R.anim.none,
+				R.anim.none, R.anim.fade_out);
 
-	initMenuButton(mButtonPlay, ListSectionsFragment.class,
-		fadeTransaction, mHideUiAnimatorSet);
-	initMenuButton(mButtonStats, StatsFragment.class, fadeTransaction,
-		mHideUiAnimatorSet);
+		initMenuButton(mButtonPlay, ListSectionsFragment.class,
+				fadeTransaction, mHideUiAnimatorSet);
+		initMenuButton(mButtonStats, StatsFragment.class, fadeTransaction,
+				mHideUiAnimatorSet);
 
-	mButtonHomeExit.setAlpha(220);
-	mButtonHomeExit.setOnClickListener(new OnClickListener() {
+		mButtonHomeExit.setAlpha(220);
+		mButtonHomeExit.setOnClickListener(new OnClickListener() {
 
-	    @Override
-	    public void onClick(View v) {
-		getActivity().onBackPressed();
-	    }
-	});
+			@Override
+			public void onClick(View v) {
+				getActivity().onBackPressed();
+			}
+		});
 
-	return view;
-    }
+		return view;
+	}
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-	super.onActivityCreated(savedInstanceState);
-	showUi();
-    }
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		showUi();
+	}
 
-    private void showUi() {
-	float[] signMovementValues = new float[] { -200, 0 };
-	ObjectAnimator signPopup = ObjectAnimator.ofFloat(mTitleSign,
-		"translationY", signMovementValues);
-	signPopup.setDuration(300);
-	signPopup.setStartDelay(700);
-	signPopup.setInterpolator(new AccelerateInterpolator());
-	signPopup.addListener(new VisibilityAnimatorListener(mTitleSign));
+	private void showUi() {
+		float[] signMovementValues = new float[] { -200, 0 };
+		ObjectAnimator signPopup = ObjectAnimator.ofFloat(mTitleSign,
+				"translationY", signMovementValues);
+		signPopup.setDuration(300);
+		signPopup.setStartDelay(700);
+		signPopup.setInterpolator(new AccelerateInterpolator());
+		signPopup.addListener(new VisibilityAnimatorListener(mTitleSign));
 
-	float[] footerMovementValues = new float[] { 500, 0 };
-	ObjectAnimator footerPopup = ObjectAnimator.ofFloat(mFooter,
-		"translationY", footerMovementValues);
-	footerPopup.setDuration(700);
-	footerPopup.setInterpolator(new AccelerateInterpolator());
-	footerPopup.addListener(new VisibilityAnimatorListener(mFooter));
+		float[] footerMovementValues = new float[] { 500, 0 };
+		ObjectAnimator footerPopup = ObjectAnimator.ofFloat(mFooter,
+				"translationY", footerMovementValues);
+		footerPopup.setDuration(700);
+		footerPopup.setInterpolator(new AccelerateInterpolator());
+		footerPopup.addListener(new VisibilityAnimatorListener(mFooter));
 
-	AnimatorUtils.bounceAnimator(signPopup, signMovementValues, 5, 100);
-	AnimatorUtils.bounceAnimator(footerPopup, footerMovementValues, 5, 100);
+		AnimatorUtils.bounceAnimator(signPopup, signMovementValues, 5, 100);
+		AnimatorUtils.bounceAnimator(footerPopup, footerMovementValues, 5, 100);
 
-	ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(
-		mMenuButtonsContainer, "alpha", 0f, 1f);
-	buttonsDisplay.setDuration(500);
-	buttonsDisplay.setStartDelay(700);
-	buttonsDisplay.addListener(new VisibilityAnimatorListener(
-		mMenuButtonsContainer));
-	buttonsDisplay.start();
+		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(
+				mMenuButtonsContainer, "alpha", 0f, 1f);
+		buttonsDisplay.setDuration(500);
+		buttonsDisplay.setStartDelay(700);
+		buttonsDisplay.addListener(new VisibilityAnimatorListener(
+				mMenuButtonsContainer));
+		buttonsDisplay.start();
 
-	ObjectAnimator homeExitDisplay = ObjectAnimator.ofFloat(
-		mButtonHomeExit, "alpha", 0f, 1f);
-	homeExitDisplay.setDuration(500);
-	homeExitDisplay.setStartDelay(700);
-	homeExitDisplay.addListener(new VisibilityAnimatorListener(
-		mButtonHomeExit));
-	homeExitDisplay.start();
+		ObjectAnimator homeExitDisplay = ObjectAnimator.ofFloat(
+				mButtonHomeExit, "alpha", 0f, 1f);
+		homeExitDisplay.setDuration(500);
+		homeExitDisplay.setStartDelay(700);
+		homeExitDisplay.addListener(new VisibilityAnimatorListener(
+				mButtonHomeExit));
+		homeExitDisplay.start();
 
-	/*
-	 * ValueAnimator animator = ValueAnimator.ofFloat(0, 360);
-	 * animator.addUpdateListener(new AnimatorUpdateListener() {
-	 * 
-	 * @Override public void onAnimationUpdate(ValueAnimator arg0) {
-	 * 
-	 * mHaloBackground.rotationDegrees = (Float) arg0.getAnimatedValue();
-	 * mHaloBackground.invalidate(); } }); animator.setInterpolator(new
-	 * LinearInterpolator());
-	 * animator.setRepeatCount(ValueAnimator.INFINITE);
-	 * animator.setDuration(8000); animator.start();
-	 */
-    }
+		/*
+		 * ValueAnimator animator = ValueAnimator.ofFloat(0, 360);
+		 * animator.addUpdateListener(new AnimatorUpdateListener() {
+		 * 
+		 * @Override public void onAnimationUpdate(ValueAnimator arg0) {
+		 * 
+		 * mHaloBackground.rotationDegrees = (Float) arg0.getAnimatedValue();
+		 * mHaloBackground.invalidate(); } }); animator.setInterpolator(new
+		 * LinearInterpolator());
+		 * animator.setRepeatCount(ValueAnimator.INFINITE);
+		 * animator.setDuration(8000); animator.start();
+		 */
+	}
 
-    private AnimatorSet createHideUiAnimation() {
-	ObjectAnimator signHiding = ObjectAnimator.ofFloat(mTitleSign,
-		"translationY", 0, -200);
-	signHiding.setDuration(300);
+	private AnimatorSet createHideUiAnimation() {
+		ObjectAnimator signHiding = ObjectAnimator.ofFloat(mTitleSign,
+				"translationY", 0, -200);
+		signHiding.setDuration(300);
 
-	ObjectAnimator footerHiding = ObjectAnimator.ofFloat(mFooter,
-		"translationY", 0, 500);
-	footerHiding.setDuration(700);
+		ObjectAnimator footerHiding = ObjectAnimator.ofFloat(mFooter,
+				"translationY", 0, 500);
+		footerHiding.setDuration(700);
 
-	ObjectAnimator buttonsHiding = ObjectAnimator.ofFloat(
-		mMenuButtonsContainer, "alpha", 1f, 0f);
-	buttonsHiding.setDuration(500);
+		ObjectAnimator buttonsHiding = ObjectAnimator.ofFloat(
+				mMenuButtonsContainer, "alpha", 1f, 0f);
+		buttonsHiding.setDuration(500);
 
-	ObjectAnimator homeExitHiding = ObjectAnimator.ofFloat(mButtonHomeExit,
-		"alpha", 1f, 0f);
-	homeExitHiding.setDuration(500);
+		ObjectAnimator homeExitHiding = ObjectAnimator.ofFloat(mButtonHomeExit,
+				"alpha", 1f, 0f);
+		homeExitHiding.setDuration(500);
 
-	AnimatorSet uiHidingAnimation = new AnimatorSet();
-	uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding,
-		homeExitHiding);
-	return uiHidingAnimation;
+		AnimatorSet uiHidingAnimation = new AnimatorSet();
+		uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding,
+				homeExitHiding);
+		return uiHidingAnimation;
 
-	/*
-	 * ValueAnimator animator = ValueAnimator.ofFloat(0, 360);
-	 * animator.addUpdateListener(new AnimatorUpdateListener() {
-	 * 
-	 * @Override public void onAnimationUpdate(ValueAnimator arg0) {
-	 * 
-	 * mHaloBackground.rotationDegrees = (Float) arg0.getAnimatedValue();
-	 * mHaloBackground.invalidate(); } }); animator.setInterpolator(new
-	 * LinearInterpolator());
-	 * animator.setRepeatCount(ValueAnimator.INFINITE);
-	 * animator.setDuration(8000); animator.start();
-	 */
-    }
+		/*
+		 * ValueAnimator animator = ValueAnimator.ofFloat(0, 360);
+		 * animator.addUpdateListener(new AnimatorUpdateListener() {
+		 * 
+		 * @Override public void onAnimationUpdate(ValueAnimator arg0) {
+		 * 
+		 * mHaloBackground.rotationDegrees = (Float) arg0.getAnimatedValue();
+		 * mHaloBackground.invalidate(); } }); animator.setInterpolator(new
+		 * LinearInterpolator());
+		 * animator.setRepeatCount(ValueAnimator.INFINITE);
+		 * animator.setDuration(8000); animator.start();
+		 */
+	}
 }
