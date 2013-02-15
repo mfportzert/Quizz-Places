@@ -9,5 +9,8 @@
     <string name="label_button_free_hints">FREE HINTS</string>
     <string name="label_button_stats">STATS</string>
    	<string name="label_button_settings">SETTINGS</string>
-   	
+   	<string name="audio_on">Audio is On</string>
+   	<string name="audio_off">Audio is Off</string>
+   	<string name="vibration_on">Vibration is On</string>
+   	<string name="vibration_off">Vibration is Off</string>
 </resources>

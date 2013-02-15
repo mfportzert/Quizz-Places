@@ -10,4 +10,9 @@
     <string name="label_button_stats">STATISTIQUES</string>
    	<string name="label_button_settings">OPTIONS</string>
    	
+   	<string name="audio_on">Audio activée</string>
+   	<string name="audio_off">Audio désactivée</string>
+   	<string name="vibration_on">Vibrations activées</string>
+   	<string name="vibration_off">Vibrations désactivées</string>
+   	
 </resources>

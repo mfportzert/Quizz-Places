@@ -65,6 +65,8 @@ public class MenuFragment extends BaseMenuFragment {
 				fadeTransaction, mHideUiAnimatorSet);
 		initMenuButton(mButtonStats, StatsFragment.class, fadeTransaction,
 				mHideUiAnimatorSet);
+		initMenuButton(mButtonSettings, SettingsFragment.class, fadeTransaction,
+				mHideUiAnimatorSet);
 
 		mButtonHomeExit.setAlpha(220);
 		mButtonHomeExit.setOnClickListener(new OnClickListener() {
