@@ -37,6 +37,10 @@ public class SettingsFragment extends BaseSettingsFragment {
 		
 		View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+		initActionbarView();
+		
+		final TextView audioLabel = (TextView) view.findViewById(R.id.AudioLabel);
+		final TextView vibrationLabel = (TextView) view.findViewById(R.id.VibrationLabel);
 		final CheckBox audioCheckbox = (CheckBox) view.findViewById(R.id.AudioCheckbox);
 		final CheckBox vibrationCheckbox = (CheckBox) view.findViewById(R.id.VibrationCheckbox);
 
@@ -47,7 +51,7 @@ public class SettingsFragment extends BaseSettingsFragment {
 			editor.commit();
 		} else {
 			audioCheckbox.setChecked(sharedPreferences.getBoolean(PREF_AUDIO_KEY, false));
-			audioCheckbox.setText(audioCheckbox.isChecked() ? R.string.audio_on : R.string.audio_off);
+			audioLabel.setText(audioCheckbox.isChecked() ? R.string.audio_on : R.string.audio_off);
 		}
 		if (!sharedPreferences.contains(PREF_VIBRATION_KEY)) {
 			Editor editor = sharedPreferences.edit();
@@ -55,7 +59,7 @@ public class SettingsFragment extends BaseSettingsFragment {
 			editor.commit();
 		} else {
 			vibrationCheckbox.setChecked(sharedPreferences.getBoolean(PREF_VIBRATION_KEY, false));
-			vibrationCheckbox.setText(
+			vibrationLabel.setText(
 					vibrationCheckbox.isChecked() ? R.string.vibration_on : R.string.vibration_off);			
 		}
 			
@@ -65,7 +69,7 @@ public class SettingsFragment extends BaseSettingsFragment {
 				Editor editor = sharedPreferences.edit();
 				editor.putBoolean(PREF_AUDIO_KEY, audioCheckbox.isChecked());
 				editor.commit();
-				audioCheckbox.setText(audioCheckbox.isChecked() ? R.string.audio_on : R.string.audio_off);
+				audioLabel.setText(audioCheckbox.isChecked() ? R.string.audio_on : R.string.audio_off);
 			}
 		});
 		
@@ -75,16 +79,10 @@ public class SettingsFragment extends BaseSettingsFragment {
 				Editor editor = sharedPreferences.edit();
 				editor.putBoolean(PREF_VIBRATION_KEY, vibrationCheckbox.isChecked());
 				editor.commit();
-				vibrationCheckbox.setText(
+				vibrationLabel.setText(
 						vibrationCheckbox.isChecked() ? R.string.vibration_on : R.string.vibration_off);
 			}
 		});
-		
-		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
-		actionBar.setCustomView(R.layout.ab_view_stats);
-		View customView = actionBar.getCustomViewContainer();
-		((TextView) customView.findViewById(R.id.ab_stat_middle_text))
-				.setText(R.string.ab_stats_title);
 
 		return view;
 	}
@@ -123,5 +121,14 @@ public class SettingsFragment extends BaseSettingsFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+	}
+	
+	private void initActionbarView() {
+		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity())
+				.getQuizzActionBar();
+		actionBar.setCustomView(R.layout.ab_view_settings);
+		View customView = actionBar.getCustomViewContainer();
+		((TextView) customView.findViewById(R.id.ab_settings_middle_text))
+				.setText(R.string.ab_settings_title);
 	}
 }

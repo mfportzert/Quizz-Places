@@ -4,12 +4,18 @@
     <string name="app_name">Quizz -Places</string>
     <string name="hello_world">Hello world!</string>
 	
+   	<!-- ActionBar -->
+  	<string name="ab_stats_title">Statistiques</string>
+    <string name="ab_settings_title">Paramètres</string>    
+    
+    
     <!-- Menu -->
     <string name="label_button_play">JOUER</string>
     <string name="label_button_free_hints">INDICES GRATUITS</string>
     <string name="label_button_stats">STATISTIQUES</string>
    	<string name="label_button_settings">OPTIONS</string>
-   	
+
+  	<!-- Paramètres -->
    	<string name="audio_on">Audio activée</string>
    	<string name="audio_off">Audio désactivée</string>
    	<string name="vibration_on">Vibrations activées</string>
