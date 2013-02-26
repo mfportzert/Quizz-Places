@@ -11,6 +11,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="STATUE  DE  LA  LIBERTE"
             android:textColor="#666"
@@ -50,8 +52,8 @@
             android:layout_alignLeft="@+id/levelPictureBigLayout"
             android:layout_alignRight="@+id/levelPictureBigLayout"
             android:layout_below="@+id/levelPictureBigLayout"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" >
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="8dp" >
 
             <EditText
                 android:id="@+id/levelInputResponse"
@@ -73,15 +75,16 @@
                 android:layout_marginRight="5dp"
                 android:adjustViewBounds="true"
                 android:background="#00000000"
-                android:maxHeight="75dp"
-                android:maxWidth="50dp"
-                android:scaleType="fitEnd"
-                android:src="@drawable/ic_hints" />
+                android:maxHeight="72dp"
+                android:maxWidth="55dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/hints_button_selector" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/levelInputResponse"
                 android:layout_below="@+id/levelInputResponse"
                 android:gravity="center" >
 
@@ -90,8 +93,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/but_grey"
-                    android:maxHeight="45dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/grey_button_selector"
                     android:shadowColor="#FFF"
                     android:shadowRadius="2"
                     android:text="Check"

@@ -1,12 +1,12 @@
 package com.quizz.places.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,13 +22,13 @@ import com.quizz.core.models.Level;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
+import com.quizz.places.dialogs.HintsDialog;
 
 public class LevelFragment extends BaseLevelFragment {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
+	private TextView mLevelTitle;
+	private Button mCheckButton;
+	private EditText mInputText;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,17 +38,23 @@ public class LevelFragment extends BaseLevelFragment {
 		View view = inflater.inflate(R.layout.fragment_level, container, false);
 		ImageView pictureBig = (ImageView) view
 				.findViewById(R.id.levelPictureBig);
-		final TextView levelName = (TextView) view.findViewById(R.id.levelName);
+		ImageButton hintsButton = (ImageButton) view
+				.findViewById(R.id.levelHints);
+		mLevelTitle = (TextView) view.findViewById(R.id.levelName);
+		mCheckButton = (Button) view.findViewById(R.id.levelCheckButton);
+		mInputText = (EditText) view.findViewById(R.id.levelInputResponse);
 
-		float rotation = getArguments().getFloat(ARG_ROTATION);
+		/* Load + rotate picture */
 		Level level = getArguments().getParcelable(ARG_LEVEL);
 		ImageLoader imageLoader = new ImageLoader(getActivity());
 		imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR
 				+ level.imageName, pictureBig, ImageType.LOCAL);
 
+		float rotation = getArguments().getFloat(ARG_ROTATION);
 		ObjectAnimator.ofFloat(pictureBig, "rotation", 0.0f, rotation / 2)
 				.setDuration(0).start();
 
+		/* Manage action bar + difficulty */
 		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity())
 				.getQuizzActionBar();
 		actionBar.setCustomView(R.layout.ab_view_level);
@@ -59,10 +65,6 @@ public class LevelFragment extends BaseLevelFragment {
 		ImageView hardStar = (ImageView) customView
 				.findViewById(R.id.levelStarHard);
 
-		Button button = (Button) view.findViewById(R.id.levelCheckButton);
-		final EditText input = (EditText) view
-				.findViewById(R.id.levelInputResponse);
-
 		mediumStar.setEnabled(true);
 		hardStar.setEnabled(true);
 		if (level.difficulty.equals(Level.LEVEL_MEDIUM)) {
@@ -72,15 +74,11 @@ public class LevelFragment extends BaseLevelFragment {
 			hardStar.setEnabled(false);
 		}
 
-		levelName.setText(level.partialResponse);
-		button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				levelName.setText(input.getText());
-			}
-		});
-
+		/* Init layout */
+		mLevelTitle.setText(level.partialResponse);
+		mCheckButton.setOnClickListener(mCheckButtonClickListener);
+		hintsButton.setOnClickListener(mHintsButtonClickListener);
+		// TODO: Init input response hint (x words, x letters)
 		return view;
 	}
 
@@ -108,12 +106,19 @@ public class LevelFragment extends BaseLevelFragment {
 	// Listeners
 	// ===========================================================
 
-	OnItemClickListener mPictureClickListener = new OnItemClickListener() {
+	OnClickListener mCheckButtonClickListener = new OnClickListener() {
 
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onClick(View v) {
+			mLevelTitle.setText(mInputText.getText());
+		}
+	};
 
+	OnClickListener mHintsButtonClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			startActivity(new Intent(LevelFragment.this.getActivity(), HintsDialog.class));
 		}
 	};
 }
