@@ -1,68 +1,93 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_border_black" >
 
     <LinearLayout
+        android:id="@+id/hints_tabs"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:paddingTop="1dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:gravity="center_horizontal" >
 
         <ImageButton
-            android:id="@id/dialog_negative_button"
+            android:id="@+id/tab_idea"
             android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_height="match_parent"
             android:scaleType="fitCenter"
+            android:background="@drawable/dialog_tab_selector"
+            android:padding="8dp"
             android:src="@drawable/ic_hint_idea" />
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/black_white_gradient_vertical" />
+
         <ImageButton
-            android:id="@id/dialog_negative_button"
+            android:id="@+id/tab_letters"
             android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_height="match_parent"
             android:scaleType="fitCenter"
+            android:background="@drawable/dialog_tab_selector"
+            android:padding="8dp"
             android:src="@drawable/ic_hint_letters" />
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/black_white_gradient_vertical" />
+
         <ImageButton
-            android:id="@id/dialog_negative_button"
+            android:id="@+id/tab_hat"
             android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_height="match_parent"
             android:scaleType="fitCenter"
+            android:background="@drawable/dialog_tab_selector"
+            android:padding="8dp"
             android:src="@drawable/ic_hint_hat" />
 
-        <ImageButton
-            android:id="@id/dialog_negative_button"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_hint_map" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/black_white_gradient_vertical" />
 
+        <ImageButton
+            android:id="@+id/tab_map"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:background="@drawable/dialog_tab_selector"
+            android:padding="8dp"
+            android:src="@drawable/ic_hint_map" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/hints_tabs_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:background="#88ffffff"
+        android:layout_below="@+id/hints_tabs"
+        android:layout_alignLeft="@+id/hints_tabs"
+        android:layout_alignRight="@+id/hints_tabs" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/hints_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:gravity="center_vertical"
-            android:text="Hint letters" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dip"
-            android:layout_weight="0.9"
-            android:textSize="14sp"
-            android:gravity="center_vertical"
-            android:text="S _ _ T _ _   D _   L _   L _ _ _ _ _ _" />
+        android:layout_below="@+id/hints_tabs_divider"
+        android:layout_alignLeft="@+id/hints_tabs"
+        android:layout_alignRight="@+id/hints_tabs" />
         
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -1,7 +1,7 @@
 package com.quizz.places.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
-import com.quizz.core.dialogs.HintsDialog;
 import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
@@ -23,10 +22,9 @@ import com.quizz.core.models.Level;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
+import com.quizz.places.dialogs.HintsDialog;
 
 public class LevelFragment extends BaseLevelFragment {
-
-	private HintsDialog mHintsDialog;
 
 	private TextView mLevelTitle;
 	private Button mCheckButton;
@@ -105,19 +103,7 @@ public class LevelFragment extends BaseLevelFragment {
 
 		@Override
 		public void onClick(View v) {
-			if (mHintsDialog == null) {
-				mHintsDialog = new HintsDialog(getActivity(), LayoutInflater
-						.from(getActivity()).inflate(R.layout.dialog_hints,
-								null));
-			}
-
-			WindowManager.LayoutParams wmlp = mHintsDialog.getWindow()
-					.getAttributes();
-			wmlp.gravity = Gravity.CENTER;
-			// TODO: Make funny animations..
-			wmlp.windowAnimations = R.style.HintsDialogAnimation;
-
-			mHintsDialog.show();
+			startActivity(new Intent(LevelFragment.this.getActivity(), HintsDialog.class));
 		}
 	};
 }
