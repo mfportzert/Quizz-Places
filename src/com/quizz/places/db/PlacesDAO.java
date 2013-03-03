@@ -32,10 +32,10 @@ public class PlacesDAO {
 				+ " FROM " + DbHelper.TABLE_SECTIONS + " WHERE "
 				+ DbHelper.TABLE_SECTIONS + "." + DbHelper.COLUMN_UNLOCKED
 				+ " = " + Section.SECTION_UNLOCKED + ") AS sections_unlocked,"
-				+ " COUNT(" + DbHelper.TABLE_SECTIONS + "."
-				+ DbHelper.COLUMN_ID + ") AS sections_total," + " (SELECT"
-				+ " COUNT(" + DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_ID
-				+ ")" + " FROM " + DbHelper.TABLE_LEVELS + " " + " WHERE "
+				+ " (SELECT" + " COUNT(" + DbHelper.TABLE_SECTIONS + "." + DbHelper.COLUMN_ID + ")"
+				+ " FROM " + DbHelper.TABLE_SECTIONS + ") AS sections_total,"
+				+ " (SELECT" + " COUNT(" + DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_ID + ")" 
+				+ " FROM " + DbHelper.TABLE_LEVELS + " " + " WHERE "
 				+ DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_STATUS + " = "
 				+ Level.STATUS_LEVEL_CLEAR + ") AS levels_clear," + " COUNT("
 				+ DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_ID
