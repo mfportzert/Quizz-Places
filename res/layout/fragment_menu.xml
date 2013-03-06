@@ -34,14 +34,15 @@
     	android:layout_height="wrap_content"
     	android:src="@drawable/quizz_footer"
     	android:layout_alignParentBottom="true"
-    	android:scaleType="fitEnd"
-    	android:visibility="invisible" />
+    	android:scaleType="centerCrop"
+    	android:visibility="gone" />
     
     <LinearLayout
         android:id="@+id/menuButtonsContainer"
     	android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-    	android:layout_below="@+id/titleSign"
+    	android:layout_centerVertical="true"
+    	android:paddingBottom="25dp"
     	android:orientation="vertical"
     	android:gravity="center_horizontal"
     	android:visibility="gone" >
