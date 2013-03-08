@@ -21,4 +21,12 @@
    	<string name="vibration_on">Vibrations activées</string>
    	<string name="vibration_off">Vibrations désactivées</string>
    	
+   	<!-- Stats -->
+   	<string name="unlocked_lvl">Niveaux débloqués</string>
+   	<string name="places_found">Total reconnus</string>
+   	<string name="easy_found">Faciles reconnus</string>
+   	<string name="medium_found">Moyens reconnus</string>
+   	<string name="hard_found">Difficiles reconnus</string>
+   	<string name="used_hints">Indices utilisés</string>
+   	
 </resources>
