@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Quizz -Places</string>
+	<string name="app_name">Word Tour Quiz</string>
     <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
+
+   	<!-- ActionBar -->
+  	<string name="ab_stats_title">Statistics</string>
+    <string name="ab_settings_title">Settings</string>    
+    	
+    <!-- Menu -->
+    <string name="label_button_play">PLAY</string>
+    <string name="label_button_free_hints">FREE HINTS</string>
+    <string name="label_button_stats">STATS</string>
+   	<string name="label_button_settings">SETTINGS</string>   	
+   		
+   	<!-- Settings -->
+   	<string name="audio_on">Audio is On</string>
+   	<string name="audio_off">Audio is Off</string>
+   	<string name="vibration_on">Vibration is On</string>
+   	<string name="vibration_off">Vibration is Off</string>
 
 </resources>
