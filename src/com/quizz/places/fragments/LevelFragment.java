@@ -1,12 +1,13 @@
 package com.quizz.places.fragments;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +30,8 @@ public class LevelFragment extends BaseLevelFragment {
 	private TextView mLevelTitle;
 	private Button mCheckButton;
 	private EditText mInputText;
+	
+	private String mPartialResponse;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,11 +77,25 @@ public class LevelFragment extends BaseLevelFragment {
 			hardStar.setEnabled(false);
 		}
 
+		// Init partial response
+		mPartialResponse = ""+level.response.charAt(0);
+		for (int i = 1; i < level.response.length(); i++) {
+			mPartialResponse += (level.response.charAt(i) == ' ') ? ' ' : '_';
+		}
+		
 		/* Init layout */
-		mLevelTitle.setText(level.partialResponse);
+		mLevelTitle.setText(mPartialResponse);
 		mCheckButton.setOnClickListener(mCheckButtonClickListener);
 		hintsButton.setOnClickListener(mHintsButtonClickListener);
+		
+		InputFilter[] FilterArray = new InputFilter[1];
+		FilterArray[0] = new InputFilter.LengthFilter(level.response.length());
+		mInputText.setFilters(FilterArray);
 		// TODO: Init input response hint (x words, x letters)
+		
+		Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-CondBold.ttf");
+		mLevelTitle.setTypeface(face);
+		
 		return view;
 	}
 

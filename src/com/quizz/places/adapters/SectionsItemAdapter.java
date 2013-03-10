@@ -36,7 +36,6 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 
 	static class ViewHolder {
 		TextView name;
-		TextView points;
 		TextView levels;
 		ImageView buttonEnter;
 		SectionProgressView progress;
@@ -52,8 +51,6 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 
 			holder = new ViewHolder();
 			holder.name = (TextView) convertView.findViewById(R.id.sectionName);
-			holder.points = (TextView) convertView
-					.findViewById(R.id.sectionNbPoints);
 			holder.levels = (TextView) convertView
 					.findViewById(R.id.sectionNbLevels);
 			holder.buttonEnter = (ImageView) convertView

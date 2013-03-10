@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
     	android:layout_height="wrap_content"
     	android:layout_margin="20dp"
+    	android:paddingBottom="15dp"
     	android:background="@drawable/bg_section_rounded" >
         
    	    <TextView
@@ -21,34 +22,23 @@
    	        android:id="@+id/sectionNbLevels"
    	        android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:textSize="22sp"
-    		android:layout_below="@+id/section_inner_separator"
-    		android:layout_marginTop="9dp"
-    		android:layout_marginLeft="25dp"
-    		android:textStyle="bold"
+			android:textSize="22sp"
+			android:layout_alignBottom="@+id/sectionName"
+			android:layout_toLeftOf="@+id/sectionEnterButton"
+			android:layout_marginRight="6dp"
+			android:textStyle="bold"
     		android:textColor="#444"
     		android:text="10 / 22" />
-   	    
-   	    <TextView
-   	        android:id="@+id/sectionNbPoints"
-   	        android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-			android:textSize="18sp"
-			android:layout_alignBottom="@+id/sectionName"
-			android:gravity="center_vertical"
-			android:layout_alignParentRight="true"
-			android:layout_marginRight="5dp"
-    		android:text="123 pts" />
 
    	    <ImageView 
    	        android:id="@+id/sectionEnterButton"
    	        android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:layout_below="@+id/section_inner_separator"
     		android:layout_alignBottom="@+id/sectionNbLevels"
-    		android:layout_marginTop="13dp"
-    		android:layout_marginRight="10dp"
-    		android:scaleType="fitEnd"
+			android:layout_alignTop="@+id/sectionNbLevels"
+			android:layout_marginTop="4dp"
+			android:layout_marginBottom="3dp"
+    		android:adjustViewBounds="true"
     		android:layout_alignParentRight="true"
     		android:src="@drawable/but_enter" />
  
@@ -56,11 +46,13 @@
    	        android:id="@+id/sectionProgress"
    	        android:layout_width="match_parent"
   	        android:layout_height="19dp"
-   	        android:layout_below="@+id/sectionEnterButton"
+   	        android:layout_below="@+id/section_inner_separator"
    	        android:src="@drawable/bg_section_progress"
    	        android:scaleType="fitXY"
    	        android:adjustViewBounds="true"
-   	        android:layout_marginTop="10dp" />
+   	        android:layout_marginTop="12dp"
+   	        android:layout_marginRight="5dp"
+   	        android:layout_marginLeft="5dp" />
 
    	    <View
    	        android:id="@+id/section_inner_separator"
@@ -68,7 +60,7 @@
    	        android:layout_height="1dp"
    	        android:layout_below="@+id/sectionName"
    	        android:layout_margin="5dp"
-   	        android:background="#AAA" />
+   	        android:background="#88aaaaaa" />
    	  	
     </RelativeLayout>
     
