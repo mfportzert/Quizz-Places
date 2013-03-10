@@ -6,26 +6,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/levelName"
+        <RelativeLayout
+            android:id="@+id/levelHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text="STATUE  DE  LA  LIBERTE"
-            android:textColor="#666"
-            android:textSize="32sp"
-            android:textStyle="bold" />
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/levelHints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_alignParentLeft="true"
+                android:background="#00000000"
+                android:maxHeight="72dp"
+                android:maxWidth="55dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/hints_button_selector" />
+
+            <TextView
+                android:id="@+id/levelName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/levelHints"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_horizontal"
+                android:layout_centerVertical="true"
+                android:textColor="#666"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/levelPictureBigLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/levelName"
+            android:layout_below="@+id/levelHeader"
             android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:gravity="center" >
 
             <ImageView
@@ -55,53 +77,37 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="8dp" >
 
-            <EditText
-                android:id="@+id/levelInputResponse"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/levelCheckButton"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/edit_text_selector"
-                android:layout_toLeftOf="@+id/levelHints"
-                android:paddingLeft="15dp" />
+                android:layout_alignTop="@+id/levelCheckButton"
+                android:layout_toLeftOf="@+id/levelCheckButton"
+                android:gravity="center_vertical" >
 
-            <ImageButton
-                android:id="@+id/levelHints"
-                android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/levelInputResponse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/edit_text_selector"
+                    android:paddingLeft="15dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/levelCheckButton"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="5dp"
-                android:adjustViewBounds="true"
-                android:background="#00000000"
-                android:maxHeight="72dp"
-                android:maxWidth="55dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/hints_button_selector" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignRight="@+id/levelInputResponse"
-                android:layout_below="@+id/levelInputResponse"
-                android:gravity="center" >
-
-                <Button
-                    android:id="@+id/levelCheckButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/grey_button_selector"
-                    android:shadowColor="#FFF"
-                    android:shadowRadius="2"
-                    android:text="Check"
-                    android:textColor="#484848"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:background="@drawable/grey_button_selector"
+                android:shadowColor="#FFF"
+                android:shadowRadius="2"
+                android:text="Check"
+                android:textColor="#484848"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
