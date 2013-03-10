@@ -116,28 +116,22 @@ public class PlacesDAO {
 		ArrayList<Stat> stats = new ArrayList<Stat>();
 
 		cursor.moveToFirst();
-		stats.add(new Stat(mContext.getResources().getIdentifier("sections",
-				"drawable", "com.quizz.places"), mContext.getString(R.string.unlocked_lvl), cursor
+		stats.add(new Stat(R.drawable.sections, mContext.getString(R.string.unlocked_lvl), cursor
 				.getInt(cursor.getColumnIndex("sections_unlocked")), cursor
 				.getInt(cursor.getColumnIndex("sections_total")), true));
-		stats.add(new Stat(mContext.getResources().getIdentifier("levels",
-				"drawable", "com.quizz.places"), mContext.getString(R.string.places_found), cursor
+		stats.add(new Stat(R.drawable.levels, mContext.getString(R.string.places_found), cursor
 				.getInt(cursor.getColumnIndex("levels_clear")), cursor
 				.getInt(cursor.getColumnIndex("levels_total")), true));
-		stats.add(new Stat(mContext.getResources().getIdentifier("easy",
-				"drawable", "com.quizz.places"), mContext.getString(R.string.easy_found), cursor
+		stats.add(new Stat(R.drawable.easy, mContext.getString(R.string.easy_found), cursor
 				.getInt(cursor.getColumnIndex("levels_easy_clear")), cursor
 				.getInt(cursor.getColumnIndex("levels_easy_total")), true));
-		stats.add(new Stat(mContext.getResources().getIdentifier("medium",
-				"drawable", "com.quizz.places"), mContext.getString(R.string.medium_found), cursor
+		stats.add(new Stat(R.drawable.medium, mContext.getString(R.string.medium_found), cursor
 				.getInt(cursor.getColumnIndex("levels_medium_clear")), cursor
 				.getInt(cursor.getColumnIndex("levels_medium_total")), true));
-		stats.add(new Stat(mContext.getResources().getIdentifier("hard",
-				"drawable", "com.quizz.places"), mContext.getString(R.string.hard_found),
+		stats.add(new Stat(R.drawable.hard, mContext.getString(R.string.hard_found),
 				cursor.getInt(cursor.getColumnIndex("levels_hard_clear")),
 				cursor.getInt(cursor.getColumnIndex("levels_hard_total")), true));
-		stats.add(new Stat(mContext.getResources().getIdentifier("hint",
-				"drawable", "com.quizz.places"), mContext.getString(R.string.used_hints), cursor
+		stats.add(new Stat(R.drawable.hint, mContext.getString(R.string.used_hints), cursor
 				.getInt(cursor.getColumnIndex("revealed_hints")), cursor
 				.getInt(cursor.getColumnIndex("total_hints")), false));
 		cursor.close();
