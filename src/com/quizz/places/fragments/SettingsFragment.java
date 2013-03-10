@@ -1,6 +1,8 @@
 package com.quizz.places.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -8,16 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseSettingsFragment;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
-import com.quizz.places.adapters.StatsItemAdapter;
 import com.quizz.places.db.PlacesDAO;
 
 public class SettingsFragment extends BaseSettingsFragment {
@@ -44,6 +44,8 @@ public class SettingsFragment extends BaseSettingsFragment {
 		final CheckBox audioCheckbox = (CheckBox) view.findViewById(R.id.AudioCheckbox);
 		final CheckBox vibrationCheckbox = (CheckBox) view.findViewById(R.id.VibrationCheckbox);
 
+		final Button resetButton = (Button) view.findViewById(R.id.ResetButton);
+		
 		final SharedPreferences sharedPreferences = getActivity().getPreferences(Activity.MODE_PRIVATE);
 		if (!sharedPreferences.contains(PREF_AUDIO_KEY)) {
 			Editor editor = sharedPreferences.edit();
@@ -84,9 +86,36 @@ public class SettingsFragment extends BaseSettingsFragment {
 			}
 		});
 
+		resetButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setMessage(R.string.confirm_reset).setPositiveButton(R.string.yes, dialogClickListener)
+				    .setNegativeButton(R.string.no, dialogClickListener).show();
+				
+			}
+		});
+		
 		return view;
 	}
 
+	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+	        switch (which){
+	        case DialogInterface.BUTTON_POSITIVE:
+	            //Yes button clicked
+	        	new PlacesDAO(getActivity()).resetDB();
+	            break;
+	        case DialogInterface.BUTTON_NEGATIVE:
+	            //No button clicked
+	        	break;
+	        }
+	    }
+	};
+
+	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);

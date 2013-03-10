@@ -38,8 +38,8 @@
 				android:layout_height="wrap_content"
 				android:layout_alignParentRight="true"
 				android:layout_marginLeft="10dp"
-				android:text="67/130"
-				android:gravity="bottom"
+				android:text="n/a"
+				android:gravity="center_horizontal|bottom"
 				android:textStyle="bold"/>
 		</RelativeLayout>
 	</LinearLayout>

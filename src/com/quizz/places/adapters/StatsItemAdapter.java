@@ -131,6 +131,7 @@ public class StatsItemAdapter extends BaseAdapter {
 					+ "% - " + stat.getLabel());
 			// holder.average.setText(String.valueOf(stat.getProgressInPercent())
 			// + "%");
+			
 			holder.score.setText(String.valueOf(stat.getDone()) + " / "
 					+ String.valueOf(stat.getTotal()));
 			holder.progress.setProgressRes(mProgressDrawables[position
@@ -150,8 +151,8 @@ public class StatsItemAdapter extends BaseAdapter {
 			holder.icon.setImageDrawable(this.mContext.getResources()
 					.getDrawable(stat.getIcon()));
 			holder.label.setText(stat.getLabel());
-			holder.score.setText(String.valueOf(stat.getDone()) + " / "
-					+ String.valueOf(stat.getTotal()));
+			holder.score.setText(String.valueOf(stat.getDone()));
+			
 		}
 		return convertView;
 	}

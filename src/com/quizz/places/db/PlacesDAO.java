@@ -3,6 +3,7 @@ package com.quizz.places.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -89,6 +90,27 @@ public class PlacesDAO {
 		return this.cursorToStat(cursor);
 	}
 
+	public void resetDB() {
+//		String query = 
+//			"UPDATE " + DbHelper.TABLE_LEVELS +
+//				"SET " + DbHelper.COLUMN_UNLOCKED + " = " + Level.STATUS_LEVEL_UNCLEAR +
+//			"; " +
+//			"UPDATE " + DbHelper.TABLE_SECTIONS +
+//				"SET " + DbHelper.COLUMN_UNLOCKED + " = " + Section.SECTION_UNLOCKED;
+		ContentValues cv = new ContentValues();
+		cv.put(DbHelper.COLUMN_STATUS, Level.STATUS_LEVEL_UNCLEAR);
+		QuizzDAO.INSTANCE.getDbHelper().getWritableDatabase()
+				.update(DbHelper.TABLE_LEVELS, cv, null, null);
+		cv.clear();
+		cv.put(DbHelper.COLUMN_UNLOCKED, Hint.STATUS_HINT_UNREVEALED);
+		QuizzDAO.INSTANCE.getDbHelper().getWritableDatabase()
+				.update(DbHelper.TABLE_HINTS, cv, null, null);
+		cv.clear();
+		cv.put(DbHelper.COLUMN_UNLOCKED, Section.SECTION_LOCKED);
+		QuizzDAO.INSTANCE.getDbHelper().getWritableDatabase()
+			.update(DbHelper.TABLE_SECTIONS, cv, null, null);
+	}
+	
 	public List<Stat> cursorToStat(Cursor cursor) {
 
 		ArrayList<Stat> stats = new ArrayList<Stat>();
@@ -119,8 +141,6 @@ public class PlacesDAO {
 				.getInt(cursor.getColumnIndex("revealed_hints")), cursor
 				.getInt(cursor.getColumnIndex("total_hints")), false));
 		cursor.close();
-
-		Log.d("test", String.valueOf(stats.size()));
 
 		return stats;
 	}

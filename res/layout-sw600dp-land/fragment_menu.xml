@@ -67,7 +67,7 @@
                 android:background="@drawable/magenta_button_selector"
                 android:shadowColor="#000"
                 android:shadowRadius="2"
-                android:text="@string/label_button_free_hints"
+                android:text="@string/label_button_rate_this_app"
                 android:textColor="#FFF"
                 android:textSize="18sp"
                 android:textStyle="bold" />

@@ -60,10 +60,10 @@
             android:background="@drawable/blue_button_selector" />
         
         <Button 
-            android:id="@+id/buttonFreeHints"
+            android:id="@+id/buttonRateThisApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_button_free_hints"
+            android:text="@string/label_button_rate_this_app"
             android:textColor="#FFF"
             android:shadowColor="#000"
             android:shadowRadius="2"

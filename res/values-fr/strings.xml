@@ -3,7 +3,9 @@
 
     <string name="app_name">Quiz - Tour du Monde</string>
     <string name="hello_world">Hello world!</string>
-	
+	<string name="yes">Oui</string>
+	<string name="no">Non</string>
+    
    	<!-- ActionBar -->
   	<string name="ab_stats_title">Statistiques</string>
     <string name="ab_settings_title">Paramètres</string>    
@@ -11,15 +13,17 @@
     
     <!-- Menu -->
     <string name="label_button_play">JOUER</string>
-    <string name="label_button_free_hints">INDICES GRATUITS</string>
+    <string name="label_button_rate_this_app">NOTER L\'APPLI</string>
     <string name="label_button_stats">STATISTIQUES</string>
    	<string name="label_button_settings">OPTIONS</string>
 
   	<!-- Paramètres -->
-   	<string name="audio_on">Audio activée</string>
-   	<string name="audio_off">Audio désactivée</string>
-   	<string name="vibration_on">Vibrations activées</string>
-   	<string name="vibration_off">Vibrations désactivées</string>
+   	<string name="audio_on">Audio activé</string>
+   	<string name="audio_off">Audio désactivé</string>
+   	<string name="vibration_on">Vibration activé</string>
+   	<string name="vibration_off">Vibration désactivé</string>
+   	<string name="reset_game">Réinitialiser le jeu</string>
+   	<string name="confirm_reset">Votre progression et tous vos indices débloqués seront effacés.\nÊtes vous sur de vouloir réinitialiser le jeu ?</string>
    	
    	<!-- Stats -->
    	<string name="unlocked_lvl">Niveaux débloqués</string>
