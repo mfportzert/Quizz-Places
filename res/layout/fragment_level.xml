@@ -91,7 +91,8 @@
                     android:id="@+id/levelInputResponse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="8dp"
+                    android:singleLine="true"
                     android:background="@drawable/edit_text_selector"
                     android:paddingLeft="15dp" />
             </LinearLayout>
