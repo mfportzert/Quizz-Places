@@ -1,67 +1,86 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-	
-   	<RelativeLayout 
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="10dp" >
+
+    <View
+        android:id="@+id/section_content_bg"
         android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-    	android:layout_margin="20dp"
-    	android:paddingBottom="15dp"
-    	android:background="@drawable/bg_section_rounded" >
-        
-   	    <TextView
-	        android:id="@+id/sectionName"
-	        android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:textSize="26sp"
-	    	android:layout_marginLeft="10dp"
-	    	android:textColor="#444"
-	    	android:text="Level 1" />
-   	    
-   	    <TextView
-   	        android:id="@+id/sectionNbLevels"
-   	        android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-			android:textSize="22sp"
-			android:layout_alignBottom="@+id/sectionName"
-			android:layout_toLeftOf="@+id/sectionEnterButton"
-			android:layout_marginRight="6dp"
-			android:textStyle="bold"
-    		android:textColor="#444"
-    		android:text="10 / 22" />
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sectionProgressContainer"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_section_rounded" />
 
-   	    <ImageView 
-   	        android:id="@+id/sectionEnterButton"
-   	        android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:layout_alignBottom="@+id/sectionNbLevels"
-			android:layout_alignTop="@+id/sectionNbLevels"
-			android:layout_marginTop="4dp"
-			android:layout_marginBottom="3dp"
-    		android:adjustViewBounds="true"
-    		android:layout_alignParentRight="true"
-    		android:src="@drawable/but_enter" />
- 
-   	    <com.quizz.core.widgets.SectionProgressView
-   	        android:id="@+id/sectionProgress"
-   	        android:layout_width="match_parent"
-  	        android:layout_height="19dp"
-   	        android:layout_below="@+id/section_inner_separator"
-   	        android:src="@drawable/bg_section_progress"
-   	        android:scaleType="fitXY"
-   	        android:adjustViewBounds="true"
-   	        android:layout_marginTop="12dp"
-   	        android:layout_marginRight="5dp"
-   	        android:layout_marginLeft="5dp" />
+    <TextView
+        android:id="@+id/sectionNbLevels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sectionName"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/sectionEnterButton"
+        android:text="10 / 22"
+        android:textColor="#555"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-   	    <View
-   	        android:id="@+id/section_inner_separator"
-   	        android:layout_width="match_parent"
-   	        android:layout_height="1dp"
-   	        android:layout_below="@+id/sectionName"
-   	        android:layout_margin="5dp"
-   	        android:background="#88aaaaaa" />
-   	  	
-    </RelativeLayout>
-    
+    <ImageView
+        android:id="@+id/sectionEnterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sectionNbLevels"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/sectionNbLevels"
+        android:layout_marginBottom="3dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/but_enter" />
+
+    <LinearLayout
+        android:id="@+id/sectionProgressContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/section_inner_separator"
+        android:paddingBottom="15dp" >
+
+        <com.quizz.core.widgets.SectionProgressView
+            android:id="@+id/sectionProgress"
+            android:layout_width="match_parent"
+            android:layout_height="19dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_section_progress" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/section_inner_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/sectionName"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:background="#88aaaaaa" />
+
+    <TextView
+        android:id="@+id/sectionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="3dp"
+        android:drawableRight="@drawable/ic_lock"
+        android:text="Level 1"
+        android:textColor="#666"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>

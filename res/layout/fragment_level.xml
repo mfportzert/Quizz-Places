@@ -38,6 +38,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="#666"
                 android:textSize="32sp"
+                android:textScaleX="1.05"
                 android:textStyle="bold" />
         </RelativeLayout>
 
