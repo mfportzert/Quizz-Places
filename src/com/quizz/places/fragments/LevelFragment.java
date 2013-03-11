@@ -1,13 +1,18 @@
 package com.quizz.places.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,7 +35,8 @@ public class LevelFragment extends BaseLevelFragment {
 	private TextView mLevelTitle;
 	private Button mCheckButton;
 	private EditText mInputText;
-	
+
+	private Level mLevel;
 	private String mPartialResponse;
 
 	@Override
@@ -48,10 +54,10 @@ public class LevelFragment extends BaseLevelFragment {
 		mInputText = (EditText) view.findViewById(R.id.levelInputResponse);
 
 		/* Load + rotate picture */
-		Level level = getArguments().getParcelable(ARG_LEVEL);
+		mLevel = getArguments().getParcelable(ARG_LEVEL);
 		ImageLoader imageLoader = new ImageLoader(getActivity());
 		imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR
-				+ level.imageName, pictureBig, ImageType.LOCAL);
+				+ mLevel.imageName, pictureBig, ImageType.LOCAL);
 
 		float rotation = getArguments().getFloat(ARG_ROTATION);
 		ObjectAnimator.ofFloat(pictureBig, "rotation", 0.0f, rotation / 2)
@@ -70,32 +76,33 @@ public class LevelFragment extends BaseLevelFragment {
 
 		mediumStar.setEnabled(true);
 		hardStar.setEnabled(true);
-		if (level.difficulty.equals(Level.LEVEL_MEDIUM)) {
+		if (mLevel.difficulty.equals(Level.LEVEL_MEDIUM)) {
 			hardStar.setEnabled(false);
-		} else if (!level.difficulty.equals(Level.LEVEL_HARD)) {
+		} else if (!mLevel.difficulty.equals(Level.LEVEL_HARD)) {
 			mediumStar.setEnabled(false);
 			hardStar.setEnabled(false);
 		}
 
 		// Init partial response
-		mPartialResponse = ""+level.response.charAt(0);
-		for (int i = 1; i < level.response.length(); i++) {
-			mPartialResponse += (level.response.charAt(i) == ' ') ? ' ' : '_';
+		mPartialResponse = "" + mLevel.response.charAt(0);
+		for (int i = 1; i < mLevel.response.length(); i++) {
+			mPartialResponse += (mLevel.response.charAt(i) == ' ') ? ' ' : '_';
 		}
-		
+
 		/* Init layout */
 		mLevelTitle.setText(mPartialResponse);
 		mCheckButton.setOnClickListener(mCheckButtonClickListener);
 		hintsButton.setOnClickListener(mHintsButtonClickListener);
-		
+
 		InputFilter[] FilterArray = new InputFilter[1];
-		FilterArray[0] = new InputFilter.LengthFilter(level.response.length());
+		FilterArray[0] = new InputFilter.LengthFilter(mLevel.response.length());
 		mInputText.setFilters(FilterArray);
 		// TODO: Init input response hint (x words, x letters)
-		
-		Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-CondBold.ttf");
+
+		Typeface face = Typeface.createFromAsset(getActivity().getAssets(),
+				"OpenSans-CondBold.ttf");
 		mLevelTitle.setTypeface(face);
-		
+
 		return view;
 	}
 
@@ -119,6 +126,52 @@ public class LevelFragment extends BaseLevelFragment {
 		super.onResume();
 	}
 
+	private boolean isCharacterValid(char userLetter, char responseLetter) {
+		// TODO: Make validation more flexible
+		if (userLetter == responseLetter) {
+			return true;
+		}
+		return false;
+	}
+
+	private void checkResponse(String inputContent) {
+		// For convenience
+		StringBuilder userResponse = new StringBuilder(mPartialResponse);
+
+		// We will replace all '_' from partial response to the corresponding
+		// input response characters
+		for (int i = 0; i < inputContent.length(); i++) {
+			// Assure the response entered isn't (for any reason) longer than
+			// the current partial response
+			if (i > userResponse.length()) {
+				break;
+			}
+
+			// We replace the first '_' found, leaving alone spaces and
+			// already discovered characters
+			if (userResponse.charAt(i) == '_') {
+				userResponse.setCharAt(i, inputContent.charAt(i));
+			}
+		}
+
+		// We now apply the colors
+		SpannableString coloredUserResponse = new SpannableString(userResponse);
+		for (int i = 0; i < coloredUserResponse.length(); i++) {
+			// We color only the '_' characters of the base partial response
+			if (mPartialResponse.charAt(i) == '_') {
+				// Check validity of the character
+				boolean isValid = isCharacterValid(
+						coloredUserResponse.charAt(i),
+						mLevel.response.charAt(i));
+				int color = (isValid) ? Color.GREEN : Color.RED;
+				coloredUserResponse.setSpan(new ForegroundColorSpan(color), i,
+						i + 1, 0);
+			}
+		}
+
+		mLevelTitle.setText(coloredUserResponse);
+	}
+
 	// ===========================================================
 	// Listeners
 	// ===========================================================
@@ -127,7 +180,10 @@ public class LevelFragment extends BaseLevelFragment {
 
 		@Override
 		public void onClick(View v) {
-			mLevelTitle.setText(mInputText.getText());
+			checkResponse(mInputText.getText().toString());
+			InputMethodManager imm = (InputMethodManager) getActivity()
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(mInputText.getWindowToken(), 0);
 		}
 	};
 
@@ -135,7 +191,8 @@ public class LevelFragment extends BaseLevelFragment {
 
 		@Override
 		public void onClick(View v) {
-			startActivity(new Intent(LevelFragment.this.getActivity(), HintsDialog.class));
+			startActivity(new Intent(LevelFragment.this.getActivity(),
+					HintsDialog.class));
 		}
 	};
 }
