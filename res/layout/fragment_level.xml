@@ -5,50 +5,29 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+        
+<!--  
         <RelativeLayout
             android:id="@+id/levelHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_below="@+id/levelPictureBigLayout"
             android:gravity="center_vertical"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal" >
 
-            <ImageButton
-                android:id="@+id/levelHints"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_alignParentLeft="true"
-                android:background="#00000000"
-                android:maxHeight="72dp"
-                android:maxWidth="55dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/hints_button_selector" />
+            
 
-            <TextView
-                android:id="@+id/levelName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/levelHints"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_horizontal"
-                android:layout_centerVertical="true"
-                android:textColor="#666"
-                android:textSize="32sp"
-                android:textScaleX="1.05"
-                android:textStyle="bold" />
+            
         </RelativeLayout>
-
+-->
         <LinearLayout
             android:id="@+id/levelPictureBigLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/levelHeader"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"
             android:gravity="center" >
 
             <ImageView
@@ -61,20 +40,47 @@
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/photo_border_white"
-                android:paddingBottom="16dp"
-                android:paddingLeft="14dp"
-                android:paddingRight="17dp"
-                android:paddingTop="13dp"
+                android:paddingBottom="14dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="15dp"
+                android:paddingTop="11dp"
                 android:scaleType="centerInside" />
         </LinearLayout>
 
+        <ImageButton
+                android:id="@+id/levelHints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_alignParentLeft="true"
+                android:background="#00000000"
+                android:maxHeight="66dp"
+                android:layout_margin="8dp"
+                android:maxWidth="48dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/hints_button_selector" />
+        
+        <TextView
+                android:id="@+id/levelName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:gravity="center_horizontal"
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/levelPictureBigLayout"
+                android:textColor="#666"
+                android:textSize="32sp"
+                android:textScaleX="1.05"
+                android:textStyle="bold" />
+        
         <RelativeLayout
             android:id="@+id/levelOpenedlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/levelPictureBigLayout"
-            android:layout_alignRight="@+id/levelPictureBigLayout"
-            android:layout_below="@+id/levelPictureBigLayout"
+            android:layout_below="@+id/levelName"
+            android:layout_marginTop="22dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="8dp" >
 

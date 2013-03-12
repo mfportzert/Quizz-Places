@@ -60,7 +60,7 @@ public class LevelFragment extends BaseLevelFragment {
 				+ mLevel.imageName, pictureBig, ImageType.LOCAL);
 
 		float rotation = getArguments().getFloat(ARG_ROTATION);
-		ObjectAnimator.ofFloat(pictureBig, "rotation", 0.0f, rotation / 2)
+		ObjectAnimator.ofFloat(pictureBig, "rotation", 0.0f, rotation / 4)
 				.setDuration(0).start();
 
 		/* Manage action bar + difficulty */
