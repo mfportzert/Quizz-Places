@@ -1,6 +1,7 @@
 package com.quizz.places.fragments;
 
-import android.content.Context;
+import java.util.Locale;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -12,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,6 +25,7 @@ import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.models.Level;
+import com.quizz.core.utils.StringUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
@@ -32,6 +33,8 @@ import com.quizz.places.dialogs.HintsDialog;
 
 public class LevelFragment extends BaseLevelFragment {
 
+	private static final int GREEN_LETTER = 0xff34C924;
+	
 	private TextView mLevelTitle;
 	private Button mCheckButton;
 	private EditText mInputText;
@@ -88,7 +91,7 @@ public class LevelFragment extends BaseLevelFragment {
 		for (int i = 1; i < mLevel.response.length(); i++) {
 			mPartialResponse += (mLevel.response.charAt(i) == ' ') ? ' ' : '_';
 		}
-
+		
 		/* Init layout */
 		mLevelTitle.setText(mPartialResponse);
 		mCheckButton.setOnClickListener(mCheckButtonClickListener);
@@ -106,26 +109,6 @@ public class LevelFragment extends BaseLevelFragment {
 		return view;
 	}
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
 	private boolean isCharacterValid(char userLetter, char responseLetter) {
 		// TODO: Make validation more flexible
 		if (userLetter == responseLetter) {
@@ -135,9 +118,13 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 
 	private void checkResponse(String inputContent) {
-		// For convenience
-		StringBuilder userResponse = new StringBuilder(mPartialResponse);
+		// Normalize and uppercase: Colisée => COLISEE
+		inputContent = StringUtils.removeDiacritic(inputContent).toUpperCase(Locale.getDefault());
+		String partialResponse = StringUtils.removeDiacritic(mPartialResponse).toUpperCase(Locale.getDefault());
 
+		// Using StringBuilder for convenience
+		StringBuilder userResponse = new StringBuilder(partialResponse);
+		
 		// We will replace all '_' from partial response to the corresponding
 		// input response characters
 		for (int i = 0; i < inputContent.length(); i++) {
@@ -159,16 +146,18 @@ public class LevelFragment extends BaseLevelFragment {
 		for (int i = 0; i < coloredUserResponse.length(); i++) {
 			// We color only the '_' characters of the base partial response
 			if (mPartialResponse.charAt(i) == '_') {
+				// Remove accents
+				char userLetter = coloredUserResponse.charAt(i);
+				char responseLetter = Character.toUpperCase(
+						StringUtils.removeDiacritic(mLevel.response.charAt(i)));
+				
 				// Check validity of the character
-				boolean isValid = isCharacterValid(
-						coloredUserResponse.charAt(i),
-						mLevel.response.charAt(i));
-				int color = (isValid) ? Color.GREEN : Color.RED;
-				coloredUserResponse.setSpan(new ForegroundColorSpan(color), i,
-						i + 1, 0);
+				boolean isValid = isCharacterValid(userLetter, responseLetter);
+				int color = (isValid) ? GREEN_LETTER : Color.RED;
+				coloredUserResponse.setSpan(new ForegroundColorSpan(color), i, i + 1, 0);
 			}
 		}
-
+		
 		mLevelTitle.setText(coloredUserResponse);
 	}
 
@@ -181,9 +170,6 @@ public class LevelFragment extends BaseLevelFragment {
 		@Override
 		public void onClick(View v) {
 			checkResponse(mInputText.getText().toString());
-			InputMethodManager imm = (InputMethodManager) getActivity()
-					.getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(mInputText.getWindowToken(), 0);
 		}
 	};
 

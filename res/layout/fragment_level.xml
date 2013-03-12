@@ -5,29 +5,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-        
-<!--  
-        <RelativeLayout
-            android:id="@+id/levelHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_below="@+id/levelPictureBigLayout"
-            android:gravity="center_vertical"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal" >
 
-            
-
-            
-        </RelativeLayout>
--->
         <LinearLayout
             android:id="@+id/levelPictureBigLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
             android:gravity="center" >
 
             <ImageView
@@ -48,41 +32,44 @@
         </LinearLayout>
 
         <ImageButton
-                android:id="@+id/levelHints"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_alignParentLeft="true"
-                android:background="#00000000"
-                android:maxHeight="66dp"
-                android:layout_margin="8dp"
-                android:maxWidth="48dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/hints_button_selector" />
-        
+            android:id="@+id/levelHints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="8dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:maxHeight="66dp"
+            android:maxWidth="48dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/hints_button_selector" />
+
         <TextView
-                android:id="@+id/levelName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal"
-                android:layout_centerVertical="true"
-                android:layout_below="@+id/levelPictureBigLayout"
-                android:textColor="#666"
-                android:textSize="32sp"
-                android:textScaleX="1.05"
-                android:textStyle="bold" />
-        
+            android:id="@+id/levelName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/levelPictureBigLayout"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:gravity="center_horizontal"
+            android:textColor="#666"
+            android:textScaleX="1.05"
+            android:shadowColor="#aa000000"
+            android:shadowDx="-1"
+            android:shadowRadius="1"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
         <RelativeLayout
             android:id="@+id/levelOpenedlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/levelName"
-            android:layout_marginTop="22dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="8dp" >
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="22dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,9 +86,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
-                    android:singleLine="true"
                     android:background="@drawable/edit_text_selector"
-                    android:paddingLeft="15dp" />
+                    android:paddingLeft="15dp"
+                    android:singleLine="true" />
             </LinearLayout>
 
             <Button
