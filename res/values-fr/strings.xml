@@ -8,8 +8,9 @@
     
    	<!-- ActionBar -->
   	<string name="ab_stats_title">Statistiques</string>
-    <string name="ab_settings_title">Paramètres</string>    
-    
+    <string name="ab_settings_title">Paramètres</string>
+    <string name="ab_sections_title">Niveaux</string>
+    <string name="ab_levels_grid_title">Photos</string>
     
     <!-- Menu -->
     <string name="label_button_play">JOUER</string>

@@ -26,6 +26,7 @@ import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.interfaces.FragmentContainer;
+import com.quizz.core.models.Level;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
@@ -66,22 +67,24 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 
 		mAdapter.notifyDataSetChanged();
 
-		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity())
-				.getQuizzActionBar();
-		actionBar.setCustomView(R.layout.ab_view_sections);
-
-		// TODO: Use database values
-		View customView = actionBar.getCustomViewContainer();
-		TextView middleText = (TextView) customView
-				.findViewById(R.id.ab_section_middle_text);
-		TextView rightText = (TextView) customView
-				.findViewById(R.id.ab_section_right_text);
-		middleText.setText("22 / 30");
-		rightText.setText("345 pts");
-
+		int picturesClearedCount = 0;
+		for (int i = 0; i < mAdapter.getCount(); i++)
+			picturesClearedCount += (((Level) mAdapter.getItem(i)).status == Level.STATUS_LEVEL_CLEAR) ? 1 : 0;
+		setActionbarView(getActivity().getString(R.string.ab_levels_grid_title),
+				String.valueOf(picturesClearedCount));
+		
 		return view;
 	}
 
+	private void setActionbarView(String middleText, String rightText) {
+		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
+		actionBar.setCustomView(R.layout.ab_view_sections);
+		View customView = actionBar.getCustomViewContainer();
+		((TextView) customView.findViewById(R.id.ab_section_middle_text))
+				.setText(middleText);
+		((TextView) customView.findViewById(R.id.ab_section_right_text)).setText(rightText);
+	}
+	
 	// ===========================================================
 	// Listeners
 	// ===========================================================

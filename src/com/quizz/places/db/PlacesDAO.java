@@ -37,9 +37,9 @@ public class PlacesDAO {
 				+ " (SELECT" + " COUNT(" + DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_ID + ")" 
 				+ " FROM " + DbHelper.TABLE_LEVELS + " " + " WHERE "
 				+ DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_STATUS + " = "
-				+ Level.STATUS_LEVEL_CLEAR + ") AS levels_clear," + " COUNT("
+				+ Level.STATUS_LEVEL_CLEAR + ") AS levels_clear," + " (SELECT" + " COUNT("
 				+ DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_ID
-				+ ") AS levels_total," + " (SELECT" + " COUNT("
+				+ ")" + " FROM " + DbHelper.TABLE_LEVELS + ") AS levels_total," + " (SELECT" + " COUNT("
 				+ DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_ID + ")"
 				+ " FROM " + DbHelper.TABLE_LEVELS + " WHERE "
 				+ DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_STATUS + " = "
@@ -82,11 +82,9 @@ public class PlacesDAO {
 				+ " FROM " + DbHelper.TABLE_SECTIONS + " LEFT JOIN "
 				+ DbHelper.TABLE_LEVELS;
 
-		Log.d("BaseQuizzDAO", sqlQuery);
-
 		Cursor cursor = QuizzDAO.INSTANCE.getDbHelper().getReadableDatabase()
 				.rawQuery(sqlQuery, null);
-		Log.d("BaseQuizzDAO", DatabaseUtils.dumpCursorToString(cursor));
+
 		return this.cursorToStat(cursor);
 	}
 

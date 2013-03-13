@@ -8,8 +8,10 @@
     
    	<!-- ActionBar -->
   	<string name="ab_stats_title">Statistics</string>
-    <string name="ab_settings_title">Settings</string>    
-    	
+    <string name="ab_settings_title">Settings</string>
+    <string name="ab_sections_title">Levels</string>
+    <string name="ab_levels_grid_title">Pictures</string>
+    
     <!-- Menu -->
     <string name="label_button_play">PLAY</string>
     <string name="label_button_rate_this_app">RATE THIS APP</string>
