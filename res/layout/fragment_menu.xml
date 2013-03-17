@@ -2,12 +2,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 	
-    <!-- Marche pas pour l instant 
-    <com.quizz.places.widgets.MenuBackground
-        android:id="@+id/haloBackground"
-        android:layout_width="match_parent"
-     	android:layout_height="match_parent" />
-     -->
     <ImageView 
         android:id="@+id/titleSign"
         android:layout_width="wrap_content"

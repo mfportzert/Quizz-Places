@@ -18,12 +18,11 @@ import com.quizz.core.fragments.BaseMenuFragment;
 import com.quizz.core.listeners.VisibilityAnimatorListener;
 import com.quizz.core.utils.AnimatorUtils;
 import com.quizz.places.R;
-import com.quizz.places.widgets.MenuBackground;
 
 public class MenuFragment extends BaseMenuFragment {
 
 	private Button mButtonPlay;
-	private Button mButtonFreeHints;
+	private Button mButtonRateThisApp;
 	private Button mButtonStats;
 	private Button mButtonSettings;
 	private LinearLayout mMenuButtonsContainer;
@@ -31,7 +30,6 @@ public class MenuFragment extends BaseMenuFragment {
 	private ImageView mTitleSign;
 	private ImageView mFooter;
 	private ImageButton mButtonHomeExit;
-	private MenuBackground mHaloBackground;
 
 	private AnimatorSet mHideUiAnimatorSet;
 
@@ -44,7 +42,7 @@ public class MenuFragment extends BaseMenuFragment {
 		View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
 		mButtonPlay = (Button) view.findViewById(R.id.buttonPlay);
-		mButtonFreeHints = (Button) view.findViewById(R.id.buttonFreeHints);
+		mButtonRateThisApp = (Button) view.findViewById(R.id.buttonRateThisApp);
 		mButtonStats = (Button) view.findViewById(R.id.buttonStats);
 		mButtonSettings = (Button) view.findViewById(R.id.buttonSettings);
 		mTitleSign = (ImageView) view.findViewById(R.id.titleSign);
@@ -52,8 +50,6 @@ public class MenuFragment extends BaseMenuFragment {
 		mMenuButtonsContainer = (LinearLayout) view
 				.findViewById(R.id.menuButtonsContainer);
 		mButtonHomeExit = (ImageButton) view.findViewById(R.id.buttonHomeExit);
-		// mHaloBackground = (MenuBackground)
-		// view.findViewById(R.id.haloBackground);
 
 		mHideUiAnimatorSet = createHideUiAnimation();
 		FragmentTransaction fadeTransaction = getActivity()
@@ -120,19 +116,6 @@ public class MenuFragment extends BaseMenuFragment {
 		homeExitDisplay.addListener(new VisibilityAnimatorListener(
 				mButtonHomeExit));
 		homeExitDisplay.start();
-
-		/*
-		 * ValueAnimator animator = ValueAnimator.ofFloat(0, 360);
-		 * animator.addUpdateListener(new AnimatorUpdateListener() {
-		 * 
-		 * @Override public void onAnimationUpdate(ValueAnimator arg0) {
-		 * 
-		 * mHaloBackground.rotationDegrees = (Float) arg0.getAnimatedValue();
-		 * mHaloBackground.invalidate(); } }); animator.setInterpolator(new
-		 * LinearInterpolator());
-		 * animator.setRepeatCount(ValueAnimator.INFINITE);
-		 * animator.setDuration(8000); animator.start();
-		 */
 	}
 
 	private AnimatorSet createHideUiAnimation() {
@@ -156,18 +139,5 @@ public class MenuFragment extends BaseMenuFragment {
 		uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding,
 				homeExitHiding);
 		return uiHidingAnimation;
-
-		/*
-		 * ValueAnimator animator = ValueAnimator.ofFloat(0, 360);
-		 * animator.addUpdateListener(new AnimatorUpdateListener() {
-		 * 
-		 * @Override public void onAnimationUpdate(ValueAnimator arg0) {
-		 * 
-		 * mHaloBackground.rotationDegrees = (Float) arg0.getAnimatedValue();
-		 * mHaloBackground.invalidate(); } }); animator.setInterpolator(new
-		 * LinearInterpolator());
-		 * animator.setRepeatCount(ValueAnimator.INFINITE);
-		 * animator.setDuration(8000); animator.start();
-		 */
 	}
 }

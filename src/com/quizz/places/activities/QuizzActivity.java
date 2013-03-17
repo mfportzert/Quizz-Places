@@ -56,8 +56,10 @@ public class QuizzActivity extends BaseQuizzActivity {
 
 	@Override
 	protected void onDestroy() {
+		if (mBgAnimation != null && mBgAnimation.isRunning()) {
+			mBgAnimation.end();
+		}
 		super.onDestroy();
-		mBgAnimation.end();
 	}
 
 	@Override
