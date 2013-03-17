@@ -11,13 +11,14 @@ import android.graphics.Point;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
 public class RotatingSunEffect extends View {
 
 	private static final int RAYS_COLOR = 0x22FFB90F;
-	
+
 	public float rotationDegrees = 0f;
 	private Point mCenterPoint = new Point();
 	private Point mPointB = new Point();
@@ -30,6 +31,9 @@ public class RotatingSunEffect extends View {
 
 	private Bitmap mSavedInnerGlowBitmap = null;
 	private Canvas mSavedInnerGlowCanvas = null;
+
+	private Path mRaysPath = new Path();
+	private RadialGradient mInnerGlowGradient;
 
 	private void init() {
 		mRayPaint.setStrokeWidth(2);
@@ -71,19 +75,15 @@ public class RotatingSunEffect extends View {
 					bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 			mSavedInnerGlowCanvas = new Canvas(mSavedInnerGlowBitmap);
 		}
-		
+
 		// Clear the bitmap of previous drawing
 		mSavedInnerGlowBitmap.eraseColor(Color.TRANSPARENT);
-		
+
 		// Copy bitmap into tempBitmap
 		mSavedInnerGlowCanvas.drawBitmap(bitmap, 0, 0, null);
 
-		// Create a radial gradient
-		RadialGradient gradient = new android.graphics.RadialGradient(circleX,
-				circleY, radius, 0xFF000000, 0x00000000,
-				android.graphics.Shader.TileMode.CLAMP);
-
-		mInnerGlowPaint.setShader(gradient);
+		// Apply the gradient
+		mInnerGlowPaint.setShader(mInnerGlowGradient);
 
 		// Draw transparent circle into tempBitmap
 		mSavedInnerGlowCanvas.drawCircle(circleX, circleY, radius,
@@ -97,22 +97,27 @@ public class RotatingSunEffect extends View {
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
 
-		// angle lumineux : 20
-		// angle ecart : 40
-
-		mCenterPoint.x = (int) (getWidth() * 0.4f);
-		mCenterPoint.y = (int) (getHeight());
-
 		// Initialize only once
 		if (mSavedRaysBitmap == null) {
 			mSavedRaysBitmap = Bitmap.createBitmap((int) getWidth(),
 					(int) getHeight(), Config.ARGB_4444);
 			mSavedRaysCanvas = new Canvas(mSavedRaysBitmap);
+
+			mCenterPoint.x = (int) (getWidth() * 0.4f);
+			mCenterPoint.y = (int) (getHeight());
+
+			// Create a radial gradient
+			mInnerGlowGradient = new RadialGradient(mCenterPoint.x,
+					mCenterPoint.y, getWidth() / 1.6f, 0xFF000000, 0x00000000,
+					Shader.TileMode.CLAMP);
 		} else {
 
 			// Clear the bitmap of previous drawing
 			mSavedRaysBitmap.eraseColor(Color.TRANSPARENT);
 
+			// angle lumineux : 20
+			// angle ecart : 40
+			
 			int distance = (int) Math.sqrt(Math.pow(getWidth(), 2)
 					+ Math.pow(getHeight(), 2));
 			int rotationStart = (int) rotationDegrees;
@@ -126,12 +131,12 @@ public class RotatingSunEffect extends View {
 				mPointC.x = (int) (mCenterPoint.x + distance * Math.cos(thetaC));
 				mPointC.y = (int) (mCenterPoint.y + distance * Math.sin(thetaC));
 
-				Path path = new Path();
-				path.setFillType(Path.FillType.EVEN_ODD);
-				path.moveTo(mCenterPoint.x, mCenterPoint.y);
-				path.lineTo(mPointB.x, mPointB.y);
-				path.lineTo(mPointC.x, mPointC.y);
-				path.close();
+				mRaysPath.rewind();
+				mRaysPath.setFillType(Path.FillType.EVEN_ODD);
+				mRaysPath.moveTo(mCenterPoint.x, mCenterPoint.y);
+				mRaysPath.lineTo(mPointB.x, mPointB.y);
+				mRaysPath.lineTo(mPointC.x, mPointC.y);
+				mRaysPath.close();
 
 				thetaB = Math.toRadians(angle + 20);
 				mPointB.x = (int) (mCenterPoint.x + distance * Math.cos(thetaB));
@@ -141,7 +146,7 @@ public class RotatingSunEffect extends View {
 				mPointC.x = (int) (mCenterPoint.x + distance * Math.cos(thetaC));
 				mPointC.y = (int) (mCenterPoint.y + distance * Math.sin(thetaC));
 
-				mSavedRaysCanvas.drawPath(path, mRayPaint);
+				mSavedRaysCanvas.drawPath(mRaysPath, mRayPaint);
 			}
 		}
 
