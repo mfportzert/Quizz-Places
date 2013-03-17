@@ -34,4 +34,7 @@
    	<string name="hard_found">Hard found</string>
    	<string name="used_hints">Used hints</string>
    	
+   	<!-- Level -->
+   	<string name="level_success_title">Well done !</string>
+   	
 </resources>

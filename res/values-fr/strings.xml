@@ -34,4 +34,7 @@
    	<string name="hard_found">Difficiles reconnus</string>
    	<string name="used_hints">Indices utilisés</string>
    	
+   	<!-- Level -->
+   	<string name="level_success_title">Bien joué !</string>
+   	
 </resources>

@@ -66,7 +66,6 @@ public class QuizzActivity extends BaseQuizzActivity {
 	}
 
 	private void initBackground() {
-		getQuizzLayout().setBackgroundResource(R.drawable.sky_clean);
 		getBackgroundAnimatedImage().setBackgroundResource(R.drawable.clouds);
 
 		mBgAnimation = ObjectAnimator.ofFloat(getBackgroundAnimatedImage(),
