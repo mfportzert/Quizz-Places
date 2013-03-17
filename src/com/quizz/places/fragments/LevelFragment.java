@@ -30,6 +30,7 @@ import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
 import com.quizz.places.dialogs.HintsDialog;
+import com.quizz.places.dialogs.LevelSuccessDialog;
 
 public class LevelFragment extends BaseLevelFragment {
 
@@ -103,14 +104,13 @@ public class LevelFragment extends BaseLevelFragment {
 		// TODO: Init input response hint (x words, x letters)
 
 		Typeface face = Typeface.createFromAsset(getActivity().getAssets(),
-				"OpenSans-CondBold.ttf");
+				"fonts/OpenSans-CondBold.ttf");
 		mLevelTitle.setTypeface(face);
 
 		return view;
 	}
 
 	private boolean isCharacterValid(char userLetter, char responseLetter) {
-		// TODO: Make validation more flexible
 		if (userLetter == responseLetter) {
 			return true;
 		}
@@ -159,6 +159,9 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 		
 		mLevelTitle.setText(coloredUserResponse);
+		
+		startActivity(new Intent(LevelFragment.this.getActivity(),
+				LevelSuccessDialog.class));
 	}
 
 	// ===========================================================
