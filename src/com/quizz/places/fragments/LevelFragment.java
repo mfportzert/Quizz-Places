@@ -2,7 +2,10 @@ package com.quizz.places.fragments;
 
 import java.util.Locale;
 
+import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -21,9 +24,11 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
+import com.quizz.core.application.BaseQuizzApplication;
 import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
+import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Level;
 import com.quizz.core.utils.StringUtils;
 import com.quizz.core.widgets.QuizzActionBar;
@@ -67,25 +72,12 @@ public class LevelFragment extends BaseLevelFragment {
 		ObjectAnimator.ofFloat(pictureBig, "rotation", 0.0f, rotation / 4)
 				.setDuration(0).start();
 
+		// get number of hints the user can reveal
+		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
+		int hintsAvailableToUnlock = sharedPreferences.getInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0);
+		
 		/* Manage action bar + difficulty */
-		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity())
-				.getQuizzActionBar();
-		actionBar.setCustomView(R.layout.ab_view_level);
-
-		View customView = actionBar.getCustomViewContainer();
-		ImageView mediumStar = (ImageView) customView
-				.findViewById(R.id.levelStarMedium);
-		ImageView hardStar = (ImageView) customView
-				.findViewById(R.id.levelStarHard);
-
-		mediumStar.setEnabled(true);
-		hardStar.setEnabled(true);
-		if (mLevel.difficulty.equals(Level.LEVEL_MEDIUM)) {
-			hardStar.setEnabled(false);
-		} else if (!mLevel.difficulty.equals(Level.LEVEL_HARD)) {
-			mediumStar.setEnabled(false);
-			hardStar.setEnabled(false);
-		}
+		setActionbarView(hintsAvailableToUnlock);
 
 		// Init partial response
 		mPartialResponse = "" + mLevel.response.charAt(0);
@@ -110,6 +102,27 @@ public class LevelFragment extends BaseLevelFragment {
 		return view;
 	}
 
+	private void setActionbarView(int hintsAvailableToUnlock) {
+		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
+		actionBar.setCustomView(R.layout.ab_view_level);
+
+		View customView = actionBar.getCustomViewContainer();
+		ImageView mediumStar = (ImageView) customView.findViewById(R.id.levelStarMedium);
+		ImageView hardStar = (ImageView) customView.findViewById(R.id.levelStarHard);
+
+		mediumStar.setEnabled(true);
+		hardStar.setEnabled(true);
+		if (mLevel.difficulty.equals(Level.LEVEL_MEDIUM)) {
+			hardStar.setEnabled(false);
+		} else if (!mLevel.difficulty.equals(Level.LEVEL_HARD)) {
+			mediumStar.setEnabled(false);
+			hardStar.setEnabled(false);
+		}
+		
+		((TextView) customView.findViewById(R.id.ab_level_hints_nb)).setText(
+				String.valueOf(hintsAvailableToUnlock));
+	}
+	
 	private boolean isCharacterValid(char userLetter, char responseLetter) {
 		if (userLetter == responseLetter) {
 			return true;
@@ -141,6 +154,7 @@ public class LevelFragment extends BaseLevelFragment {
 			}
 		}
 
+		int errorsCount = 0;
 		// We now apply the colors
 		SpannableString coloredUserResponse = new SpannableString(userResponse);
 		for (int i = 0; i < coloredUserResponse.length(); i++) {
@@ -155,15 +169,41 @@ public class LevelFragment extends BaseLevelFragment {
 				boolean isValid = isCharacterValid(userLetter, responseLetter);
 				int color = (isValid) ? GREEN_LETTER : Color.RED;
 				coloredUserResponse.setSpan(new ForegroundColorSpan(color), i, i + 1, 0);
+				
+				// Increment errorsCount if not valid in order to know if we show success dialog
+				errorsCount += (!isValid) ? 1 : 0;
 			}
 		}
 		
 		mLevelTitle.setText(coloredUserResponse);
-		
-		startActivity(new Intent(LevelFragment.this.getActivity(),
-				LevelSuccessDialog.class));
+
+		// if we didn't find any error, display success dialog
+		if (errorsCount == 0) {
+			onSuccess();
+		} else {
+			onError(errorsCount);
+		}
 	}
 
+	public void onSuccess() {
+		startActivity(new Intent(LevelFragment.this.getActivity(), LevelSuccessDialog.class));
+
+		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
+		Editor editor = sharedPreferences.edit();
+		editor.putInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 
+				sharedPreferences.getInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0) +
+				sharedPreferences.getInt(BaseQuizzApplication.PREF_DEFAULT_NB_HINTS_ONSUCCESS_KEY, 2)
+				);
+		editor.commit();
+		
+		mLevel.status = Level.STATUS_LEVEL_CLEAR;
+		mLevel.update();
+	}
+	
+	public void onError(int errorsCount) {
+		
+	}
+	
 	// ===========================================================
 	// Listeners
 	// ===========================================================

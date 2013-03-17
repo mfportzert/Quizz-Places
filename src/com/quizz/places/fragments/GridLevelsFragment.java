@@ -71,7 +71,7 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 		for (int i = 0; i < mAdapter.getCount(); i++)
 			picturesClearedCount += (((Level) mAdapter.getItem(i)).status == Level.STATUS_LEVEL_CLEAR) ? 1 : 0;
 		setActionbarView(getActivity().getString(R.string.ab_levels_grid_title),
-				String.valueOf(picturesClearedCount));
+				String.valueOf(picturesClearedCount) + "/" + String.valueOf(mAdapter.getCount()));
 		
 		return view;
 	}

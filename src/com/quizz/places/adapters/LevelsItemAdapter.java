@@ -89,7 +89,9 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 					.ofFloat(imageView, "rotation", 0.0f,
 							mRotations.get(position)).setDuration(0).start();
 
-			statusIcon.setVisibility(View.VISIBLE);
+			if (getItem(position).status == Level.STATUS_LEVEL_CLEAR) {
+				statusIcon.setVisibility(View.VISIBLE);
+			}
 			difficulty.setVisibility(View.VISIBLE);
 			picture.setVisibility(View.VISIBLE);
 		}
