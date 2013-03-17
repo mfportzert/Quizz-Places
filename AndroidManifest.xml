@@ -26,6 +26,9 @@
         <activity 
             android:name="com.quizz.places.dialogs.HintsDialog" 
             android:theme="@android:style/Theme.Dialog" />
+        <activity 
+            android:name="com.quizz.places.dialogs.LevelSuccessDialog" 
+            android:theme="@android:style/Theme.Dialog" />
     </application>
 
 </manifest>
