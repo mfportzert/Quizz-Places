@@ -87,10 +87,14 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	public void onSectionsLoaded(List<Section> listSections) {
 		super.onSectionsLoaded(listSections);
 		int unlockedCount = 0;
-		for (Section section : listSections)
+		for (Section section : listSections) {
 			unlockedCount += (section.status == Section.SECTION_UNLOCKED) ? 1 : 0;
-		setActionbarView(getActivity().getString(R.string.ab_sections_title), 
-				String.valueOf(unlockedCount) + "/" + String.valueOf(listSections.size()));
+		}
+		
+		if (getActivity() != null) {
+			setActionbarView(getActivity().getString(R.string.ab_sections_title), 
+					String.valueOf(unlockedCount) + "/" + String.valueOf(listSections.size()));
+		}
 	}
 	
 	// ===========================================================
