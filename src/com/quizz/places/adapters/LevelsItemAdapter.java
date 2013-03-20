@@ -4,8 +4,6 @@ import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageLoaderListener;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.models.Level;
-import com.quizz.core.utils.ConvertUtils;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
 
@@ -29,9 +26,10 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 
 	private int mLineLayout;
 	private LayoutInflater mInflater;
-	private SparseArray<Float> mRotations = new SparseArray<Float>();
 	private ImageLoader mImageLoader;
+	private Random mRandom = new Random();
 
+	
 	public LevelsItemAdapter(Context context, int lineLayout) {
 		super(context, lineLayout);
 
@@ -77,17 +75,14 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 				alphaAnim.start();
 			}
 
-			if (mRotations.get(position) == null) {
-				Random random = new Random();
-				float rotationRatio = random.nextFloat()
-						* DEFAULT_RANDOM_ROTATION_RANGE;
-				mRotations.append(position, rotationRatio
-						- (DEFAULT_RANDOM_ROTATION_RANGE / 2));
+			Level level = LevelsItemAdapter.this.getItem(position);
+			if (level.rotation == 0) {
+				float rotationRatio = mRandom.nextFloat() * DEFAULT_RANDOM_ROTATION_RANGE;
+				level.rotation = rotationRatio - (DEFAULT_RANDOM_ROTATION_RANGE / 2);
 			}
 
-			ObjectAnimator
-					.ofFloat(imageView, "rotation", 0.0f,
-							mRotations.get(position)).setDuration(0).start();
+			ObjectAnimator.ofFloat(
+					imageView, "rotation", 0.0f, level.rotation).setDuration(0).start();
 
 			if (getItem(position).status == Level.STATUS_LEVEL_CLEAR) {
 				statusIcon.setVisibility(View.VISIBLE);
@@ -148,9 +143,5 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 				+ level.imageName, holder.picture, ImageType.LOCAL, holder);
 
 		return convertView;
-	}
-
-	public Float getPictureRotation(int position) {
-		return mRotations.get(position);
 	}
 }

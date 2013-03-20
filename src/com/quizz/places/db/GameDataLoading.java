@@ -29,8 +29,7 @@ public class GameDataLoading {
 	public static final String DEBUG_TAG = GameDataLoading.class.getSimpleName();
 
 	private Context mContext;
-	
-	private GameDataLoadingListener gameDataLoadingListener;
+	private GameDataLoadingListener mGameDataLoadingListener;
 	
 	public interface GameDataLoadingListener {
 		public void onGameLoadingStart();
@@ -42,7 +41,7 @@ public class GameDataLoading {
 	public GameDataLoading(Context pContext) {
 		if (pContext instanceof GameDataLoadingListener) {
 			mContext = pContext;
-			gameDataLoadingListener = (GameDataLoadingListener) mContext;
+			mGameDataLoadingListener = (GameDataLoadingListener) mContext;
 		} else {
 			throw new ClassCastException(pContext.toString() + " must implement GameDataLoadingListener");
 		}
@@ -97,14 +96,6 @@ public class GameDataLoading {
 	public void executeAsyncGameLoading(boolean loadFromJson) {
 		new AsyncDataLoader(loadFromJson).execute();
 	}
-	
-//	private void displayMenuFragment() {
-//		FragmentContainer container = (FragmentContainer) getActivity();
-//		FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//		FragmentTransaction transaction = fragmentManager.beginTransaction();
-//		NavigationUtils.directNavigationTo(MenuFragment.class,
-//				fragmentManager, container, false, transaction);
-//	}
 
 	// ===========================================================
 	// Inner classes
@@ -126,26 +117,31 @@ public class GameDataLoading {
 		
 		@Override
 		protected void onPreExecute() {
-			gameDataLoadingListener.onGameLoadingStart();
+			mGameDataLoadingListener.onGameLoadingStart();
 			initPreferences();
+			Log.e("ASYNC", "onPreExecute: "+System.currentTimeMillis());
 		}
 
 		@Override
 		protected void onProgressUpdate(Integer... progress) {
 			if (progress[0] <= 100) {
-				gameDataLoadingListener.onGameLoadingProgress(progress[0]);
+				mGameDataLoadingListener.onGameLoadingProgress(progress[0]);
 			}
 		}
 
 		@Override
 		protected void onPostExecute(List<Section> result) {
-			if (mException != null)
-				gameDataLoadingListener.onGameLoadingFailure(mException);
-			gameDataLoadingListener.onGameLoadingSuccess(result);
+			Log.e("ASYNC", "onPostExecute: "+System.currentTimeMillis());
+			if (mException != null) {
+				mGameDataLoadingListener.onGameLoadingFailure(mException);
+			} else {
+				mGameDataLoadingListener.onGameLoadingSuccess(result);
+			}
 		}
 
 		@Override
 		protected List<Section> doInBackground(Void... arg0) {
+			Log.e("ASYNC", "doInBackground: "+System.currentTimeMillis());
 			List<Section> sections = null;
 			if (mLoadFromJson) {
 				Gson gson = new Gson();
