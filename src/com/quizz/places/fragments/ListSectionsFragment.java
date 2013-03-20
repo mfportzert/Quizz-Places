@@ -83,15 +83,15 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 		((TextView) customView.findViewById(R.id.ab_settings_right_text)).setText(rightText);
 	}
 	
-	@Override
-	public void onSectionsLoaded(List<Section> listSections) {
-		super.onSectionsLoaded(listSections);
-		int unlockedCount = 0;
-		for (Section section : listSections)
-			unlockedCount += (section.status == Section.SECTION_UNLOCKED) ? 1 : 0;
-		setActionbarView(getActivity().getString(R.string.ab_sections_title), 
-				String.valueOf(unlockedCount) + "/" + String.valueOf(listSections.size()));
-	}
+//	@Override
+//	public void onSectionsLoaded(List<Section> listSections) {
+//		super.onSectionsLoaded(listSections);
+//		int unlockedCount = 0;
+//		for (Section section : listSections)
+//			unlockedCount += (section.status == Section.SECTION_UNLOCKED) ? 1 : 0;
+//		setActionbarView(getActivity().getString(R.string.ab_sections_title), 
+//				String.valueOf(unlockedCount) + "/" + String.valueOf(listSections.size()));
+//	}
 	
 	// ===========================================================
 	// Listeners
