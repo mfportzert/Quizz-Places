@@ -1,29 +1,25 @@
 package com.quizz.places.dialogs;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.View.OnClickListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ValueAnimator;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ValueAnimator.AnimatorUpdateListener;
-import com.quizz.core.fragments.BaseLevelFragment;
-import com.quizz.core.interfaces.FragmentContainer;
-import com.quizz.core.utils.NavigationUtils;
 import com.quizz.places.R;
-import com.quizz.places.adapters.LevelsItemAdapter;
-import com.quizz.places.fragments.LevelFragment;
 import com.quizz.places.widgets.RotatingSunEffect;
 
 public class LevelSuccessDialog extends Activity {
-
+	public static final int RESULT_CODE_CLOSE = 1;
+	public static final int RESULT_CODE_NEXT = 2;
+	
 	private ValueAnimator mBackgroundRotationAnimator;
-	private LevelSuccessDialogListener mLevelSuccessDialogListener;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +30,10 @@ public class LevelSuccessDialog extends Activity {
 		getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 		setContentView(R.layout.dialog_level_success);
+		Button closeButton = (Button) findViewById(R.id.level_success_close_button);
+		Button nextButton = (Button) findViewById(R.id.level_success_next_button);
+		closeButton.setOnClickListener(mOnCloseButtonClickListener);
+		nextButton.setOnClickListener(mOnNextButtonClickListener);
 		
 		final RotatingSunEffect background = (RotatingSunEffect) findViewById(R.id.level_success_background_effect);
 		
@@ -60,19 +60,17 @@ public class LevelSuccessDialog extends Activity {
 		super.onDestroy();
 	}
 	
-	public void setLevelSuccessDialogListener(LevelSuccessDialogListener listener) {
-		mLevelSuccessDialogListener = listener;
-	}
-	
-	public void close() {
-		finish();		
+	public void close(int result) {
+		Intent returnIntent = new Intent();
+		setResult(result, returnIntent);
+		finish();
 	}
 	
 	OnClickListener mOnCloseButtonClickListener = new OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
-			close();
+			close(RESULT_CODE_CLOSE);
 		}
 	};
 
@@ -80,14 +78,7 @@ public class LevelSuccessDialog extends Activity {
 		
 		@Override
 		public void onClick(View v) {
-			close();
-			if (mLevelSuccessDialogListener != null) {
-				mLevelSuccessDialogListener.onNextLevel();
-			}
+			close(RESULT_CODE_NEXT);
 		}
 	};
-	
-	public interface LevelSuccessDialogListener {
-		public void onNextLevel();
-	}
 }

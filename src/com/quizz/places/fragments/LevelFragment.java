@@ -31,19 +31,18 @@ import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.interfaces.FragmentContainer;
+import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Level;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.utils.StringUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
-import com.quizz.places.adapters.LevelsItemAdapter;
 import com.quizz.places.application.QuizzPlacesApplication;
 import com.quizz.places.dialogs.HintsDialog;
 import com.quizz.places.dialogs.LevelSuccessDialog;
-import com.quizz.places.dialogs.LevelSuccessDialog.LevelSuccessDialogListener;
 
-public class LevelFragment extends BaseLevelFragment implements LevelSuccessDialogListener {
-
+public class LevelFragment extends BaseLevelFragment {
+	public static final int LEVEL_SUCCESS_REQUEST_CODE = 1;
 	private static final int GREEN_LETTER = 0xff34C924;
 	
 	private TextView mLevelTitle;
@@ -73,8 +72,7 @@ public class LevelFragment extends BaseLevelFragment implements LevelSuccessDial
 		imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR
 				+ mLevel.imageName, pictureBig, ImageType.LOCAL);
 
-		float rotation = getArguments().getFloat(ARG_ROTATION);
-		ObjectAnimator.ofFloat(pictureBig, "rotation", 0.0f, rotation / 4)
+		ObjectAnimator.ofFloat(pictureBig, "rotation", 0.0f, mLevel.rotation / 4)
 				.setDuration(0).start();
 
 		// get number of hints the user can reveal
@@ -135,6 +133,7 @@ public class LevelFragment extends BaseLevelFragment implements LevelSuccessDial
 		return false;
 	}
 
+	// TODO: Move to BaseLevelFragment
 	private void checkResponse(String inputContent) {
 		// Normalize and uppercase: Colisée => COLISEE
 		inputContent = StringUtils.removeDiacritic(inputContent).toUpperCase(Locale.getDefault());
@@ -209,23 +208,33 @@ public class LevelFragment extends BaseLevelFragment implements LevelSuccessDial
 		
 	}
 	
-	@Override
 	public void onNextLevel() {
-		/*
-		FragmentContainer container = (FragmentContainer) getActivity();
-		FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.setCustomAnimations(R.anim.fade_in,
-				R.anim.none, R.anim.slide_in_left,
-				R.anim.slide_out_right);
-
-		Bundle args = new Bundle();
-		// TODO: Mettre la rotation dans le level
-		args.putFloat(BaseLevelFragment.ARG_ROTATION, ((LevelsItemAdapter) mAdapter).getPictureRotation(mPosition));
-		args.putParcelable(BaseLevelFragment.ARG_LEVEL, mAdapter.getItem(mPosition));
-		NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager, 
-				container, false, transaction, args);*/
+		Level nextLevel = DataManager.getNextLevel(mLevel);
+		if (nextLevel != null) {
+			FragmentContainer container = (FragmentContainer) getActivity();
+			FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+	
+			FragmentTransaction transaction = fragmentManager.beginTransaction();
+			transaction.setCustomAnimations(R.anim.fade_in,
+					R.anim.none, R.anim.slide_in_left,
+					R.anim.slide_out_right);
+	
+			Bundle args = new Bundle();
+			args.putParcelable(BaseLevelFragment.ARG_LEVEL, nextLevel);
+			NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager, 
+					container, false, transaction, args);
+		}
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode == LEVEL_SUCCESS_REQUEST_CODE) {
+			if (resultCode == LevelSuccessDialog.RESULT_CODE_NEXT) {
+				onNextLevel();
+			}
+		}
 	}
 	
 	// ===========================================================
@@ -244,8 +253,8 @@ public class LevelFragment extends BaseLevelFragment implements LevelSuccessDial
 
 		@Override
 		public void onClick(View v) {
-			startActivity(new Intent(LevelFragment.this.getActivity(),
-					HintsDialog.class));
+			LevelFragment.this.startActivityForResult(new Intent(LevelFragment.this.getActivity(),
+					HintsDialog.class), LEVEL_SUCCESS_REQUEST_CODE);
 		}
 	};
 }

@@ -151,10 +151,9 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 			animationSet.setFillAfter(true);
 			animationSet.setDuration(200);
 
-			LevelsItemAdapter adapter = (LevelsItemAdapter) mAdapter;
 			ObjectAnimator
 					.ofFloat(mTransitionLevelImage, "rotation", 0.0f,
-							adapter.getPictureRotation(mPosition))
+							mAdapter.getItem(mPosition).rotation)
 					.setDuration(0).start();
 
 			/* Fade out the grid */
@@ -189,9 +188,6 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 					 * R.anim.slide_in_left, R.anim.slide_out_right
 					 */
 					Bundle args = new Bundle();
-					args.putFloat(BaseLevelFragment.ARG_ROTATION,
-							((LevelsItemAdapter) mAdapter)
-									.getPictureRotation(mPosition));
 					args.putParcelable(BaseLevelFragment.ARG_LEVEL,
 							mAdapter.getItem(mPosition));
 					NavigationUtils
