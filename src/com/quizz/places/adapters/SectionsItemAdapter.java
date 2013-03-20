@@ -90,10 +90,8 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 				horizontalPadding, verticalPadding);
 
 		// Level locked management
-		if (section.status == Section.SECTION_LOCKED/*position > 0*/) {
+		if (section.status == Section.SECTION_LOCKED) {
 			holder.name.setCompoundDrawablesWithIntrinsicBounds(null, null, mLockDrawable, null);
-			//holder.background.bringToFront();
-			//holder.name.bringToFront();
 		} else {
 			holder.name.setCompoundDrawables(null, null, null, null);
 		}
