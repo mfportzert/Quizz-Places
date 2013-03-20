@@ -21,6 +21,7 @@ import com.quizz.core.dialogs.ConfirmQuitDialog;
 import com.quizz.core.dialogs.ConfirmQuitDialog.Closeable;
 import com.quizz.core.fragments.BaseMenuFragment;
 import com.quizz.core.listeners.VisibilityAnimatorListener;
+import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Section;
 import com.quizz.core.utils.AnimatorUtils;
 import com.quizz.places.R;
@@ -97,14 +98,7 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 	@Override
 	public void onGameLoadingSuccess(List<Section> sections) {
 		mDataLoadingProgressBar.setVisibility(View.GONE);
-		
-		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(
-				mMenuButtonsContainer, "alpha", 0f, 1f);
-		buttonsDisplay.setDuration(500);
-		buttonsDisplay.setStartDelay(700);
-		buttonsDisplay.addListener(new VisibilityAnimatorListener(
-				mMenuButtonsContainer));
-		buttonsDisplay.start();
+		displayButtons();
 	}
 
 	@Override
@@ -131,6 +125,16 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		showUi();
 	}
 
+	private void displayButtons() {
+		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(
+				mMenuButtonsContainer, "alpha", 0f, 1f);
+		buttonsDisplay.setDuration(500);
+		buttonsDisplay.setStartDelay(700);
+		buttonsDisplay.addListener(new VisibilityAnimatorListener(
+				mMenuButtonsContainer));
+		buttonsDisplay.start();
+	}
+	
 	private void showUi() {
 		float[] signMovementValues = new float[] { -200, 0 };
 		ObjectAnimator signPopup = ObjectAnimator.ofFloat(mTitleSign,
@@ -149,6 +153,11 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 
 		AnimatorUtils.bounceAnimator(signPopup, signMovementValues, 5, 100);
 		AnimatorUtils.bounceAnimator(footerPopup, footerMovementValues, 5, 100);
+		
+		if (DataManager.getSections() != null) {
+			mDataLoadingProgressBar.setVisibility(View.GONE);
+			displayButtons();
+		}
 	}
 
 	private AnimatorSet createHideUiAnimation() {
