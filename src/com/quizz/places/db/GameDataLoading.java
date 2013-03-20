@@ -147,18 +147,27 @@ public class GameDataLoading {
 				Gson gson = new Gson();
 				Type type = new TypeToken<Collection<Section>>() {}.getType();
 				try {
+					Log.e("ASYNC", "InputStream: "+System.currentTimeMillis());
 					InputStream is = mContext.getResources().getAssets().open(QuizzPlacesApplication.JSON_FILE);
+					Log.e("ASYNC", "reader: "+System.currentTimeMillis());
 					Reader reader = new InputStreamReader(is);
+					Log.e("ASYNC", "sections: "+System.currentTimeMillis());
 					sections = gson.fromJson(reader, type);
+					Log.e("ASYNC", "setSections: "+System.currentTimeMillis());
 					DataManager.setSections(sections);
+					Log.e("ASYNC", "for: "+System.currentTimeMillis());
 					if (sections.size() > 0) {
 						int progress = 0;
 						int ratio = 100 / sections.size();
+						Log.e("ASYNC", "before inserts: "+System.currentTimeMillis());
 						for (Section section : sections) {
 							section.status = (section.number == 1) ? Section.SECTION_UNLOCKED : Section.SECTION_LOCKED;
 							QuizzDAO.INSTANCE.insertSection(section);
-							publishProgress(++progress * ratio);
+							int progressTmp = ++progress * ratio;
+							Log.e("ASYNC", "progress: "+progressTmp+", time: "+System.currentTimeMillis());
+							publishProgress(progressTmp);
 						}
+						Log.e("ASYNC", "after inserts: "+System.currentTimeMillis());
 					} else {
 						publishProgress(100);
 					}
@@ -169,6 +178,7 @@ public class GameDataLoading {
 			} else {
 				DataManager.getSections();
 			}
+			DataManager.dataLoaded = true;
 			return sections;
 		}
 	}

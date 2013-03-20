@@ -9,6 +9,7 @@ import android.view.animation.LinearInterpolator;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
+import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Section;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.widgets.QuizzActionBar;
@@ -31,10 +32,13 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		if (savedInstanceState == null) {
 			// First launch of the activity, not a rotation change
 			getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
+		}
+
+		if (!DataManager.dataLoaded) {
 			Log.e("ASYNC", "initAsyncGameLoading: "+System.currentTimeMillis());
 			initAsyncGameLoading();
 		}
-
+		
 		getQuizzActionBar().getBackButton().setImageResource(
 				R.drawable.back_but_5);
 		getQuizzActionBar().setCustomView(R.layout.ab_view_sections);

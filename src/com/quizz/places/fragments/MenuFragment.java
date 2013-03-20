@@ -154,7 +154,7 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		AnimatorUtils.bounceAnimator(signPopup, signMovementValues, 5, 100);
 		AnimatorUtils.bounceAnimator(footerPopup, footerMovementValues, 5, 100);
 		
-		if (DataManager.getSections() != null) {
+		if (DataManager.dataLoaded) {
 			mDataLoadingProgressBar.setVisibility(View.GONE);
 			displayButtons();
 		}
