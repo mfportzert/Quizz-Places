@@ -1,14 +1,20 @@
 package com.quizz.places.fragments;
 
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorSet;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
@@ -16,10 +22,16 @@ import com.quizz.core.dialogs.ConfirmQuitDialog;
 import com.quizz.core.dialogs.ConfirmQuitDialog.Closeable;
 import com.quizz.core.fragments.BaseMenuFragment;
 import com.quizz.core.listeners.VisibilityAnimatorListener;
+import com.quizz.core.models.Section;
 import com.quizz.core.utils.AnimatorUtils;
+import com.quizz.core.utils.NavigationUtils;
 import com.quizz.places.R;
+import com.quizz.places.db.GameDataLoading;
+import com.quizz.places.db.GameDataLoading.GameDataLoadingListener;
 
-public class MenuFragment extends BaseMenuFragment implements Closeable {
+public class MenuFragment extends BaseMenuFragment implements Closeable, GameDataLoadingListener {
+
+	public static final String DEBUG_TAG = MenuFragment.class.getSimpleName();
 
 	private Button mButtonPlay;
 	private Button mButtonRateThisApp;
@@ -35,37 +47,33 @@ public class MenuFragment extends BaseMenuFragment implements Closeable {
 	private View mConfirmQuitDialogView;
 	private ConfirmQuitDialog mConfirmQuitDialog;
 	
+	
+	private View mView;
+	private RelativeLayout mLoadingContainerLayout;
+	private ProgressBar mProgressBar;
+
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 
-		View view = inflater.inflate(R.layout.fragment_menu, container, false);
+		View mView = inflater.inflate(R.layout.fragment_menu, container, false);
 
-		mButtonPlay = (Button) view.findViewById(R.id.buttonPlay);
-		mButtonRateThisApp = (Button) view.findViewById(R.id.buttonRateThisApp);
-		mButtonStats = (Button) view.findViewById(R.id.buttonStats);
-		mButtonSettings = (Button) view.findViewById(R.id.buttonSettings);
-		mTitleSign = (ImageView) view.findViewById(R.id.titleSign);
-		mFooter = (ImageView) view.findViewById(R.id.footer);
-		mMenuButtonsContainer = (LinearLayout) view
+		mButtonPlay = (Button) mView.findViewById(R.id.buttonPlay);
+		mButtonRateThisApp = (Button) mView.findViewById(R.id.buttonRateThisApp);
+		mButtonStats = (Button) mView.findViewById(R.id.buttonStats);
+		mButtonSettings = (Button) mView.findViewById(R.id.buttonSettings);
+		mTitleSign = (ImageView) mView.findViewById(R.id.titleSign);
+		mFooter = (ImageView) mView.findViewById(R.id.footer);
+		mMenuButtonsContainer = (LinearLayout) mView
 				.findViewById(R.id.menuButtonsContainer);
 		//mButtonHomeExit = (ImageButton) view.findViewById(R.id.buttonHomeExit);
 
-		mHideUiAnimatorSet = createHideUiAnimation();
-		FragmentTransaction fadeTransaction = getActivity()
-				.getSupportFragmentManager().beginTransaction();
-		fadeTransaction.setCustomAnimations(R.anim.none, R.anim.none,
-				R.anim.none, R.anim.fade_out);
-
-		initMenuButton(mButtonPlay, ListSectionsFragment.class,
-				fadeTransaction, mHideUiAnimatorSet);
-		initMenuButton(mButtonStats, StatsFragment.class, fadeTransaction,
-				mHideUiAnimatorSet);
-		initMenuButton(mButtonSettings, SettingsFragment.class, fadeTransaction,
-				mHideUiAnimatorSet);
-/*
+		initAsyncGameLoading();
+		
+		/*
 		mButtonHomeExit.setAlpha(220);
 		mButtonHomeExit.setOnClickListener(new OnClickListener() {
 
@@ -75,7 +83,7 @@ public class MenuFragment extends BaseMenuFragment implements Closeable {
 			}
 		});*/
 
-		return view;
+		return mView;
 	}
 
 	@Override
@@ -123,6 +131,8 @@ public class MenuFragment extends BaseMenuFragment implements Closeable {
 		buttonsDisplay.addListener(new VisibilityAnimatorListener(
 				mMenuButtonsContainer));
 		buttonsDisplay.start();
+		
+		Log.d(DEBUG_TAG, "showUi");
 /*
 		ObjectAnimator homeExitDisplay = ObjectAnimator.ofFloat(
 				mButtonHomeExit, "alpha", 0f, 1f);
@@ -155,4 +165,86 @@ public class MenuFragment extends BaseMenuFragment implements Closeable {
 				homeExitHiding*/);
 		return uiHidingAnimation;
 	}
+	
+	private void initAsyncGameLoading() {
+		GameDataLoading gdl = new GameDataLoading(this.getActivity());
+		if (gdl.isFirstLaunch()) {
+			gdl.executeAsyncGameLoading(gdl.isFirstLaunch());
+//			gdl.initPreferences();
+		} else if (gdl.isDbUpgradeNeeded()) {
+			Log.d(DEBUG_TAG, "upgrade is needed");
+			// Handle upgrade stuff here
+			gdl.upgradeVersionInPreferences();
+		} else {
+			Log.d(DEBUG_TAG, "upgrade is NOT needed");
+			
+		}
+	}
+
+	@Override
+	public void onGameLoadingStart() {
+//		RelativeLayout.LayoutParams tvLayoutParams = new RelativeLayout.LayoutParams(
+//		RelativeLayout.LayoutParams.WRAP_CONTENT,
+//		RelativeLayout.LayoutParams.WRAP_CONTENT);
+//		tvLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+//		TextView tv = new TextView(this);
+//		tv.setText("test");
+//		tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+//		tv.setLayoutParams(tvLayoutParams);
+		
+		mProgressBar = new ProgressBar(this.getActivity(), null, android.R.attr.progressBarStyleHorizontal);
+		mProgressBar.setMax(100);
+		mProgressBar.setProgress(0);
+		mProgressBar.setLayoutParams(new FrameLayout.LayoutParams(
+				FrameLayout.LayoutParams.MATCH_PARENT,
+				FrameLayout.LayoutParams.WRAP_CONTENT));
+		
+		mLoadingContainerLayout = new RelativeLayout(this.getActivity());
+		RelativeLayout.LayoutParams containerLayoutParams = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.WRAP_CONTENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+		containerLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+		mLoadingContainerLayout.setLayoutParams(containerLayoutParams);
+		mLoadingContainerLayout.setPadding(20, 0, 20, 0);	    
+//		containerLayout.addView(tv);
+		mLoadingContainerLayout.addView(mProgressBar);
+		
+		((RelativeLayout) mView.findViewById(R.id.fragmentsContainer)).addView(mLoadingContainerLayout);
+	}
+
+	@Override
+	public void onGameLoadingProgress(int progress) {
+		Log.d(DEBUG_TAG, "progress : " + String.valueOf(progress) + "%");
+		mProgressBar.setProgress(progress);
+		mProgressBar.invalidate();
+	}
+
+	@Override
+	public void onGameLoadingSuccess(List<Section> sections) {
+		mProgressBar.setVisibility(View.GONE);
+		mLoadingContainerLayout.setVisibility(View.GONE);
+		
+		mHideUiAnimatorSet = createHideUiAnimation();
+		FragmentTransaction fadeTransaction = getActivity()
+				.getSupportFragmentManager().beginTransaction();
+		fadeTransaction.setCustomAnimations(R.anim.none, R.anim.none,
+				R.anim.none, R.anim.fade_out);
+
+		initMenuButton(mButtonPlay, ListSectionsFragment.class,
+				fadeTransaction, mHideUiAnimatorSet);
+		initMenuButton(mButtonStats, StatsFragment.class, fadeTransaction,
+				mHideUiAnimatorSet);
+		initMenuButton(mButtonSettings, SettingsFragment.class, fadeTransaction,
+				mHideUiAnimatorSet);
+
+//		FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
+//		NavigationUtils.directNavigationTo(MenuFragment.class,
+//				this.getActivity().getSupportFragmentManager(), this, false, transaction);
+	}
+
+	@Override
+	public void onGameLoadingFailure(Exception e) {
+		// TODO Auto-generated method stub
+	}
+
 }

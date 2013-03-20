@@ -36,10 +36,10 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		if (savedInstanceState == null) {
 			// First launch of the activity, not a rotation change
 			getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
-//			FragmentTransaction transaction = getSupportFragmentManager()
-//					.beginTransaction();
-//			NavigationUtils.directNavigationTo(GameStartLoadingFragment.class,
-//					getSupportFragmentManager(), this, false, transaction);
+			FragmentTransaction transaction = getSupportFragmentManager()
+					.beginTransaction();
+			NavigationUtils.directNavigationTo(MenuFragment.class,
+					getSupportFragmentManager(), this, false, transaction);
 		}
 
 		getQuizzActionBar().getBackButton().setImageResource(
@@ -47,7 +47,6 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		getQuizzActionBar().setCustomView(R.layout.ab_view_sections);
 		getQuizzActionBar().setBackgroundResource(R.drawable.bg_actionbar);
 
-		initAsyncGameLoading();
 		initBackground();
 	}
 
