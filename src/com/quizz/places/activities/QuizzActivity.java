@@ -49,17 +49,17 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 
 	private void initAsyncGameLoading() {
 		GameDataLoading gdl = new GameDataLoading(this);
-		if (gdl.isFirstLaunch()) {
-			gdl.executeAsyncGameLoading(gdl.isFirstLaunch());
+		gdl.executeAsyncGameLoading(gdl.isFirstLaunch());
+		
 //			gdl.initPreferences();
-		} else if (gdl.isDbUpgradeNeeded()) {
+		/*} else if (gdl.isDbUpgradeNeeded()) {
 			Log.d(DEBUG_TAG, "upgrade is needed");
 			// Handle upgrade stuff here
 			gdl.upgradeVersionInPreferences();
 		} else {
 			Log.d(DEBUG_TAG, "upgrade is NOT needed");
 			
-		}
+		}*/
 	}
 
 	public void setGameDataLoadingListener(GameDataLoadingListener listener) {
