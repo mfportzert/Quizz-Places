@@ -23,7 +23,6 @@ import com.quizz.core.fragments.BaseMenuFragment;
 import com.quizz.core.listeners.VisibilityAnimatorListener;
 import com.quizz.core.models.Section;
 import com.quizz.core.utils.AnimatorUtils;
-import com.quizz.core.utils.NavigationUtils;
 import com.quizz.places.R;
 import com.quizz.places.activities.QuizzActivity;
 import com.quizz.places.db.GameDataLoading.GameDataLoadingListener;
@@ -51,6 +50,8 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		}
 	}
 	
+	private View mView;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		initMenuButton(mButtonSettings, SettingsFragment.class, fadeTransaction,
 				mHideUiAnimatorSet);
 
-		return view;
+		return mView;
 	}
 
 	@Override

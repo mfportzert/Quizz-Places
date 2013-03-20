@@ -43,7 +43,7 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		NavigationUtils.directNavigationTo(MenuFragment.class,
 				getSupportFragmentManager(), this, false, transaction);
-				
+		
 		initBackground();
 	}
 
