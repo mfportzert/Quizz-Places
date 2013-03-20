@@ -130,9 +130,9 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 
 	@Override
 	public void onGameLoadingSuccess(List<Section> sections) {
-//		mProgressBar.setVisibility(View.GONE);
-//		mLoadingContainerLayout.setVisibility(View.GONE);
-//		
+		mProgressBar.setVisibility(View.GONE);
+		mLoadingContainerLayout.setVisibility(View.GONE);
+		
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		NavigationUtils.directNavigationTo(MenuFragment.class,
 				getSupportFragmentManager(), this, false, transaction);
