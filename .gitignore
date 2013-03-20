@@ -16,3 +16,6 @@ gen/
 local.properties
 
 # Eclipse project files
+/assets
+/project.properties
+/README.md

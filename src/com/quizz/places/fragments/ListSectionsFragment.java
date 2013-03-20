@@ -89,10 +89,12 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 //		int unlockedCount = 0;
 //		for (Section section : listSections)
 //			unlockedCount += (section.status == Section.SECTION_UNLOCKED) ? 1 : 0;
-//		setActionbarView(getActivity().getString(R.string.ab_sections_title), 
+//		if (getActivity() != null) {
+//			setActionbarView(getActivity().getString(R.string.ab_sections_title), 
 //				String.valueOf(unlockedCount) + "/" + String.valueOf(listSections.size()));
+//		}
 //	}
-	
+
 	// ===========================================================
 	// Listeners
 	// ===========================================================

@@ -4,22 +4,22 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorSet;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.quizz.core.dialogs.ConfirmQuitDialog;
+import com.quizz.core.dialogs.ConfirmQuitDialog.Closeable;
 import com.quizz.core.fragments.BaseMenuFragment;
 import com.quizz.core.listeners.VisibilityAnimatorListener;
 import com.quizz.core.utils.AnimatorUtils;
 import com.quizz.places.R;
 
-public class MenuFragment extends BaseMenuFragment {
+public class MenuFragment extends BaseMenuFragment implements Closeable {
 
 	private Button mButtonPlay;
 	private Button mButtonRateThisApp;
@@ -29,10 +29,12 @@ public class MenuFragment extends BaseMenuFragment {
 
 	private ImageView mTitleSign;
 	private ImageView mFooter;
-	private ImageButton mButtonHomeExit;
+	//private ImageButton mButtonHomeExit;
 
 	private AnimatorSet mHideUiAnimatorSet;
-
+	private View mConfirmQuitDialogView;
+	private ConfirmQuitDialog mConfirmQuitDialog;
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +51,7 @@ public class MenuFragment extends BaseMenuFragment {
 		mFooter = (ImageView) view.findViewById(R.id.footer);
 		mMenuButtonsContainer = (LinearLayout) view
 				.findViewById(R.id.menuButtonsContainer);
-		mButtonHomeExit = (ImageButton) view.findViewById(R.id.buttonHomeExit);
+		//mButtonHomeExit = (ImageButton) view.findViewById(R.id.buttonHomeExit);
 
 		mHideUiAnimatorSet = createHideUiAnimation();
 		FragmentTransaction fadeTransaction = getActivity()
@@ -63,7 +65,7 @@ public class MenuFragment extends BaseMenuFragment {
 				mHideUiAnimatorSet);
 		initMenuButton(mButtonSettings, SettingsFragment.class, fadeTransaction,
 				mHideUiAnimatorSet);
-
+/*
 		mButtonHomeExit.setAlpha(220);
 		mButtonHomeExit.setOnClickListener(new OnClickListener() {
 
@@ -71,11 +73,24 @@ public class MenuFragment extends BaseMenuFragment {
 			public void onClick(View v) {
 				getActivity().onBackPressed();
 			}
-		});
+		});*/
 
 		return view;
 	}
 
+	@Override
+	public void onDestroy() {
+		if (mConfirmQuitDialog != null) {
+			mConfirmQuitDialog.dismiss();
+		}
+		super.onDestroy();
+	}
+	
+	@Override
+	public void close() {
+		getActivity().finish();
+	}
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -108,14 +123,14 @@ public class MenuFragment extends BaseMenuFragment {
 		buttonsDisplay.addListener(new VisibilityAnimatorListener(
 				mMenuButtonsContainer));
 		buttonsDisplay.start();
-
+/*
 		ObjectAnimator homeExitDisplay = ObjectAnimator.ofFloat(
 				mButtonHomeExit, "alpha", 0f, 1f);
 		homeExitDisplay.setDuration(500);
 		homeExitDisplay.setStartDelay(700);
 		homeExitDisplay.addListener(new VisibilityAnimatorListener(
 				mButtonHomeExit));
-		homeExitDisplay.start();
+		homeExitDisplay.start();*/
 	}
 
 	private AnimatorSet createHideUiAnimation() {
@@ -130,14 +145,14 @@ public class MenuFragment extends BaseMenuFragment {
 		ObjectAnimator buttonsHiding = ObjectAnimator.ofFloat(
 				mMenuButtonsContainer, "alpha", 1f, 0f);
 		buttonsHiding.setDuration(500);
-
+/*
 		ObjectAnimator homeExitHiding = ObjectAnimator.ofFloat(mButtonHomeExit,
 				"alpha", 1f, 0f);
 		homeExitHiding.setDuration(500);
-
+*/
 		AnimatorSet uiHidingAnimation = new AnimatorSet();
-		uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding,
-				homeExitHiding);
+		uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding/*,
+				homeExitHiding*/);
 		return uiHidingAnimation;
 	}
 }

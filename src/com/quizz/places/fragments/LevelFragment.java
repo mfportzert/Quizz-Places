@@ -9,6 +9,8 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -28,16 +30,19 @@ import com.quizz.core.application.BaseQuizzApplication;
 import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
-import com.quizz.core.managers.DataManager;
+import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.models.Level;
+import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.utils.StringUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
+import com.quizz.places.adapters.LevelsItemAdapter;
 import com.quizz.places.application.QuizzPlacesApplication;
 import com.quizz.places.dialogs.HintsDialog;
 import com.quizz.places.dialogs.LevelSuccessDialog;
+import com.quizz.places.dialogs.LevelSuccessDialog.LevelSuccessDialogListener;
 
-public class LevelFragment extends BaseLevelFragment {
+public class LevelFragment extends BaseLevelFragment implements LevelSuccessDialogListener {
 
 	private static final int GREEN_LETTER = 0xff34C924;
 	
@@ -202,6 +207,25 @@ public class LevelFragment extends BaseLevelFragment {
 	
 	public void onError(int errorsCount) {
 		
+	}
+	
+	@Override
+	public void onNextLevel() {
+		/*
+		FragmentContainer container = (FragmentContainer) getActivity();
+		FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.setCustomAnimations(R.anim.fade_in,
+				R.anim.none, R.anim.slide_in_left,
+				R.anim.slide_out_right);
+
+		Bundle args = new Bundle();
+		// TODO: Mettre la rotation dans le level
+		args.putFloat(BaseLevelFragment.ARG_ROTATION, ((LevelsItemAdapter) mAdapter).getPictureRotation(mPosition));
+		args.putParcelable(BaseLevelFragment.ARG_LEVEL, mAdapter.getItem(mPosition));
+		NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager, 
+				container, false, transaction, args);*/
 	}
 	
 	// ===========================================================

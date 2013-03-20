@@ -42,13 +42,8 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 //					getSupportFragmentManager(), this, false, transaction);
 		}
 
-		/*
-		 * View confirmQuitDialog =
-		 * getLayoutInflater().inflate(R.layout.dialog_confirm_quit, null);
-		 * setConfirmQuitDialogView(confirmQuitDialog);
-		 */
-
-		getQuizzActionBar().getBackButton().setImageResource(R.drawable.back_but_5);
+		getQuizzActionBar().getBackButton().setImageResource(
+				R.drawable.back_but_5);
 		getQuizzActionBar().setCustomView(R.layout.ab_view_sections);
 		getQuizzActionBar().setBackgroundResource(R.drawable.bg_actionbar);
 
