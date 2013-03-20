@@ -18,6 +18,7 @@ import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.fragments.BaseListSectionsFragment;
 import com.quizz.core.interfaces.FragmentContainer;
+import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Section;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.widgets.QuizzActionBar;
@@ -72,6 +73,18 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 			((BaseQuizzActivity) getActivity()).getQuizzActionBar()
 					.showIfNecessary(QuizzActionBar.MOVE_NORMAL);
 		}
+		
+		List<Section> sections = DataManager.getSections();
+		int unlockedCount = 0;
+		for (Section section : sections) {
+			section.name = "Level "+section.number;
+			mAdapter.add(section);
+			unlockedCount += (section.status == Section.SECTION_UNLOCKED) ? 1 : 0;
+		}
+		mAdapter.notifyDataSetChanged();
+		
+		setActionbarView(getActivity().getString(R.string.ab_sections_title), 
+				String.valueOf(unlockedCount) + "/" + String.valueOf(sections.size()));
 	}
 	
 	private void setActionbarView(String middleText, String rightText) {
@@ -83,18 +96,6 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 		((TextView) customView.findViewById(R.id.ab_settings_right_text)).setText(rightText);
 	}
 	
-//	@Override
-//	public void onSectionsLoaded(List<Section> listSections) {
-//		super.onSectionsLoaded(listSections);
-//		int unlockedCount = 0;
-//		for (Section section : listSections)
-//			unlockedCount += (section.status == Section.SECTION_UNLOCKED) ? 1 : 0;
-//		if (getActivity() != null) {
-//			setActionbarView(getActivity().getString(R.string.ab_sections_title), 
-//				String.valueOf(unlockedCount) + "/" + String.valueOf(listSections.size()));
-//		}
-//	}
-
 	// ===========================================================
 	// Listeners
 	// ===========================================================
