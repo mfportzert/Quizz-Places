@@ -101,7 +101,9 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 
 	@Override
 	public void onGameLoadingSuccess(List<Section> sections) {
+		Log.e("ASYNC", "onGameLoadingSuccess: "+System.currentTimeMillis());
 		if (mGameDataLoadingListener != null) {
+			Log.e("ASYNC", "onGameLoadingSuccess mGameDataLoadingListener: "+System.currentTimeMillis());
 			mGameDataLoadingListener.onGameLoadingSuccess(sections);
 		}
 	}

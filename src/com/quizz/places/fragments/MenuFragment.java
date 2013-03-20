@@ -50,8 +50,6 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		}
 	}
 	
-	private View mView;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -81,7 +79,7 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		initMenuButton(mButtonSettings, SettingsFragment.class, fadeTransaction,
 				mHideUiAnimatorSet);
 
-		return mView;
+		return view;
 	}
 
 	@Override
