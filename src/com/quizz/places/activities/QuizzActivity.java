@@ -5,11 +5,7 @@ import java.util.List;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.LinearInterpolator;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
@@ -26,8 +22,7 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 	public static final String DEBUG_TAG = QuizzActivity.class.getSimpleName();
 	
 	private ObjectAnimator mBgAnimation;
-	private RelativeLayout mLoadingContainerLayout;
-	private ProgressBar mProgressBar;
+	private GameDataLoadingListener mGameDataLoadingListener;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +31,8 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		if (savedInstanceState == null) {
 			// First launch of the activity, not a rotation change
 			getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
-//			FragmentTransaction transaction = getSupportFragmentManager()
-//					.beginTransaction();
-//			NavigationUtils.directNavigationTo(GameStartLoadingFragment.class,
-//					getSupportFragmentManager(), this, false, transaction);
+			Log.e("ASYNC", "initAsyncGameLoading: "+System.currentTimeMillis());
+			initAsyncGameLoading();
 		}
 
 		getQuizzActionBar().getBackButton().setImageResource(
@@ -47,7 +40,10 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		getQuizzActionBar().setCustomView(R.layout.ab_view_sections);
 		getQuizzActionBar().setBackgroundResource(R.drawable.bg_actionbar);
 
-		initAsyncGameLoading();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		NavigationUtils.directNavigationTo(MenuFragment.class,
+				getSupportFragmentManager(), this, false, transaction);
+				
 		initBackground();
 	}
 
@@ -66,6 +62,10 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		}
 	}
 
+	public void setGameDataLoadingListener(GameDataLoadingListener listener) {
+		mGameDataLoadingListener = listener;
+	}
+	
 	@Override
 	protected void onDestroy() {
 		if (mBgAnimation != null && mBgAnimation.isRunning()) {
@@ -87,55 +87,29 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 
 	@Override
 	public void onGameLoadingStart() {
-//		RelativeLayout.LayoutParams tvLayoutParams = new RelativeLayout.LayoutParams(
-//		RelativeLayout.LayoutParams.WRAP_CONTENT,
-//		RelativeLayout.LayoutParams.WRAP_CONTENT);
-//		tvLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-//		TextView tv = new TextView(this);
-//		tv.setText("test");
-//		tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
-//		tv.setLayoutParams(tvLayoutParams);
-		
-		mProgressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
-		mProgressBar.setMax(100);
-		mProgressBar.setProgress(0);
-		mProgressBar.setLayoutParams(new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.MATCH_PARENT,
-				FrameLayout.LayoutParams.WRAP_CONTENT));
-		
-		mLoadingContainerLayout = new RelativeLayout(this);
-		RelativeLayout.LayoutParams containerLayoutParams = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		containerLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-		mLoadingContainerLayout.setLayoutParams(containerLayoutParams);
-		mLoadingContainerLayout.setPadding(20, 0, 20, 0);	    
-//		containerLayout.addView(tv);
-		mLoadingContainerLayout.addView(mProgressBar);
-		
-		((RelativeLayout) findViewById(R.id.fragmentsContainer)).addView(mLoadingContainerLayout);
+		if (mGameDataLoadingListener != null) {
+			mGameDataLoadingListener.onGameLoadingStart();
+		}
 	}
-
+	
 	@Override
 	public void onGameLoadingProgress(int progress) {
-		Log.d(DEBUG_TAG, "progress : " + String.valueOf(progress) + "%");
-		mProgressBar.setProgress(progress);
-		mProgressBar.invalidate();
+		if (mGameDataLoadingListener != null) {
+			mGameDataLoadingListener.onGameLoadingProgress(progress);
+		}
 	}
 
 	@Override
 	public void onGameLoadingSuccess(List<Section> sections) {
-		mProgressBar.setVisibility(View.GONE);
-		mLoadingContainerLayout.setVisibility(View.GONE);
-		
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		NavigationUtils.directNavigationTo(MenuFragment.class,
-				getSupportFragmentManager(), this, false, transaction);
+		if (mGameDataLoadingListener != null) {
+			mGameDataLoadingListener.onGameLoadingSuccess(sections);
+		}
 	}
 
 	@Override
 	public void onGameLoadingFailure(Exception e) {
-		// TODO Auto-generated method stub
+		if (mGameDataLoadingListener != null) {
+			mGameDataLoadingListener.onGameLoadingFailure(e);
+		}		
 	}
-
 }

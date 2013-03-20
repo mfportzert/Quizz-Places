@@ -1,7 +1,11 @@
 package com.quizz.places.fragments;
 
+import java.util.List;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorSet;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
@@ -16,10 +21,14 @@ import com.quizz.core.dialogs.ConfirmQuitDialog;
 import com.quizz.core.dialogs.ConfirmQuitDialog.Closeable;
 import com.quizz.core.fragments.BaseMenuFragment;
 import com.quizz.core.listeners.VisibilityAnimatorListener;
+import com.quizz.core.models.Section;
 import com.quizz.core.utils.AnimatorUtils;
+import com.quizz.core.utils.NavigationUtils;
 import com.quizz.places.R;
+import com.quizz.places.activities.QuizzActivity;
+import com.quizz.places.db.GameDataLoading.GameDataLoadingListener;
 
-public class MenuFragment extends BaseMenuFragment implements Closeable {
+public class MenuFragment extends BaseMenuFragment implements Closeable, GameDataLoadingListener {
 
 	private Button mButtonPlay;
 	private Button mButtonRateThisApp;
@@ -29,13 +38,19 @@ public class MenuFragment extends BaseMenuFragment implements Closeable {
 
 	private ImageView mTitleSign;
 	private ImageView mFooter;
-	//private ImageButton mButtonHomeExit;
 
+	private ProgressBar mDataLoadingProgressBar;
 	private AnimatorSet mHideUiAnimatorSet;
-	private View mConfirmQuitDialogView;
 	private ConfirmQuitDialog mConfirmQuitDialog;
 	
-	@SuppressWarnings("deprecation")
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof QuizzActivity) {
+			((QuizzActivity) activity).setGameDataLoadingListener(this);
+		}
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -49,10 +64,9 @@ public class MenuFragment extends BaseMenuFragment implements Closeable {
 		mButtonSettings = (Button) view.findViewById(R.id.buttonSettings);
 		mTitleSign = (ImageView) view.findViewById(R.id.titleSign);
 		mFooter = (ImageView) view.findViewById(R.id.footer);
-		mMenuButtonsContainer = (LinearLayout) view
-				.findViewById(R.id.menuButtonsContainer);
-		//mButtonHomeExit = (ImageButton) view.findViewById(R.id.buttonHomeExit);
-
+		mMenuButtonsContainer = (LinearLayout) view.findViewById(R.id.menuButtonsContainer);
+		mDataLoadingProgressBar = (ProgressBar) view.findViewById(R.id.dataLoadingProgress);
+		
 		mHideUiAnimatorSet = createHideUiAnimation();
 		FragmentTransaction fadeTransaction = getActivity()
 				.getSupportFragmentManager().beginTransaction();
@@ -65,19 +79,40 @@ public class MenuFragment extends BaseMenuFragment implements Closeable {
 				mHideUiAnimatorSet);
 		initMenuButton(mButtonSettings, SettingsFragment.class, fadeTransaction,
 				mHideUiAnimatorSet);
-/*
-		mButtonHomeExit.setAlpha(220);
-		mButtonHomeExit.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				getActivity().onBackPressed();
-			}
-		});*/
 
 		return view;
 	}
 
+	@Override
+	public void onGameLoadingStart() {
+		
+	}
+	
+	@Override
+	public void onGameLoadingProgress(int progress) {
+		Log.d("BLABLA", "progress : " + String.valueOf(progress) + "%");
+		mDataLoadingProgressBar.setProgress(progress);
+		mDataLoadingProgressBar.invalidate();
+	}
+
+	@Override
+	public void onGameLoadingSuccess(List<Section> sections) {
+		mDataLoadingProgressBar.setVisibility(View.GONE);
+		
+		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(
+				mMenuButtonsContainer, "alpha", 0f, 1f);
+		buttonsDisplay.setDuration(500);
+		buttonsDisplay.setStartDelay(700);
+		buttonsDisplay.addListener(new VisibilityAnimatorListener(
+				mMenuButtonsContainer));
+		buttonsDisplay.start();
+	}
+
+	@Override
+	public void onGameLoadingFailure(Exception e) {
+		// TODO FIXME: Find a solution to let the player play anyway
+	}
+	
 	@Override
 	public void onDestroy() {
 		if (mConfirmQuitDialog != null) {
@@ -115,22 +150,6 @@ public class MenuFragment extends BaseMenuFragment implements Closeable {
 
 		AnimatorUtils.bounceAnimator(signPopup, signMovementValues, 5, 100);
 		AnimatorUtils.bounceAnimator(footerPopup, footerMovementValues, 5, 100);
-
-		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(
-				mMenuButtonsContainer, "alpha", 0f, 1f);
-		buttonsDisplay.setDuration(500);
-		buttonsDisplay.setStartDelay(700);
-		buttonsDisplay.addListener(new VisibilityAnimatorListener(
-				mMenuButtonsContainer));
-		buttonsDisplay.start();
-/*
-		ObjectAnimator homeExitDisplay = ObjectAnimator.ofFloat(
-				mButtonHomeExit, "alpha", 0f, 1f);
-		homeExitDisplay.setDuration(500);
-		homeExitDisplay.setStartDelay(700);
-		homeExitDisplay.addListener(new VisibilityAnimatorListener(
-				mButtonHomeExit));
-		homeExitDisplay.start();*/
 	}
 
 	private AnimatorSet createHideUiAnimation() {
@@ -145,14 +164,9 @@ public class MenuFragment extends BaseMenuFragment implements Closeable {
 		ObjectAnimator buttonsHiding = ObjectAnimator.ofFloat(
 				mMenuButtonsContainer, "alpha", 1f, 0f);
 		buttonsHiding.setDuration(500);
-/*
-		ObjectAnimator homeExitHiding = ObjectAnimator.ofFloat(mButtonHomeExit,
-				"alpha", 1f, 0f);
-		homeExitHiding.setDuration(500);
-*/
+
 		AnimatorSet uiHidingAnimation = new AnimatorSet();
-		uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding/*,
-				homeExitHiding*/);
+		uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding);
 		return uiHidingAnimation;
 	}
 }
