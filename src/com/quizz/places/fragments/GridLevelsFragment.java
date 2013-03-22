@@ -190,10 +190,8 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 					Bundle args = new Bundle();
 					args.putParcelable(BaseLevelFragment.ARG_LEVEL,
 							mAdapter.getItem(mPosition));
-					NavigationUtils
-							.directNavigationTo(LevelFragment.class,
-									fragmentManager, container, true,
-									transaction, args);
+					NavigationUtils.directNavigationTo(LevelFragment.class, 
+							fragmentManager, container, true, transaction, args);
 				}
 			}
 

@@ -33,7 +33,6 @@ import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Level;
-import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.utils.StringUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
@@ -45,42 +44,80 @@ public class LevelFragment extends BaseLevelFragment {
 	public static final int LEVEL_SUCCESS_REQUEST_CODE = 1;
 	private static final int GREEN_LETTER = 0xff34C924;
 	
+	private ImageView mPictureBig;
+	private ImageButton mHintsButton;
 	private TextView mLevelTitle;
 	private Button mCheckButton;
 	private EditText mInputText;
 
+	private ImageView mMediumStar;
+	private ImageView mHardStar;
+	private TextView mActionBarHints;
+	
 	private Level mLevel;
 	private String mPartialResponse;
-
+	private ImageLoader mImageLoader;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 
 		View view = inflater.inflate(R.layout.fragment_level, container, false);
-		ImageView pictureBig = (ImageView) view
-				.findViewById(R.id.levelPictureBig);
-		ImageButton hintsButton = (ImageButton) view
-				.findViewById(R.id.levelHints);
+		mPictureBig = (ImageView) view.findViewById(R.id.levelPictureBig);
+		mHintsButton = (ImageButton) view.findViewById(R.id.levelHints);
 		mLevelTitle = (TextView) view.findViewById(R.id.levelName);
 		mCheckButton = (Button) view.findViewById(R.id.levelCheckButton);
 		mInputText = (EditText) view.findViewById(R.id.levelInputResponse);
+		
+		// Init actionBar
+		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
+		actionBar.setCustomView(R.layout.ab_view_level);
 
-		/* Load + rotate picture */
-		mLevel = getArguments().getParcelable(ARG_LEVEL);
-		ImageLoader imageLoader = new ImageLoader(getActivity());
-		imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR
-				+ mLevel.imageName, pictureBig, ImageType.LOCAL);
-
-		ObjectAnimator.ofFloat(pictureBig, "rotation", 0.0f, mLevel.rotation / 4)
-				.setDuration(0).start();
+		View customView = actionBar.getCustomViewContainer();
+		mMediumStar = (ImageView) customView.findViewById(R.id.levelStarMedium);
+		mHardStar = (ImageView) customView.findViewById(R.id.levelStarHard);
+		mActionBarHints = (TextView) customView.findViewById(R.id.ab_level_hints_nb);
+		
+		mImageLoader = new ImageLoader(getActivity());
+		mCheckButton.setOnClickListener(mCheckButtonClickListener);
+		mHintsButton.setOnClickListener(mHintsButtonClickListener);
+		
+		// Load special font
+		Typeface face = Typeface.createFromAsset(getActivity().getAssets(),
+				"fonts/OpenSans-CondBold.ttf");
+		mLevelTitle.setTypeface(face);
 
 		// get number of hints the user can reveal
 		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
-		int hintsAvailableToUnlock = sharedPreferences.getInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0);
+		int hintsAvailableToUnlock = sharedPreferences.getInt(
+				BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0);
 		
-		/* Manage action bar + difficulty */
-		setActionbarView(hintsAvailableToUnlock);
+		mActionBarHints.setText(String.valueOf(hintsAvailableToUnlock));
+		
+		Level level = getArguments().getParcelable(ARG_LEVEL);
+		initLayout(level);
+		
+		return view;
+	}
+
+	/**
+	 * Load, rotate picture, fill data
+	 * 
+	 * @param level
+	 */
+	private void initLayout(Level level) {
+		if (level == null) {
+			return;
+		}
+		
+		mLevel = level;
+		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + mLevel.imageName, 
+				mPictureBig, ImageType.LOCAL);
+
+		ObjectAnimator.ofFloat(mPictureBig, "rotation", 0.0f, mLevel.rotation / 4)
+				.setDuration(0)
+				.start();		
 
 		// Init partial response
 		mPartialResponse = "" + mLevel.response.charAt(0);
@@ -88,42 +125,21 @@ public class LevelFragment extends BaseLevelFragment {
 			mPartialResponse += (mLevel.response.charAt(i) == ' ') ? ' ' : '_';
 		}
 		
-		/* Init layout */
 		mLevelTitle.setText(mPartialResponse);
-		mCheckButton.setOnClickListener(mCheckButtonClickListener);
-		hintsButton.setOnClickListener(mHintsButtonClickListener);
-
+		
 		InputFilter[] FilterArray = new InputFilter[1];
 		FilterArray[0] = new InputFilter.LengthFilter(mLevel.response.length());
 		mInputText.setFilters(FilterArray);
-		// TODO: Init input response hint (x words, x letters)
-
-		Typeface face = Typeface.createFromAsset(getActivity().getAssets(),
-				"fonts/OpenSans-CondBold.ttf");
-		mLevelTitle.setTypeface(face);
-
-		return view;
-	}
-
-	private void setActionbarView(int hintsAvailableToUnlock) {
-		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
-		actionBar.setCustomView(R.layout.ab_view_level);
-
-		View customView = actionBar.getCustomViewContainer();
-		ImageView mediumStar = (ImageView) customView.findViewById(R.id.levelStarMedium);
-		ImageView hardStar = (ImageView) customView.findViewById(R.id.levelStarHard);
-
-		mediumStar.setEnabled(true);
-		hardStar.setEnabled(true);
-		if (mLevel.difficulty.equals(Level.LEVEL_MEDIUM)) {
-			hardStar.setEnabled(false);
-		} else if (!mLevel.difficulty.equals(Level.LEVEL_HARD)) {
-			mediumStar.setEnabled(false);
-			hardStar.setEnabled(false);
-		}
 		
-		((TextView) customView.findViewById(R.id.ab_level_hints_nb)).setText(
-				String.valueOf(hintsAvailableToUnlock));
+		// Fill action bar difficulty
+		mMediumStar.setEnabled(false);
+		mHardStar.setEnabled(false);
+		if (mLevel.difficulty.equals(Level.LEVEL_MEDIUM)) {
+			mHardStar.setEnabled(true);
+		} else if (!mLevel.difficulty.equals(Level.LEVEL_HARD)) {
+			mMediumStar.setEnabled(true);
+			mHardStar.setEnabled(true);
+		}
 	}
 	
 	private boolean isCharacterValid(char userLetter, char responseLetter) {
@@ -190,39 +206,38 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 
 	public void onSuccess() {
-		startActivity(new Intent(LevelFragment.this.getActivity(), LevelSuccessDialog.class));
-
 		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
+
+		int newHintsAvailableNb = sharedPreferences.getInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0) + 
+				sharedPreferences.getInt(BaseQuizzApplication.PREF_DEFAULT_NB_HINTS_ONSUCCESS_KEY, 2);
+
 		Editor editor = sharedPreferences.edit();
-		editor.putInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 
-				sharedPreferences.getInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0) +
-				sharedPreferences.getInt(BaseQuizzApplication.PREF_DEFAULT_NB_HINTS_ONSUCCESS_KEY, 2)
-				);
+		editor.putInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, newHintsAvailableNb);
 		editor.commit();
+		
+		// update actionBar hints number
+		mActionBarHints.setText(String.valueOf(newHintsAvailableNb));
 		
 		mLevel.status = Level.STATUS_LEVEL_CLEAR;
 		mLevel.update();
+		
+		// Launching LevelSuccessDialog
+		startActivityForResult(new Intent(getActivity(), LevelSuccessDialog.class), 
+				LEVEL_SUCCESS_REQUEST_CODE);
 	}
 	
 	public void onError(int errorsCount) {
 		
 	}
 	
+	private void loadNewLevel(Level level) {
+		initLayout(level);
+	}
+	
 	public void onNextLevel() {
 		Level nextLevel = DataManager.getNextLevel(mLevel);
 		if (nextLevel != null) {
-			FragmentContainer container = (FragmentContainer) getActivity();
-			FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-	
-			FragmentTransaction transaction = fragmentManager.beginTransaction();
-			transaction.setCustomAnimations(R.anim.fade_in,
-					R.anim.none, R.anim.slide_in_left,
-					R.anim.slide_out_right);
-	
-			Bundle args = new Bundle();
-			args.putParcelable(BaseLevelFragment.ARG_LEVEL, nextLevel);
-			NavigationUtils.directNavigationTo(LevelFragment.class, fragmentManager, 
-					container, false, transaction, args);
+			loadNewLevel(nextLevel);
 		}
 	}
 	
@@ -253,8 +268,7 @@ public class LevelFragment extends BaseLevelFragment {
 
 		@Override
 		public void onClick(View v) {
-			LevelFragment.this.startActivityForResult(new Intent(LevelFragment.this.getActivity(),
-					HintsDialog.class), LEVEL_SUCCESS_REQUEST_CODE);
+			startActivity(new Intent(getActivity(), HintsDialog.class));
 		}
 	};
 }
