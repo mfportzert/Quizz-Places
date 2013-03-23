@@ -1,10 +1,7 @@
 package com.quizz.places.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +16,11 @@ import com.quizz.core.fragments.BaseSettingsFragment;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.db.PlacesDAO;
+import com.quizz.places.utils.PreferencesUtils;
 
 public class SettingsFragment extends BaseSettingsFragment {
 	private boolean mHideActionBarOnDestroyView = true;
 
-	private static final String PREF_AUDIO_KEY = "QuizzPlaces.AUDIO";
-	private static final String PREF_VIBRATION_KEY = "QuizzPlaces.VIBRATION";
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,21 +39,16 @@ public class SettingsFragment extends BaseSettingsFragment {
 
 		final Button resetButton = (Button) view.findViewById(R.id.ResetButton);
 		
-		final SharedPreferences sharedPreferences = getActivity().getPreferences(Activity.MODE_PRIVATE);
-		if (!sharedPreferences.contains(PREF_AUDIO_KEY)) {
-			Editor editor = sharedPreferences.edit();
-			editor.putBoolean(PREF_AUDIO_KEY, false);
-			editor.commit();
+		if (!PreferencesUtils.isAudioEnabled(this.getActivity())) {
+			PreferencesUtils.setAudioEnabled(this.getActivity(), false);
 		} else {
-			audioCheckbox.setChecked(sharedPreferences.getBoolean(PREF_AUDIO_KEY, false));
+			audioCheckbox.setChecked(PreferencesUtils.isAudioEnabled(this.getActivity()));
 			audioLabel.setText(audioCheckbox.isChecked() ? R.string.audio_on : R.string.audio_off);
 		}
-		if (!sharedPreferences.contains(PREF_VIBRATION_KEY)) {
-			Editor editor = sharedPreferences.edit();
-			editor.putBoolean(PREF_VIBRATION_KEY, false);
-			editor.commit();
+		if (!PreferencesUtils.isVibrationEnabled(this.getActivity())) {
+			PreferencesUtils.setVibrationEnabled(this.getActivity(), false);
 		} else {
-			vibrationCheckbox.setChecked(sharedPreferences.getBoolean(PREF_VIBRATION_KEY, false));
+			vibrationCheckbox.setChecked(PreferencesUtils.isVibrationEnabled(this.getActivity()));
 			vibrationLabel.setText(
 					vibrationCheckbox.isChecked() ? R.string.vibration_on : R.string.vibration_off);			
 		}
@@ -66,9 +56,7 @@ public class SettingsFragment extends BaseSettingsFragment {
 		audioCheckbox.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Editor editor = sharedPreferences.edit();
-				editor.putBoolean(PREF_AUDIO_KEY, audioCheckbox.isChecked());
-				editor.commit();
+				PreferencesUtils.setAudioEnabled(getActivity(), audioCheckbox.isChecked());
 				audioLabel.setText(audioCheckbox.isChecked() ? R.string.audio_on : R.string.audio_off);
 			}
 		});
@@ -76,9 +64,7 @@ public class SettingsFragment extends BaseSettingsFragment {
 		vibrationCheckbox.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Editor editor = sharedPreferences.edit();
-				editor.putBoolean(PREF_VIBRATION_KEY, vibrationCheckbox.isChecked());
-				editor.commit();
+				PreferencesUtils.setVibrationEnabled(getActivity(), vibrationCheckbox.isChecked());
 				vibrationLabel.setText(
 						vibrationCheckbox.isChecked() ? R.string.vibration_on : R.string.vibration_off);
 			}
