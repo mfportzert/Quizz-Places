@@ -80,6 +80,8 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		initMenuButton(mButtonSettings, SettingsFragment.class, fadeTransaction,
 				mHideUiAnimatorSet);
 
+		showUi();
+		
 		return view;
 	}
 
@@ -119,12 +121,6 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		getActivity().finish();
 	}
 	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		showUi();
-	}
-
 	private void displayButtons() {
 		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(
 				mMenuButtonsContainer, "alpha", 0f, 1f);

@@ -2,7 +2,6 @@ package com.quizz.places.activities;
 
 import java.util.List;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -33,6 +32,9 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		if (savedInstanceState == null) {
 			// First launch of the activity, not a rotation change
 			getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			NavigationUtils.directNavigationTo(MenuFragment.class,
+					getSupportFragmentManager(), this, false, transaction);
 		}
 
 		if (!DataManager.dataLoaded) {
@@ -44,10 +46,6 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 				R.drawable.back_but_5);
 		getQuizzActionBar().setCustomView(R.layout.ab_view_sections);
 		getQuizzActionBar().setBackgroundResource(R.drawable.bg_actionbar);
-
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		NavigationUtils.directNavigationTo(MenuFragment.class,
-				getSupportFragmentManager(), this, false, transaction);
 		
 		initBackground();
 	}
