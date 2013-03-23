@@ -34,6 +34,9 @@
    	<string name="hard_found">Hard found</string>
    	<string name="used_hints">Used hints</string>
    	
+   	<!-- Grid levels -->
+   	<string name="complete">cleared</string>
+   	
    	<!-- Level -->
    	<string name="level_success_title">Well done !</string>
    	

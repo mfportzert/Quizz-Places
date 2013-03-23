@@ -37,8 +37,6 @@ public class SettingsFragment extends BaseSettingsFragment {
 		
 		View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-		initActionbarView();
-		
 		final TextView audioLabel = (TextView) view.findViewById(R.id.AudioLabel);
 		final TextView vibrationLabel = (TextView) view.findViewById(R.id.VibrationLabel);
 		final CheckBox audioCheckbox = (CheckBox) view.findViewById(R.id.AudioCheckbox);
@@ -97,6 +95,8 @@ public class SettingsFragment extends BaseSettingsFragment {
 			}
 		});
 		
+		initActionbarView();
+		
 		return view;
 	}
 
@@ -153,8 +153,7 @@ public class SettingsFragment extends BaseSettingsFragment {
 	}
 	
 	private void initActionbarView() {
-		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity())
-				.getQuizzActionBar();
+		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
 		actionBar.setCustomView(R.layout.ab_view_settings);
 		View customView = actionBar.getCustomViewContainer();
 		((TextView) customView.findViewById(R.id.ab_settings_middle_text))

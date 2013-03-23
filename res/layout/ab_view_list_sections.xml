@@ -1,7 +1,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <TextView
-        android:id="@+id/ab_settings_middle_text"
+        android:id="@+id/ab_list_sections_middle_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 		android:layout_centerInParent="true"
@@ -15,7 +15,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/ab_settings_right_text"
+        android:id="@+id/ab_list_sections_right_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -25,8 +25,8 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:textColor="#616161"
+        android:textColor="#636363"
         android:textSize="20sp"
-        android:textStyle="normal" />
+        android:textStyle="bold" />
     
 </merge>

@@ -89,9 +89,9 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
 		actionBar.setCustomView(R.layout.ab_view_list_sections);
 		View customView = actionBar.getCustomViewContainer();
-		((TextView) customView.findViewById(R.id.ab_settings_middle_text))
+		((TextView) customView.findViewById(R.id.ab_list_sections_middle_text))
 				.setText(middleText);
-		((TextView) customView.findViewById(R.id.ab_settings_right_text)).setText(rightText);
+		((TextView) customView.findViewById(R.id.ab_list_sections_right_text)).setText(rightText);
 	}
 	
 	// ===========================================================
