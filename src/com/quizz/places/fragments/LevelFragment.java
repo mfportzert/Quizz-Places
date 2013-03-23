@@ -9,8 +9,6 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -18,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -33,7 +30,6 @@ import com.quizz.core.application.BaseQuizzApplication;
 import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
-import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Level;
 import com.quizz.core.utils.StringUtils;
@@ -208,7 +204,7 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 	}
 
-	public void onSuccess() {
+	private void onSuccess() {
 		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
 
 		int newHintsAvailableNb = sharedPreferences.getInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0) + 
@@ -225,11 +221,12 @@ public class LevelFragment extends BaseLevelFragment {
 		mLevel.update();
 		
 		// Launching LevelSuccessDialog
-		startActivityForResult(new Intent(getActivity(), LevelSuccessDialog.class), 
-				LEVEL_SUCCESS_REQUEST_CODE);
+		Intent intent = new Intent(getActivity(), LevelSuccessDialog.class);
+		intent.putExtra(LevelSuccessDialog.EXTRA_IS_LAST_LEVEL, DataManager.isLastLevel(mLevel));
+		startActivityForResult(intent, LEVEL_SUCCESS_REQUEST_CODE);
 	}
 	
-	public void onError(int errorsCount) {
+	private void onError(int errorsCount) {
 		
 	}
 	
@@ -237,7 +234,7 @@ public class LevelFragment extends BaseLevelFragment {
 		initLayout(level);
 	}
 	
-	public void onNextLevel() {
+	private void onNextLevel() {
 		// Fade out current level, load next level when animation end
 		ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(getView(), "alpha", 1f, 0f);
 		alphaAnimator.setDuration(200);
@@ -250,8 +247,15 @@ public class LevelFragment extends BaseLevelFragment {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		if (requestCode == LEVEL_SUCCESS_REQUEST_CODE) {
-			if (resultCode == LevelSuccessDialog.RESULT_CODE_NEXT) {
-				onNextLevel();
+			switch (resultCode) {
+			
+				case LevelSuccessDialog.RESULT_CODE_NEXT:
+					onNextLevel();
+					break;
+					
+				case LevelSuccessDialog.RESULT_CODE_BACK:
+					getActivity().onBackPressed();
+					break;
 			}
 		}
 	}
@@ -299,25 +303,6 @@ public class LevelFragment extends BaseLevelFragment {
 				alphaAnimator.setDuration(200);
 				alphaAnimator.start();
 			}
-		}
-		
-		@Override
-		public void onAnimationCancel(Animator animation) {
-		}
-	};
-	
-	AnimatorListener mEndLoadLevelAnimatorListener = new AnimatorListener() {
-		
-		@Override
-		public void onAnimationStart(Animator animation) {
-		}
-		
-		@Override
-		public void onAnimationRepeat(Animator animation) {
-		}
-		
-		@Override
-		public void onAnimationEnd(Animator animation) {
 		}
 		
 		@Override
