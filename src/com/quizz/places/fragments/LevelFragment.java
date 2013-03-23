@@ -18,12 +18,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
+import com.actionbarsherlock.internal.nineoldandroids.animation.Animator.AnimatorListener;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.application.BaseQuizzApplication;
@@ -235,10 +238,11 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 	
 	public void onNextLevel() {
-		Level nextLevel = DataManager.getNextLevel(mLevel);
-		if (nextLevel != null) {
-			loadNewLevel(nextLevel);
-		}
+		// Fade out current level, load next level when animation end
+		ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(getView(), "alpha", 1f, 0f);
+		alphaAnimator.setDuration(200);
+		alphaAnimator.addListener(mStartLoadLevelAnimatorListener);			
+		alphaAnimator.start();
 	}
 	
 	@Override
@@ -269,6 +273,55 @@ public class LevelFragment extends BaseLevelFragment {
 		@Override
 		public void onClick(View v) {
 			startActivity(new Intent(getActivity(), HintsDialog.class));
+		}
+	};
+	
+	AnimatorListener mStartLoadLevelAnimatorListener = new AnimatorListener() {
+		
+		@Override
+		public void onAnimationStart(Animator animation) {
+		}
+		
+		@Override
+		public void onAnimationRepeat(Animator animation) {
+		}
+		
+		@Override
+		public void onAnimationEnd(Animator animation) {
+			Level nextLevel = DataManager.getNextLevel(mLevel);
+			if (nextLevel != null) {
+				loadNewLevel(nextLevel);
+			}
+			
+			// Fade in new level
+			if (getView() != null) {
+				ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(getView(), "alpha", 0f, 1f);
+				alphaAnimator.setDuration(200);
+				alphaAnimator.start();
+			}
+		}
+		
+		@Override
+		public void onAnimationCancel(Animator animation) {
+		}
+	};
+	
+	AnimatorListener mEndLoadLevelAnimatorListener = new AnimatorListener() {
+		
+		@Override
+		public void onAnimationStart(Animator animation) {
+		}
+		
+		@Override
+		public void onAnimationRepeat(Animator animation) {
+		}
+		
+		@Override
+		public void onAnimationEnd(Animator animation) {
+		}
+		
+		@Override
+		public void onAnimationCancel(Animator animation) {
 		}
 	};
 }

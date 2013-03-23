@@ -34,8 +34,6 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-
-		setActionbarView(getActivity().getString(R.string.ab_sections_title), "");
 		
 		View view = inflater.inflate(R.layout.fragment_list_sections, container, false);
 
