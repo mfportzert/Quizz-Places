@@ -17,6 +17,9 @@ import com.quizz.places.widgets.RotatingSunEffect;
 public class LevelSuccessDialog extends Activity {
 	public static final int RESULT_CODE_CLOSE = 1;
 	public static final int RESULT_CODE_NEXT = 2;
+	public static final int RESULT_CODE_BACK = 3;
+	
+	public static final String EXTRA_IS_LAST_LEVEL = "LevelSuccessDialog.EXTRA_IS_LAST_LEVEL";
 	
 	private ValueAnimator mBackgroundRotationAnimator;
 	
@@ -31,8 +34,17 @@ public class LevelSuccessDialog extends Activity {
 		setContentView(R.layout.dialog_level_success);
 		Button closeButton = (Button) findViewById(R.id.level_success_close_button);
 		Button nextButton = (Button) findViewById(R.id.level_success_next_button);
+		Button backButton = (Button) findViewById(R.id.level_success_back_button);
 		closeButton.setOnClickListener(mOnCloseButtonClickListener);
-		nextButton.setOnClickListener(mOnNextButtonClickListener);
+		
+		boolean isLastLevel = getIntent().getExtras().getBoolean(EXTRA_IS_LAST_LEVEL, true);
+		if (!isLastLevel) {
+			nextButton.setOnClickListener(mOnNextButtonClickListener);
+		} else {
+			nextButton.setVisibility(View.GONE);
+			backButton.setVisibility(View.VISIBLE);
+			backButton.setOnClickListener(mOnBackButtonClickListener);
+		}
 		
 		final RotatingSunEffect background = (RotatingSunEffect) findViewById(R.id.level_success_background_effect);
 		
@@ -64,6 +76,10 @@ public class LevelSuccessDialog extends Activity {
 		finish();
 	}
 	
+	// ===========================================================
+	// Listeners
+	// ===========================================================
+	
 	OnClickListener mOnCloseButtonClickListener = new OnClickListener() {
 		
 		@Override
@@ -77,6 +93,14 @@ public class LevelSuccessDialog extends Activity {
 		@Override
 		public void onClick(View v) {
 			close(RESULT_CODE_NEXT);
+		}
+	};
+	
+	OnClickListener mOnBackButtonClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			close(RESULT_CODE_BACK);
 		}
 	};
 }

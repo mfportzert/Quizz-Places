@@ -101,8 +101,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 	OnItemClickListener mSectionItemClickListener = new OnItemClickListener() {
 
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-				long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 			mHideActionBarOnDestroyView = false;
 			FragmentContainer container = (FragmentContainer) getActivity();
 			FragmentManager fragmentManager = getActivity()
