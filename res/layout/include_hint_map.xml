@@ -1,0 +1,12 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ImageView 
+        android:id="@+id/mapLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/world_map_zoom4"
+        android:layout_marginTop="15dp" />
+    
+</merge>

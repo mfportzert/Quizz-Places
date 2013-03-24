@@ -14,37 +14,10 @@
         android:paddingRight="1dp"
         android:gravity="center_horizontal" >
 
-        <ImageButton
-            android:id="@+id/tab_idea"
-            android:layout_width="64dp"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:background="@drawable/dialog_tab_selector"
-            android:padding="8dp"
-            android:src="@drawable/ic_hint_idea" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/black_white_gradient_vertical" />
-
-        <ImageButton
-            android:id="@+id/tab_letters"
-            android:layout_width="64dp"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:background="@drawable/dialog_tab_selector"
-            android:padding="8dp"
-            android:src="@drawable/ic_hint_letters" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/black_white_gradient_vertical" />
 
         <ImageButton
             android:id="@+id/tab_hat"
-            android:layout_width="64dp"
+            android:layout_width="128dp"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
             android:background="@drawable/dialog_tab_selector"
@@ -58,7 +31,7 @@
 
         <ImageButton
             android:id="@+id/tab_map"
-            android:layout_width="64dp"
+            android:layout_width="128dp"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
             android:background="@drawable/dialog_tab_selector"
@@ -77,14 +50,14 @@
         android:layout_alignLeft="@+id/hints_tabs"
         android:layout_alignRight="@+id/hints_tabs" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/hints_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="200dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:gravity="center"
+        android:minHeight="150dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
         android:orientation="vertical"
         android:layout_below="@+id/hints_tabs_divider"
         android:layout_alignLeft="@+id/hints_tabs"

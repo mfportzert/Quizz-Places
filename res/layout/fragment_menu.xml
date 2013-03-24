@@ -3,32 +3,21 @@
     android:layout_height="match_parent" >
 	
     <ImageView 
-        android:id="@+id/titleSign"
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_marginTop="-70dp"
-    	android:layout_marginLeft="-10dp"
-    	android:src="@drawable/title"
-    	android:visibility="gone" />
-    
-    <ImageButton 
-        android:id="@+id/buttonHomeExit"
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:src="@drawable/exit_button_selector"
-    	android:background="@null"
-    	android:layout_alignParentRight="true"
-    	android:layout_marginRight="8dp"
-    	android:layout_marginTop="8dp"
-    	android:visibility="gone" />
-    
-    <ImageView 
         android:id="@+id/footer"
         android:layout_width="match_parent"
     	android:layout_height="wrap_content"
     	android:src="@drawable/quizz_footer"
     	android:layout_alignParentBottom="true"
     	android:scaleType="centerCrop"
+    	android:visibility="gone" />
+    
+    <ImageView 
+        android:id="@+id/titleSign"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="-70dp"
+    	android:layout_marginLeft="-10dp"
+    	android:src="@drawable/title"
     	android:visibility="gone" />
     
     <ProgressBar 

@@ -276,7 +276,9 @@ public class LevelFragment extends BaseLevelFragment {
 
 		@Override
 		public void onClick(View v) {
-			startActivity(new Intent(getActivity(), HintsDialog.class));
+			Intent intent = new Intent(getActivity(), HintsDialog.class);
+			intent.putExtra(HintsDialog.EXTRA_LEVEL, mLevel);
+			startActivity(intent);
 		}
 	};
 	
