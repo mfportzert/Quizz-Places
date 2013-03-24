@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseSettingsFragment;
@@ -34,39 +35,42 @@ public class SettingsFragment extends BaseSettingsFragment {
 
 		final TextView audioLabel = (TextView) view.findViewById(R.id.AudioLabel);
 		final TextView vibrationLabel = (TextView) view.findViewById(R.id.VibrationLabel);
-		final CheckBox audioCheckbox = (CheckBox) view.findViewById(R.id.AudioCheckbox);
-		final CheckBox vibrationCheckbox = (CheckBox) view.findViewById(R.id.VibrationCheckbox);
+//		final CheckBox audioCheckbox = (CheckBox) view.findViewById(R.id.AudioCheckbox);
+//		final CheckBox vibrationCheckbox = (CheckBox) view.findViewById(R.id.VibrationCheckbox);
 
+		final ToggleButton audioOption = (ToggleButton) view.findViewById(R.id.AudioOption);
+		final ToggleButton vibrationOption = (ToggleButton) view.findViewById(R.id.VibrationOption);
+		
 		final Button resetButton = (Button) view.findViewById(R.id.ResetButton);
 		
 		if (!PreferencesUtils.isAudioEnabled(this.getActivity())) {
 			PreferencesUtils.setAudioEnabled(this.getActivity(), false);
 		} else {
-			audioCheckbox.setChecked(PreferencesUtils.isAudioEnabled(this.getActivity()));
-			audioLabel.setText(audioCheckbox.isChecked() ? R.string.audio_on : R.string.audio_off);
+			audioOption.setChecked(PreferencesUtils.isAudioEnabled(this.getActivity()));
+			audioLabel.setText(audioOption.isChecked() ? R.string.audio_on : R.string.audio_off);
 		}
 		if (!PreferencesUtils.isVibrationEnabled(this.getActivity())) {
 			PreferencesUtils.setVibrationEnabled(this.getActivity(), false);
 		} else {
-			vibrationCheckbox.setChecked(PreferencesUtils.isVibrationEnabled(this.getActivity()));
+			vibrationOption.setChecked(PreferencesUtils.isVibrationEnabled(this.getActivity()));
 			vibrationLabel.setText(
-					vibrationCheckbox.isChecked() ? R.string.vibration_on : R.string.vibration_off);			
+					vibrationOption.isChecked() ? R.string.vibration_on : R.string.vibration_off);
 		}
-			
-		audioCheckbox.setOnClickListener(new OnClickListener() {
+
+		audioOption.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				PreferencesUtils.setAudioEnabled(getActivity(), audioCheckbox.isChecked());
-				audioLabel.setText(audioCheckbox.isChecked() ? R.string.audio_on : R.string.audio_off);
+				PreferencesUtils.setAudioEnabled(getActivity(), audioOption.isChecked());
+				audioLabel.setText(audioOption.isChecked() ? R.string.audio_on : R.string.audio_off);
 			}
 		});
 		
-		vibrationCheckbox.setOnClickListener(new OnClickListener() {
+		vibrationOption.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				PreferencesUtils.setVibrationEnabled(getActivity(), vibrationCheckbox.isChecked());
+				PreferencesUtils.setVibrationEnabled(getActivity(), vibrationOption.isChecked());
 				vibrationLabel.setText(
-						vibrationCheckbox.isChecked() ? R.string.vibration_on : R.string.vibration_off);
+						vibrationOption.isChecked() ? R.string.vibration_on : R.string.vibration_off);
 			}
 		});
 
