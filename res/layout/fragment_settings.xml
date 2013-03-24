@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!--  android:layout_marginTop="15dp" -->
     <TextView
         android:id="@+id/general_config_group_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:text="@string/setting_global_setup"
         android:textColor="#3E3E3E"
         android:shadowColor="#eee"
@@ -16,7 +17,8 @@
         android:shadowDy="1"
         android:shadowRadius="1"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/general_config_group_container"
@@ -48,7 +50,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="@string/audio"
                 android:textColor="#606060"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ToggleButton
@@ -83,7 +85,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="@string/vibration"
                 android:textColor="#606060"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ToggleButton
@@ -118,7 +120,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="@string/exit_popup"
                 android:textColor="#606060"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ToggleButton
@@ -131,6 +133,7 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <!--  android:layout_marginTop="15dp" -->
     <TextView
         android:id="@+id/game_data_group_label"
         android:layout_width="match_parent"
@@ -138,7 +141,6 @@
         android:layout_below="@+id/general_config_group_container"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
         android:text="@string/setting_game_data"
         android:textColor="#3E3E3E"
         android:textSize="18sp"
@@ -146,7 +148,8 @@
         android:shadowColor="#eee"
         android:shadowDx="1"
         android:shadowDy="1"
-        android:shadowRadius="1" />
+        android:shadowRadius="1"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -177,7 +180,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="@string/reset_game"
                 android:textColor="#606060"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Button

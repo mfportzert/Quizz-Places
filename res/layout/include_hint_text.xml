@@ -1,22 +1,24 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
 
-    <TextView 
+    <TextView
         android:id="@+id/hintTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textStyle="bold"
         android:textColor="#eee"
-        android:textSize="20sp" />
-    
-    <TextView 
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/hintMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_below="@+id/hintTitle"
         android:layout_marginTop="25dp"
+        android:gravity="center_horizontal"
         android:textColor="#eee"
         android:textSize="16sp" />
-    
-</merge>
+
+</RelativeLayout>
