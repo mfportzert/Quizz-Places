@@ -158,12 +158,11 @@ public class GameDataLoading {
 					Log.e("ASYNC", "for: "+System.currentTimeMillis());
 					if (sections.size() > 0) {
 						int progress = 0;
-						int ratio = 100 / sections.size();
 						Log.e("ASYNC", "before inserts: "+System.currentTimeMillis());
 						for (Section section : sections) {
 							section.status = (section.number == 1) ? Section.SECTION_UNLOCKED : Section.SECTION_LOCKED;
 							QuizzDAO.INSTANCE.insertSection(section);
-							int progressTmp = ++progress * ratio;
+							int progressTmp = (int) (++progress * 100.0f) / sections.size(); //(int) (n * 100.0f) / v;
 							Log.e("ASYNC", "progress: "+progressTmp+", time: "+System.currentTimeMillis());
 							publishProgress(progressTmp);
 						}

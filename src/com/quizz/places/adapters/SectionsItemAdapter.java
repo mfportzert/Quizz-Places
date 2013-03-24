@@ -2,6 +2,7 @@ package com.quizz.places.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.quizz.core.models.Level;
 import com.quizz.core.models.Section;
 import com.quizz.core.utils.ConvertUtils;
 import com.quizz.core.widgets.SectionProgressView;
@@ -82,8 +84,17 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		holder.name.setText(section.name);
 		holder.progress.setProgressDrawable(mProgressDrawables[position
 				% mProgressDrawables.length]);
-		holder.progress.setProgressValue(34);
-
+		
+		if (section.levels != null && section.levels.size() > 0) {
+			int nbLevelsCleared = 0;
+			for (Level lvl : section.levels) {
+				nbLevelsCleared += (lvl.status == Level.STATUS_LEVEL_CLEAR) ? 1 : 0;
+			}
+			holder.progress.setProgressValue((int) (nbLevelsCleared * 100.0f)  / section.levels.size());
+		} else {
+			holder.progress.setProgressValue(0);
+		}
+		
 		int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f, getContext());
 		int horizontalPadding = (int) ConvertUtils.convertDpToPixels(3f, getContext());
 		holder.progress.setPaddingProgress(horizontalPadding, verticalPadding,
