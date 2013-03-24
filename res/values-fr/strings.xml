@@ -19,11 +19,15 @@
    	<string name="label_button_settings">OPTIONS</string>
 
   	<!-- Paramètres -->
-   	<string name="audio_on">Audio activé</string>
-   	<string name="audio_off">Audio désactivé</string>
-   	<string name="vibration_on">Vibration activé</string>
-   	<string name="vibration_off">Vibration désactivé</string>
+   	<string name="audio_on">Audio</string>
+<!--    	<string name="audio_off">Audio désactivé</string> -->
+   	<string name="vibration_on">Vibration</string>
+<!--    	<string name="vibration_off">Vibration désactivé</string> -->
+	<string name="exit_popup">Confirmer pour quitter</string>
    	<string name="reset_game">Réinitialiser le jeu</string>
+ 	<string name="setting_game_data">Données du jeu</string>
+	<string name="clear_cache">Effacer le cache</string>
+	<string name="setting_global_setup">Configuration générale</string>
    	<string name="confirm_reset">Votre progression et tous vos indices débloqués seront effacés.\nÊtes vous sur de vouloir réinitialiser le jeu ?</string>
    	
    	<!-- Stats -->

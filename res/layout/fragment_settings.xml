@@ -8,14 +8,10 @@
 	    android:id="@+id/general_config_group_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Global setup"
+        android:text="@string/setting_global_setup"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="17dp"
         android:layout_marginRight="15dp"
-        android:shadowColor="#888"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="2"
         android:textColor="#333"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -44,7 +40,7 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/audio_off"
+		        android:text="@string/audio"
 		        android:layout_marginLeft="10dp"
 		        android:textSize="20sp"
 		        android:textStyle="bold" />
@@ -82,7 +78,7 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/vibration_off"
+		        android:text="@string/vibration"
 		        android:layout_marginLeft="10dp"
 		        android:textSize="20sp"
 		        android:textStyle="bold" />
@@ -111,7 +107,7 @@
 
        	<RelativeLayout
 	       android:layout_width="match_parent"
-	       android:layout_height="wrap_content"
+	       android:layout_height="50dp"
 	       android:layout_margin="5dp" >
         
             <TextView 
@@ -120,7 +116,7 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/vibration_off"
+		        android:text="@string/exit_popup"
 		        android:layout_marginLeft="10dp"
 		        android:textSize="20sp"
 		        android:textStyle="bold" />
@@ -130,17 +126,11 @@
                 style="@style/Widget.Button.Toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:layout_alignParentRight="true" />
 	        
 	    </RelativeLayout>
 	    
-       	<View 
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#88888888"/>
-        
     </LinearLayout>
         
     <TextView
@@ -148,14 +138,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/general_config_group_container"
-        android:text="Game data"
+        android:text="@string/setting_game_data"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="17dp"
         android:layout_marginRight="15dp"
-        android:shadowColor="#888"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="2"
         android:textColor="#333"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -183,7 +169,7 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="Reset game"
+		        android:text="@string/reset_game"
 		        android:layout_marginLeft="10dp"
 		        android:textSize="20sp"
 		        android:textStyle="bold" />
@@ -194,13 +180,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="Yes"
-	            android:textColor="#333"
-	            android:shadowColor="#FFF"
+		        android:text="@string/yes"
+	            android:textColor="#F7F7F7"
+	            android:shadowColor="#333"
 	            android:shadowRadius="2"
 	            android:textStyle="bold"
 	            android:textSize="16sp"
-	            android:background="@drawable/setting_button_bg" />
+	            android:background="@drawable/setting_blue_button_selector" />
         	        
 	    </RelativeLayout>
 	    

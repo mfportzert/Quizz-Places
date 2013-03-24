@@ -8,20 +8,25 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseSettingsFragment;
+import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.db.PlacesDAO;
-import com.quizz.places.utils.PreferencesUtils;
 
 public class SettingsFragment extends BaseSettingsFragment {
 	private boolean mHideActionBarOnDestroyView = true;
 
+	private ToggleButton mAudioOption;
+	private ToggleButton mVibrationOption;
+	private ToggleButton mExitPopupOption;
+	private Button mResetButton;
+//	private Button clearCacheButton;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,63 +38,44 @@ public class SettingsFragment extends BaseSettingsFragment {
 		
 		View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-		final TextView audioLabel = (TextView) view.findViewById(R.id.AudioLabel);
-		final TextView vibrationLabel = (TextView) view.findViewById(R.id.VibrationLabel);
-//		final CheckBox audioCheckbox = (CheckBox) view.findViewById(R.id.AudioCheckbox);
-//		final CheckBox vibrationCheckbox = (CheckBox) view.findViewById(R.id.VibrationCheckbox);
-
-		final ToggleButton audioOption = (ToggleButton) view.findViewById(R.id.AudioOption);
-		final ToggleButton vibrationOption = (ToggleButton) view.findViewById(R.id.VibrationOption);
-		
-		final Button resetButton = (Button) view.findViewById(R.id.ResetButton);
-		
-		if (!PreferencesUtils.isAudioEnabled(this.getActivity())) {
-			PreferencesUtils.setAudioEnabled(this.getActivity(), false);
-		} else {
-			audioOption.setChecked(PreferencesUtils.isAudioEnabled(this.getActivity()));
-			audioLabel.setText(audioOption.isChecked() ? R.string.audio_on : R.string.audio_off);
-		}
-		if (!PreferencesUtils.isVibrationEnabled(this.getActivity())) {
-			PreferencesUtils.setVibrationEnabled(this.getActivity(), false);
-		} else {
-			vibrationOption.setChecked(PreferencesUtils.isVibrationEnabled(this.getActivity()));
-			vibrationLabel.setText(
-					vibrationOption.isChecked() ? R.string.vibration_on : R.string.vibration_off);
-		}
-
-		audioOption.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				PreferencesUtils.setAudioEnabled(getActivity(), audioOption.isChecked());
-				audioLabel.setText(audioOption.isChecked() ? R.string.audio_on : R.string.audio_off);
-			}
-		});
-		
-		vibrationOption.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				PreferencesUtils.setVibrationEnabled(getActivity(), vibrationOption.isChecked());
-				vibrationLabel.setText(
-						vibrationOption.isChecked() ? R.string.vibration_on : R.string.vibration_off);
-			}
-		});
-
-		resetButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setMessage(R.string.confirm_reset).setPositiveButton(R.string.yes, dialogClickListener)
-				    .setNegativeButton(R.string.no, dialogClickListener).show();
-				
-			}
-		});
-		
-		initActionbarView();
+		initActionbarView();		
+		initSettingViewsFromPreferences(view);
 		
 		return view;
 	}
 
+	private void initSettingViewsFromPreferences(View pView) {
+
+		mAudioOption = (ToggleButton) pView.findViewById(R.id.AudioOption);
+		mVibrationOption = (ToggleButton) pView.findViewById(R.id.VibrationOption);
+		mExitPopupOption = (ToggleButton) pView.findViewById(R.id.ExitPopupOption);
+		mResetButton = (Button) pView.findViewById(R.id.ResetButton);
+
+		mAudioOption.setOnClickListener(mAudioListener);
+		mVibrationOption.setOnClickListener(mVibrationListener);
+		mExitPopupOption.setOnClickListener(mExitPopupListener);
+		mResetButton.setOnClickListener(mResetListener);
+
+		// init Audio
+		if (!PreferencesUtils.containsAudioPreference(this.getActivity())) {
+			PreferencesUtils.setAudioEnabled(this.getActivity(), false);
+		} else {
+			mAudioOption.setChecked(PreferencesUtils.isAudioEnabled(this.getActivity()));
+		}
+		// init Vibrations
+		if (!PreferencesUtils.containsVibrationPreference(this.getActivity())) {
+			PreferencesUtils.setVibrationEnabled(this.getActivity(), false);
+		} else {
+			mVibrationOption.setChecked(PreferencesUtils.isVibrationEnabled(this.getActivity()));
+		}
+		// init Exit popup
+		if (!PreferencesUtils.containsExitPopupPreference(this.getActivity())) {
+			PreferencesUtils.setExitPopupEnabled(this.getActivity(), true);
+		} else {
+			mExitPopupOption.setChecked(PreferencesUtils.isExitPopupEnabled(this.getActivity()));
+		}
+	}
+	
 	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 	    @Override
 	    public void onClick(DialogInterface dialog, int which) {
@@ -105,7 +91,6 @@ public class SettingsFragment extends BaseSettingsFragment {
 	    }
 	};
 
-	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -149,4 +134,40 @@ public class SettingsFragment extends BaseSettingsFragment {
 		((TextView) customView.findViewById(R.id.ab_settings_middle_text))
 				.setText(R.string.ab_settings_title);
 	}
+
+	// ===========================================================
+	// Listeners
+	// ===========================================================
+	
+	private View.OnClickListener mAudioListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			PreferencesUtils.setAudioEnabled(getActivity(), mAudioOption.isChecked());
+		}
+	};
+
+	private View.OnClickListener mVibrationListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			PreferencesUtils.setVibrationEnabled(getActivity(), mVibrationOption.isChecked());
+		}
+	};
+	
+	private View.OnClickListener mExitPopupListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			PreferencesUtils.setExitPopupEnabled(getActivity(), mExitPopupOption.isChecked());
+		}
+	};
+
+	private View.OnClickListener mResetListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setMessage(R.string.confirm_reset)
+				.setPositiveButton(R.string.yes, dialogClickListener)
+			    .setNegativeButton(R.string.no, dialogClickListener).show();
+		}
+	};	
+	
 }
