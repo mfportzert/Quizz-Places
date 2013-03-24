@@ -104,40 +104,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/levelClosedlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/levelPictureBigLayout"
-            android:layout_alignRight="@+id/levelPictureBigLayout"
-            android:layout_below="@+id/levelPictureBigLayout"
-            android:visibility="gone" >
-
-            <TextView
-                android:id="@+id/levelTextResponse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/levelInfo"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/levelInfo"
-                android:gravity="center"
-                android:text="Big Ben"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/levelInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:adjustViewBounds="true"
-                android:background="#00000000"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_info" />
-        </RelativeLayout>
     </RelativeLayout>
 
 </ScrollView>
