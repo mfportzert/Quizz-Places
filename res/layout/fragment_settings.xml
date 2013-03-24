@@ -1,194 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent" >
 
-	<TextView
-	    android:id="@+id/general_config_group_label"
+    <TextView
+        android:id="@+id/general_config_group_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/setting_global_setup"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginRight="15dp"
-        android:textColor="#333"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
-        
+        android:text="@string/setting_global_setup"
+        android:textColor="#3E3E3E"
+        android:shadowColor="#eee"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:id="@+id/general_config_group_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/general_config_group_label"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_section_rounded"
-        android:orientation="vertical">
-        
-        <RelativeLayout
-	       android:layout_width="match_parent"
-	       android:layout_height="wrap_content"
-	       android:layout_margin="5dp" >
+        android:orientation="vertical"
+        android:paddingBottom="2dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp" >
 
-            <TextView 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+
+            <TextView
                 android:id="@+id/AudioLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/audio"
-		        android:layout_marginLeft="10dp"
-		        android:textSize="20sp"
-		        android:textStyle="bold" />
-            
-            <ToggleButton 
+                android:layout_marginLeft="10dp"
+                android:text="@string/audio"
+                android:textColor="#606060"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ToggleButton
                 android:id="@+id/AudioOption"
                 style="@style/Widget.Button.Toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true" />
-            
-<!-- 	        <CheckBox -->
-<!-- 		        android:id="@+id/AudioCheckbox" -->
-<!-- 		        android:layout_alignParentRight="true" -->
-<!-- 		        android:layout_width="wrap_content" -->
-<!-- 		        android:layout_height="wrap_content" /> -->
-
         </RelativeLayout>
-        
-        <View 
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginBottom="2dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#88888888"/>
-        
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            android:background="#88aaaaaa" />
+
         <RelativeLayout
-	       android:layout_width="match_parent"
-	       android:layout_height="wrap_content"
-	       android:layout_margin="5dp" >
-        
-            <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+
+            <TextView
                 android:id="@+id/VibrationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/vibration"
-		        android:layout_marginLeft="10dp"
-		        android:textSize="20sp"
-		        android:textStyle="bold" />
-        
-<!-- 	        <CheckBox -->
-<!-- 		        android:id="@+id/VibrationCheckbox" -->
-<!-- 		        android:layout_alignParentRight="true" -->
-<!-- 		        android:layout_width="wrap_content" -->
-<!-- 		        android:layout_height="wrap_content" /> -->
+                android:layout_marginLeft="10dp"
+                android:text="@string/vibration"
+                android:textColor="#606060"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <ToggleButton 
+            <ToggleButton
                 android:id="@+id/VibrationOption"
                 style="@style/Widget.Button.Toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true" />
-	        
-	    </RelativeLayout>
-	    
-        <View 
+        </RelativeLayout>
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginBottom="2dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#88888888"/>
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            android:background="#88aaaaaa" />
 
-       	<RelativeLayout
-	       android:layout_width="match_parent"
-	       android:layout_height="50dp"
-	       android:layout_margin="5dp" >
-        
-            <TextView 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" >
+
+            <TextView
                 android:id="@+id/ExitPopupLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/exit_popup"
-		        android:layout_marginLeft="10dp"
-		        android:textSize="20sp"
-		        android:textStyle="bold" />
-        
+                android:layout_marginLeft="10dp"
+                android:text="@string/exit_popup"
+                android:textColor="#606060"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <ToggleButton
                 android:id="@+id/ExitPopupOption"
                 style="@style/Widget.Button.Toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:layout_alignParentRight="true" />
-	        
-	    </RelativeLayout>
-	    
+                android:layout_alignParentRight="true"
+                android:checked="true" />
+        </RelativeLayout>
     </LinearLayout>
-        
+
     <TextView
-	    android:id="@+id/game_data_group_label"
+        android:id="@+id/game_data_group_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/general_config_group_container"
-        android:text="@string/setting_game_data"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="17dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="15dp"
-        android:textColor="#333"
-        android:textSize="20sp"
+        android:layout_marginTop="15dp"
+        android:text="@string/setting_game_data"
+        android:textColor="#3E3E3E"
+        android:textSize="18sp"
         android:textStyle="bold"
-        />
-        
+        android:shadowColor="#eee"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/game_data_group_label"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="15dp"
         android:layout_marginTop="5dp"
+        android:paddingBottom="2dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
         android:background="@drawable/bg_section_rounded"
-        android:orientation="vertical">
-       	
-       	<RelativeLayout
-	       android:layout_width="match_parent"
-	       android:layout_height="wrap_content"
-	       android:layout_margin="5dp" >
-        
-            <TextView 
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="3dp" >
+            
+            <TextView
                 android:id="@+id/ResetLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/reset_game"
-		        android:layout_marginLeft="10dp"
-		        android:textSize="20sp"
-		        android:textStyle="bold" />
-            <Button 
+                android:layout_marginLeft="10dp"
+                android:text="@string/reset_game"
+                android:textColor="#606060"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
                 android:id="@+id/ResetButton"
-                android:layout_centerVertical="true"
-                android:gravity="center"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="@string/yes"
-	            android:textColor="#F7F7F7"
-	            android:shadowColor="#333"
-	            android:shadowRadius="2"
-	            android:textStyle="bold"
-	            android:textSize="16sp"
-	            android:background="@drawable/setting_blue_button_selector" />
-        	        
-	    </RelativeLayout>
-	    
-	</LinearLayout>
+                android:layout_centerVertical="true"
+                android:background="@drawable/setting_blue_button_selector"
+                android:gravity="center"
+                android:shadowColor="#333"
+                android:shadowRadius="2"
+                android:text="@string/yes"
+                android:textColor="#F7F7F7"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
+
 </RelativeLayout>
