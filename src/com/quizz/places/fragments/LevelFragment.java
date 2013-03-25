@@ -118,17 +118,23 @@ public class LevelFragment extends BaseLevelFragment {
 				.setDuration(0)
 				.start();		
 
-		// Init partial response
-		mPartialResponse = "" + mLevel.response.charAt(0);
-		for (int i = 1; i < mLevel.response.length(); i++) {
-			mPartialResponse += (mLevel.response.charAt(i) == ' ') ? ' ' : '_';
+		if (level.status == Level.STATUS_LEVEL_CLEAR) {
+			mLevelTitle.setText(level.response);
+			mInputText.setVisibility(View.GONE);
+			mCheckButton.setVisibility(View.GONE);
+		} else {
+			// Init partial response
+			mPartialResponse = "" + mLevel.response.charAt(0);
+			for (int i = 1; i < mLevel.response.length(); i++) {
+				mPartialResponse += (mLevel.response.charAt(i) == ' ') ? ' ' : '_';
+			}
+			
+			mLevelTitle.setText(mPartialResponse);
+			
+			InputFilter[] FilterArray = new InputFilter[1];
+			FilterArray[0] = new InputFilter.LengthFilter(mLevel.response.length());
+			mInputText.setFilters(FilterArray);
 		}
-		
-		mLevelTitle.setText(mPartialResponse);
-		
-		InputFilter[] FilterArray = new InputFilter[1];
-		FilterArray[0] = new InputFilter.LengthFilter(mLevel.response.length());
-		mInputText.setFilters(FilterArray);
 		
 		// Fill action bar difficulty
 		mMediumStar.setEnabled(false);
