@@ -12,14 +12,20 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
@@ -57,6 +63,8 @@ public class LevelFragment extends BaseLevelFragment {
 	private String mPartialResponse;
 	private ImageLoader mImageLoader;
 	
+	private TableLayout mLettersTableLayout;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -68,6 +76,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mLevelTitle = (TextView) view.findViewById(R.id.levelName);
 		mCheckButton = (Button) view.findViewById(R.id.levelCheckButton);
 		mInputText = (EditText) view.findViewById(R.id.levelInputResponse);
+		mLettersTableLayout = (TableLayout) view.findViewById(R.id.tableLetters);
 		
 		// Init actionBar
 		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
@@ -134,6 +143,46 @@ public class LevelFragment extends BaseLevelFragment {
 			InputFilter[] FilterArray = new InputFilter[1];
 			FilterArray[0] = new InputFilter.LengthFilter(mLevel.response.length());
 			mInputText.setFilters(FilterArray);
+
+			
+			/* ADD INPUT CELLS */
+			
+			Display display = getActivity().getWindowManager().getDefaultDisplay();
+		    DisplayMetrics outMetrics = new DisplayMetrics();
+		    display.getMetrics(outMetrics);
+
+		    float density  = getResources().getDisplayMetrics().density;
+		    float screenDpWidth  = outMetrics.widthPixels / density;
+			
+		    // TODO: Get from dimens.xml
+		    int cellWidth = 32;
+
+		    int currentRowWidth = 0;
+		    
+			mLettersTableLayout.removeAllViews();
+			TableRow currentRow = new TableRow(getActivity());
+			LayoutParams params = new TableRow.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			currentRow.setLayoutParams(params);
+			currentRow.setGravity(Gravity.CENTER_HORIZONTAL);
+			mLettersTableLayout.addView(currentRow);
+			for (Character letter : level.response.toCharArray()) {
+				
+				// TODO: TAKE WORD IN ACCOUNT
+				if (currentRowWidth + cellWidth > screenDpWidth) {
+					currentRow = new TableRow(getActivity());
+					currentRow.setLayoutParams(params);
+					currentRow.setGravity(Gravity.CENTER_HORIZONTAL);
+					mLettersTableLayout.addView(currentRow);
+					
+					currentRowWidth = 0;
+				}
+				
+				TextView letterTextView = (TextView) getActivity().getLayoutInflater().inflate(R.layout.item_table_letters, null);
+				letterTextView.setText(""+letter);
+				currentRow.addView(letterTextView);
+				
+				currentRowWidth += cellWidth;
+			}
 		}
 		
 		// Fill action bar difficulty
