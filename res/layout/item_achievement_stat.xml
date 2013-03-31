@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout 
-	   xmlns:android="http://schemas.android.com/apk/res/android"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-    
-    
-	    <RelativeLayout
-	       android:id="@+id/IsAchievement"
-	       android:layout_width="match_parent"
-	       android:layout_height="wrap_content"
-	       android:layout_margin="5dp"
-	       android:background="@drawable/bg_section_rounded"
-	       >
-	       
-	       <ImageView
+<RelativeLayout
+   	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/IsAchievement"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+	<RelativeLayout
+	    android:id="@+id/AchievementItemDataContainer"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:padding="10dp">
+	      
+	    <ImageView
 	        android:id="@+id/StatIcon"
 	        android:layout_width="42px"
 	        android:layout_height="58px"
@@ -28,20 +26,21 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:orientation="vertical"
+	            android:layout_centerInParent="true"
 	            android:layout_toLeftOf="@+id/StatScores">
 	            <TextView
 		            android:id="@+id/StatLabel"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
 			        android:text="Niveaux débloqués"
-			        android:gravity="bottom|center_horizontal"
+			        android:gravity="center_horizontal"
 			        android:textStyle="bold"
-			        android:textSize="14dp"
+			        android:textSize="14sp"
 			        android:layout_marginLeft="10dp" />
 	            <com.quizz.core.widgets.SectionProgressView
 		        	android:id="@+id/StatProgress"
 		   	        android:layout_width="match_parent"
-		  	        android:layout_height="19dp"
+		  	        android:layout_height="10dp"
 		   	        android:src="@drawable/bg_section_progress"
 		   	        android:scaleType="fitXY"
 		   	        android:adjustViewBounds="true" />
@@ -67,7 +66,17 @@
 	                android:textSize="11dp"
 	                android:gravity="bottom|center_horizontal"
 	                android:textStyle="bold"/>
-	           </LinearLayout>
-		</RelativeLayout>    
+	          </LinearLayout>
+		</RelativeLayout>		
 	</RelativeLayout>
-</FrameLayout>
+	
+    <View 
+        android:id="@+id/AchievementItemSeparator"
+        android:layout_below="@+id/AchievementItemDataContainer"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#88888888"/>
+	
+</RelativeLayout>

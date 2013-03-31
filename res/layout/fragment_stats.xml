@@ -1,14 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-	
-    <ListView 
-        android:id="@+id/StatsListView"
-        android:layout_width="match_parent"
-    	android:layout_height="match_parent"
-    	android:divider="@null"
-    	android:dividerHeight="0dp" />
+    android:layout_height="match_parent">
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    
+    <TextView
+	    android:id="@+id/StatsAchievementsLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Achievements"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="15dp"
+        android:textColor="#333"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout 
+        android:id="@+id/StatsAchievementsListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_section_rounded"
+        android:layout_margin="10dp" />
+    	
+<!--     <ListView  -->
+<!--         android:id="@+id/StatsAchievementsListView" -->
+<!--         android:layout_width="match_parent" -->
+<!--     	android:layout_height="wrap_content" -->
+<!--     	android:divider="#88888888" -->
+<!--     	android:dividerHeight="1dp" -->
+<!--     	android:layout_marginLeft="15dp" -->
+<!--         android:layout_marginRight="15dp" -->
+<!--         android:layout_marginBottom="15dp" -->
+<!--         android:layout_marginTop="5dp" -->
+<!--         android:background="@drawable/bg_section_rounded" /> -->
+    
+    <TextView
+	    android:id="@+id/StatsSimpleLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/setting_global_setup"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="15dp"
+        android:textColor="#333"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+    
+    <ListView 
+        android:id="@+id/StatsSimpleListView"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:divider="#88888888"
+    	android:dividerHeight="1dp"
+    	android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_section_rounded" />
+
+    </LinearLayout>
+</ScrollView>
