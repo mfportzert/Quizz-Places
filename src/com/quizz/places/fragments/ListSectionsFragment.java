@@ -102,22 +102,24 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-			mHideActionBarOnDestroyView = false;
-			FragmentContainer container = (FragmentContainer) getActivity();
-			FragmentManager fragmentManager = getActivity()
-					.getSupportFragmentManager();
-
-			FragmentTransaction transaction = fragmentManager
-					.beginTransaction();
-			transaction.setCustomAnimations(R.anim.slide_in_right,
-					R.anim.slide_out_left, R.anim.slide_in_left,
-					R.anim.slide_out_right);
-
-			Bundle args = new Bundle();
-			args.putParcelable(BaseGridLevelsFragment.ARG_SECTION,
-					mAdapter.getItem(position));
-			NavigationUtils.directNavigationTo(GridLevelsFragment.class,
-					fragmentManager, container, true, transaction, args);
+			if (mAdapter.getItem(position).status == Section.SECTION_UNLOCKED) {
+				mHideActionBarOnDestroyView = false;
+				FragmentContainer container = (FragmentContainer) getActivity();
+				FragmentManager fragmentManager = getActivity()
+						.getSupportFragmentManager();
+	
+				FragmentTransaction transaction = fragmentManager
+						.beginTransaction();
+				transaction.setCustomAnimations(R.anim.slide_in_right,
+						R.anim.slide_out_left, R.anim.slide_in_left,
+						R.anim.slide_out_right);
+	
+				Bundle args = new Bundle();
+				args.putParcelable(BaseGridLevelsFragment.ARG_SECTION,
+						mAdapter.getItem(position));
+				NavigationUtils.directNavigationTo(GridLevelsFragment.class,
+						fragmentManager, container, true, transaction, args);
+			}
 		}
 	};
 }

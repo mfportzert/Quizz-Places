@@ -1,205 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!--  android:layout_marginTop="15dp" -->
-    <TextView
-        android:id="@+id/general_config_group_label"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/setting_global_setup"
-        android:textColor="#3E3E3E"
-        android:shadowColor="#eee"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:layout_height="match_parent" >
 
-    <LinearLayout
-        android:id="@+id/general_config_group_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/general_config_group_label"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/bg_section_rounded"
-        android:orientation="vertical"
-        android:paddingBottom="2dp"
-        android:paddingRight="5dp"
-        android:paddingTop="2dp" >
+        <!-- android:layout_marginTop="15dp" -->
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/general_config_group_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" >
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:shadowColor="#eee"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="@string/setting_global_setup"
+            android:textColor="#3E3E3E"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
-            <TextView
-                android:id="@+id/AudioLabel"
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/general_config_group_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/general_config_group_label"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_section_rounded"
+            android:orientation="vertical"
+            android:paddingBottom="2dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" >
+
+                <TextView
+                    android:id="@+id/AudioLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/audio"
+                    android:textColor="#606060"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ToggleButton
+                    android:id="@+id/AudioOption"
+                    style="@style/Widget.Button.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="2dp"
                 android:layout_marginLeft="10dp"
-                android:text="@string/audio"
-                android:textColor="#606060"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="2dp"
+                android:background="#88aaaaaa" />
 
-            <ToggleButton
-                android:id="@+id/AudioOption"
-                style="@style/Widget.Button.Toggle"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true" />
-        </RelativeLayout>
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" >
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="2dp"
-            android:background="#88aaaaaa" />
+                <TextView
+                    android:id="@+id/VibrationLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/vibration"
+                    android:textColor="#606060"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-        <RelativeLayout
+                <ToggleButton
+                    android:id="@+id/VibrationOption"
+                    style="@style/Widget.Button.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="2dp"
+                android:background="#88aaaaaa" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" >
+
+                <TextView
+                    android:id="@+id/ExitPopupLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/exit_popup"
+                    android:textColor="#606060"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ToggleButton
+                    android:id="@+id/ExitPopupOption"
+                    style="@style/Widget.Button.Toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:checked="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- android:layout_marginTop="15dp" -->
+
+        <TextView
+            android:id="@+id/game_data_group_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" >
+            android:layout_below="@+id/general_config_group_container"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:shadowColor="#eee"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="@string/setting_game_data"
+            android:textColor="#3E3E3E"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
-            <TextView
-                android:id="@+id/VibrationLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="@string/vibration"
-                android:textColor="#606060"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+        <!-- android:layout_marginTop="5dp" -->
 
-            <ToggleButton
-                android:id="@+id/VibrationOption"
-                style="@style/Widget.Button.Toggle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="2dp"
-            android:background="#88aaaaaa" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" >
+            android:layout_below="@+id/game_data_group_label"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/bg_section_rounded"
+            android:orientation="vertical"
+            android:paddingBottom="2dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp" >
 
-            <TextView
-                android:id="@+id/ExitPopupLabel"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="@string/exit_popup"
-                android:textColor="#606060"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="3dp" >
 
-            <ToggleButton
-                android:id="@+id/ExitPopupOption"
-                style="@style/Widget.Button.Toggle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:checked="true" />
-        </RelativeLayout>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/ResetLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/reset_game"
+                    android:textColor="#606060"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-    <!--  android:layout_marginTop="15dp" -->
-    <TextView
-        android:id="@+id/game_data_group_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/general_config_group_container"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="15dp"
-        android:text="@string/setting_game_data"
-        android:textColor="#3E3E3E"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:shadowColor="#eee"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="1"
-        android:visibility="invisible" />
+                <Button
+                    android:id="@+id/ResetButton"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/setting_blue_button_selector"
+                    android:gravity="center"
+                    android:shadowColor="#333"
+                    android:shadowRadius="2"
+                    android:text="@string/yes"
+                    android:textColor="#F7F7F7"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
 
-    <!--  android:layout_marginTop="5dp" -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/game_data_group_label"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:paddingBottom="2dp"
-        android:paddingRight="5dp"
-        android:paddingTop="2dp"
-        android:background="@drawable/bg_section_rounded"
-        android:orientation="vertical" >
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="3dp" >
-            
-            <TextView
-                android:id="@+id/ResetLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="@string/reset_game"
-                android:textColor="#606060"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/ResetButton"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/setting_blue_button_selector"
-                android:gravity="center"
-                android:shadowColor="#333"
-                android:shadowRadius="2"
-                android:text="@string/yes"
-                android:textColor="#F7F7F7"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </LinearLayout>
-
-</RelativeLayout>
+</ScrollView>

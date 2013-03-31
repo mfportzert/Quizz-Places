@@ -29,7 +29,6 @@
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/StatIcon"
             android:layout_toLeftOf="@+id/StatDoneOnTotal"
-            android:text="Niveaux débloqués"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -41,7 +40,6 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="n/a"
             android:textStyle="bold" />
     </RelativeLayout>
 
