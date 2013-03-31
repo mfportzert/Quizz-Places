@@ -3,6 +3,7 @@ package com.quizz.places.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,37 +71,46 @@ public class StatsFragment extends BaseStatsFragment {
 			}
 		}
 		
-		ViewGroup parentGroup = (ViewGroup)view.findViewById(R.id.StatsAchievementsListView);
+		Log.d("StatsFragments : l.74", String.valueOf(simples.size()));
+		
+		ViewGroup parentGroup = (ViewGroup)view.findViewById(R.id.StatsAchievementsContainer);
 		this.fillAchivementLinearLayout(inflater, parentGroup, achievements);
-
-//		for (int i = 0; i < 3; i++)
-//		{
-//		    
-//		    
-//		    rBar.setProgress(i);
-//		    parentGroup.addView(view);
-//		}
 		
-//		mAchievementAdapter.setItems(achievements);
-//		mAchievementStatsListView = (ListView) view.findViewById(R.id.StatsAchievementsListView);
-//		mAchievementStatsListView.setAdapter(mAchievementAdapter);
+		parentGroup = (ViewGroup)view.findViewById(R.id.SimpleStatsContainer);
+		this.fillSimpleStatsLinearLayout(inflater, parentGroup, simples);		
 		
-		mSimpleAdapter.setItems(simples);
-		mSimpleStatsListView = (ListView) view.findViewById(R.id.StatsSimpleListView);
-		mSimpleStatsListView.setAdapter(mSimpleAdapter);
-
-//		ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mAchievementStatsListView,
+//		mSimpleAdapter.setItems(simples);
+//		mSimpleStatsListView = (ListView) view.findViewById(R.id.StatsSimpleListView);
+//		mSimpleStatsListView.setAdapter(mSimpleAdapter);
+//
+//		ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSimpleStatsListView,
 //				"alpha", 0f, 1f);
 //		listDisplay.setDuration(300);
 //		listDisplay.start();
-		ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSimpleStatsListView,
-				"alpha", 0f, 1f);
-		listDisplay.setDuration(300);
-		listDisplay.start();
 
 		return view;
 	}
 
+	private void fillSimpleStatsLinearLayout(LayoutInflater inflater, ViewGroup parentGroup,
+			List<Stat> stats) {
+		char position = 0; // guess we will never have more than 255 achievements
+		for (Stat stat : stats) {
+			View subview = inflater.inflate(R.layout.item_simple_stat, null, true);
+			((ImageView) subview.findViewById(R.id.StatIcon))
+			.setImageDrawable(this.getActivity().getResources()
+			.getDrawable(stat.getIcon()));
+			((TextView) subview.findViewById(R.id.StatLabel)).setText(stat.getLabel());
+			((TextView) subview.findViewById(R.id.StatDoneOnTotal))
+			.setText(String.valueOf(stat.getDone()));
+			if ((position + 1) == stats.size()) {
+				subview.findViewById(R.id.SimpleStatItemSeparator).setVisibility(View.GONE);
+			}
+			parentGroup.addView(subview);
+			position++;
+		}
+	}
+	
+	@SuppressLint("NewApi")
 	private void fillAchivementLinearLayout(LayoutInflater inflater, ViewGroup parentGroup,
 			List<Stat> stats) {
 		
@@ -112,10 +122,12 @@ public class StatsFragment extends BaseStatsFragment {
 		char position = 0; // guess we will never have more than 255 achievements
 		for (Stat stat : stats) {
 			View subview = inflater.inflate(R.layout.item_achievement_stat, null, true);
-			((TextView) subview.findViewById(R.id.StatLabel)).setText(stat.getLabel());
-			((TextView) subview.findViewById(R.id.StatDoneOnTotal))
-						.setText(String.valueOf(stat.getDone()) + " / "
-						+ String.valueOf(stat.getTotal()));
+			((TextView) subview.findViewById(R.id.StatLabel)).setText(stat.getLabel() + " : " + 
+					String.valueOf(stat.getDone()) + " / "
+					+ String.valueOf(stat.getTotal()));
+//			((TextView) subview.findViewById(R.id.StatDoneOnTotal))
+//						.setText(String.valueOf(stat.getDone()) + " / "
+//						+ String.valueOf(stat.getTotal()));
 			((ImageView) subview.findViewById(R.id.StatIcon))
 						.setImageDrawable(this.getActivity().getResources()
 						.getDrawable(stat.getIcon()));
@@ -124,18 +136,20 @@ public class StatsFragment extends BaseStatsFragment {
 						horizontalPadding, verticalPadding);
 			((SectionProgressView) subview.findViewById(R.id.StatProgress))
 						.setProgressRes(mProgressDrawables[position
-			            % mProgressDrawables.length]);
+			            % mProgressDrawables.length]/*R.drawable.fg_section_progress_blue_small*/);
 			((SectionProgressView) subview.findViewById(R.id.StatProgress))
-						.setProgressValue(stat.getProgressInPercent());
+						.setProgressValue(stat.getProgressInPercent() > 0 ? stat.getProgressInPercent() : 1);
 			if (stat.getDone() == stat.getTotal()) {
 				((ImageView) subview.findViewById(R.id.StatCupIcon))
 						.setImageDrawable(this.getActivity().getResources()
 						.getDrawable(R.drawable.gold_cup));
+				((ImageView) subview.findViewById(R.id.StatCupIcon)).setAlpha(1.0f);
 			}
 			if ((position + 1) == stats.size()) {
 				subview.findViewById(R.id.AchievementItemSeparator).setVisibility(View.GONE);
 			}
-			parentGroup.addView(subview, position++);
+			parentGroup.addView(subview);
+			position++;
 		}
 		
 		parentGroup.invalidate();

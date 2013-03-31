@@ -90,9 +90,10 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 			for (Level lvl : section.levels) {
 				nbLevelsCleared += (lvl.status == Level.STATUS_LEVEL_CLEAR) ? 1 : 0;
 			}
-			holder.progress.setProgressValue((int) (nbLevelsCleared * 100.0f)  / section.levels.size());
+			int progressValue = (int) (nbLevelsCleared * 100.0f)  / section.levels.size();
+			holder.progress.setProgressValue(progressValue > 0 ? progressValue : 1);
 		} else {
-			holder.progress.setProgressValue(0);
+			holder.progress.setProgressValue(1);
 		}
 		
 		int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f, getContext());

@@ -1,46 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="10dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
 
-	  <LinearLayout
-	      android:layout_width="match_parent"
-	      android:layout_height="wrap_content"
-	      android:orientation="horizontal"
-	      android:layout_margin="5dp">
-	   	<RelativeLayout
-	       	android:layout_width="match_parent"
-	    	android:layout_height="wrap_content" >
-			<ImageView
-		        android:id="@+id/StatIcon"
-		        android:layout_width="42px"
-		        android:layout_height="58px"
-		        android:gravity="center"
-		      	android:src="@drawable/ic_star" />
-	       	<TextView
-				android:id="@+id/StatLabel"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_centerVertical="true"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"
-				android:layout_toLeftOf="@+id/StatScores"
-				android:gravity="center"
-				android:text="Niveaux débloqués"
-				android:textSize="14dp"
-				android:textStyle="bold" />
-			<TextView 
-				android:id="@+id/StatDoneOnTotal"
-				android:layout_centerVertical="true"
-				android:layout_width="45dp"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_marginLeft="10dp"
-				android:text="n/a"
-				android:gravity="center_horizontal|bottom"
-				android:textStyle="bold"/>
-		</RelativeLayout>
-	</LinearLayout>
-</FrameLayout>
+    <RelativeLayout
+        android:id="@+id/SimpleStatItemDataContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+	    android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/StatIcon"
+            android:layout_width="34dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_star" />
+
+        <TextView
+            android:id="@+id/StatLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:layout_centerHorizontal="true"
+			android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/StatIcon"
+            android:layout_toLeftOf="@+id/StatDoneOnTotal"
+            android:text="Niveaux débloqués"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/StatDoneOnTotal"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="n/a"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/SimpleStatItemSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/SimpleStatItemDataContainer"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#88888888" />
+
+</RelativeLayout>

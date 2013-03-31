@@ -11,63 +11,54 @@
 	    android:layout_height="wrap_content"
 	    android:padding="10dp">
 	      
+	    <!-- 42*58 -->
 	    <ImageView
 	        android:id="@+id/StatIcon"
-	        android:layout_width="42px"
-	        android:layout_height="58px"
-	        android:layout_marginRight="10dp"
+	        android:layout_width="34dp"
+	        android:layout_height="60dp"
 	        android:gravity="center"
-	      	android:src="@drawable/ic_star" />
-	    <RelativeLayout
-	        android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_toRightOf="@+id/StatIcon" >
-	        <LinearLayout 
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="vertical"
-	            android:layout_centerInParent="true"
-	            android:layout_toLeftOf="@+id/StatScores">
-	            <TextView
-		            android:id="@+id/StatLabel"
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:text="Niveaux débloqués"
-			        android:gravity="center_horizontal"
-			        android:textStyle="bold"
-			        android:textSize="14sp"
-			        android:layout_marginLeft="10dp" />
-	            <com.quizz.core.widgets.SectionProgressView
-		        	android:id="@+id/StatProgress"
-		   	        android:layout_width="match_parent"
-		  	        android:layout_height="10dp"
-		   	        android:src="@drawable/bg_section_progress"
-		   	        android:scaleType="fitXY"
-		   	        android:adjustViewBounds="true" />
-	        </LinearLayout>
-	        <LinearLayout 
-	            android:id="@+id/StatScores"
-	            android:layout_width="45dp"
-	            android:layout_height="wrap_content"
-	            android:orientation="vertical"
-	            android:layout_alignParentRight="true"
-	            android:layout_marginLeft="10dp">
-	            <ImageView
-			        android:id="@+id/StatCupIcon"
-			        android:layout_width="29px"
-			        android:layout_height="36px"
-			        android:layout_gravity="center"
-			        android:src="@drawable/gray_cup" />
-	            <TextView 
-	                android:id="@+id/StatDoneOnTotal"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:text="67/130"
-	                android:textSize="11dp"
-	                android:gravity="bottom|center_horizontal"
-	                android:textStyle="bold"/>
-	          </LinearLayout>
-		</RelativeLayout>		
+	        android:layout_alignParentLeft="true"
+	      	android:src="@drawable/ic_star"
+	      	android:contentDescription="@null" />
+
+	    <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/StatIcon"
+            android:layout_toLeftOf="@+id/StatCupIcon"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="6dp"
+            >
+            <TextView
+	            android:id="@+id/StatLabel"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="Niveaux débloqués"
+		        android:gravity="center_horizontal"
+		        android:textStyle="bold"
+		        android:textSize="14sp"
+		        android:layout_marginLeft="10dp" />
+            <com.quizz.core.widgets.SectionProgressView
+	        	android:id="@+id/StatProgress"
+	   	        android:layout_width="match_parent"
+	  	        android:layout_height="10dp"
+	   	        android:src="@drawable/bg_section_progress_small"
+	   	        android:scaleType="fitXY"
+	   	        android:adjustViewBounds="true" />
+	    </LinearLayout>
+		
+		<ImageView
+			android:id="@+id/StatCupIcon"
+			android:layout_width="42dp"
+			android:layout_height="42dp"
+			android:layout_centerVertical="true"
+			android:layout_alignParentRight="true"
+			android:src="@drawable/gray_cup"
+			android:contentDescription="@null"
+			android:alpha="0.7" />
+		
 	</RelativeLayout>
 	
     <View 
