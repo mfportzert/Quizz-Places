@@ -31,7 +31,7 @@ import com.quizz.places.db.GameDataLoading.GameDataLoadingListener;
 public class MenuFragment extends BaseMenuFragment implements Closeable, GameDataLoadingListener {
 
 	private Button mButtonPlay;
-	private Button mButtonRateThisApp;
+	//private Button mButtonRateThisApp;
 	private Button mButtonStats;
 	private Button mButtonSettings;
 	private LinearLayout mMenuButtonsContainer;
@@ -59,7 +59,7 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
 		mButtonPlay = (Button) view.findViewById(R.id.buttonPlay);
-		mButtonRateThisApp = (Button) view.findViewById(R.id.buttonRateThisApp);
+		//mButtonRateThisApp = (Button) view.findViewById(R.id.buttonRateThisApp);
 		mButtonStats = (Button) view.findViewById(R.id.buttonStats);
 		mButtonSettings = (Button) view.findViewById(R.id.buttonSettings);
 		mTitleSign = (ImageView) view.findViewById(R.id.titleSign);

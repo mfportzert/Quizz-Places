@@ -7,12 +7,12 @@
         android:id="@+id/SimpleStatItemDataContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-	    android:padding="10dp" >
+        android:padding="10dp" >
 
         <ImageView
             android:id="@+id/StatIcon"
             android:layout_width="34dp"
-            android:layout_height="60dp"
+            android:layout_height="52dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:contentDescription="@null"
@@ -22,14 +22,15 @@
             android:id="@+id/StatLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-			android:layout_centerInParent="true"
-			android:layout_centerHorizontal="true"
-			android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/StatIcon"
             android:layout_toLeftOf="@+id/StatDoneOnTotal"
-            android:textSize="14sp"
+            android:layout_toRightOf="@+id/StatIcon"
+            android:gravity="center"
+            android:textColor="#606060"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -38,8 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:gravity="center"
             android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textColor="#606060"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -50,6 +53,6 @@
         android:layout_below="@+id/SimpleStatItemDataContainer"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#88888888" />
+        android:background="#88aaaaaa" />
 
 </RelativeLayout>

@@ -2,54 +2,28 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-    
-<!--     <TextView -->
-<!-- 	    android:id="@+id/StatsAchievementsLabel" -->
-<!--         android:layout_width="match_parent" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:text="Achievements" -->
-<!--         android:layout_marginTop="15dp" -->
-<!--         android:layout_marginLeft="17dp" -->
-<!--         android:layout_marginRight="15dp" -->
-<!--         android:textColor="#333" -->
-<!--         android:textSize="20sp" -->
-<!--         android:textStyle="bold" -->
-<!--         /> -->
+        android:orientation="vertical" >
 
-    <LinearLayout 
-        android:id="@+id/StatsAchievementsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/bg_section_rounded"
-        android:layout_margin="10dp" />
-    
-<!--     <TextView -->
-<!-- 	    android:id="@+id/StatsSimpleLabel" -->
-<!--         android:layout_width="match_parent" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:text="@string/setting_global_setup" -->
-<!--         android:layout_marginTop="15dp" -->
-<!--         android:layout_marginLeft="17dp" -->
-<!--         android:layout_marginRight="15dp" -->
-<!--         android:textColor="#333" -->
-<!--         android:textSize="20sp" -->
-<!--         android:textStyle="bold" -->
-<!--         /> -->
-    
-    <LinearLayout 
-        android:id="@+id/SimpleStatsContainer"
-		android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/bg_section_rounded"
-        android:layout_margin="10dp" />
+        <LinearLayout
+            android:id="@+id/StatsAchievementsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/bg_section_rounded"
+            android:orientation="vertical" />
 
+        <LinearLayout
+            android:id="@+id/SimpleStatsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/bg_section_rounded"
+            android:orientation="vertical" />
     </LinearLayout>
+
 </ScrollView>

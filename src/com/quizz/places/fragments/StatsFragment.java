@@ -156,13 +156,7 @@ public class StatsFragment extends BaseStatsFragment {
 	}
 	
 	private void initProgressDrawables() {
-		mProgressDrawables = new int[] { R.drawable.fg_section_progress_blue,
-				R.drawable.fg_section_progress_green,
-				R.drawable.fg_section_progress_orange,
-				R.drawable.fg_section_progress_pink,
-				R.drawable.fg_section_progress_purple,
-				R.drawable.fg_section_progress_yellow,
-				R.drawable.fg_section_progress_red };
+		mProgressDrawables = new int[] { R.drawable.fg_section_progress_yellow };
 	}
 	
 	@Override

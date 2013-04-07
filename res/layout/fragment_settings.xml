@@ -7,24 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <!-- android:layout_marginTop="15dp" -->
-
-        <TextView
-            android:id="@+id/general_config_group_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:shadowColor="#eee"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/setting_global_setup"
-            android:textColor="#3E3E3E"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="invisible" />
-
         <LinearLayout
             android:id="@+id/general_config_group_container"
             android:layout_width="wrap_content"
@@ -33,7 +15,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bg_section_rounded"
             android:orientation="vertical"
             android:paddingBottom="2dp"
@@ -138,34 +120,14 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <!-- android:layout_marginTop="15dp" -->
-
-        <TextView
-            android:id="@+id/game_data_group_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/general_config_group_container"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="15dp"
-            android:shadowColor="#eee"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/setting_game_data"
-            android:textColor="#3E3E3E"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="invisible" />
-
-        <!-- android:layout_marginTop="5dp" -->
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/game_data_group_label"
+            android:layout_below="@+id/general_config_group_container"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/bg_section_rounded"
             android:orientation="vertical"
             android:paddingBottom="2dp"
