@@ -19,12 +19,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/sectionName"
-        android:layout_marginRight="6dp"
+        android:layout_marginRight="2dp"
         android:layout_marginTop="10dp"
         android:layout_toLeftOf="@+id/sectionEnterButton"
         android:text="10 / 22"
-        android:textColor="#555"
-        android:textSize="20sp"
+        android:textColor="#666"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <ImageView
@@ -78,10 +78,11 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:drawablePadding="3dp"
+        android:gravity="bottom"
         android:drawableRight="@drawable/ic_lock"
         android:text="Level 1"
-        android:textColor="#666"
-        android:textSize="24sp"
+        android:textColor="#777"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

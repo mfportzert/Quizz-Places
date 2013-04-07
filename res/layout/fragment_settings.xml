@@ -37,7 +37,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="@string/audio"
                     android:textColor="#606060"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <ToggleButton
@@ -72,7 +72,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="@string/vibration"
                     android:textColor="#606060"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <ToggleButton
@@ -107,7 +107,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="@string/exit_popup"
                     android:textColor="#606060"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <ToggleButton
@@ -149,7 +149,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="@string/reset_game"
                     android:textColor="#606060"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <Button
