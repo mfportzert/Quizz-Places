@@ -38,7 +38,6 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		}
 
 		if (!DataManager.dataLoaded) {
-			Log.e("ASYNC", "initAsyncGameLoading: "+System.currentTimeMillis());
 			initAsyncGameLoading();
 		}
 		

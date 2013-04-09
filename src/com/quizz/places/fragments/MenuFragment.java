@@ -92,9 +92,7 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 	
 	@Override
 	public void onGameLoadingProgress(int progress) {
-		Log.d("BLABLA", "progress : " + String.valueOf(progress) + "%");
 		mDataLoadingProgressBar.setProgress(progress);
-		mDataLoadingProgressBar.invalidate();
 	}
 
 	@Override

@@ -145,26 +145,27 @@ public class GameDataLoading {
 			List<Section> sections = null;
 			if (mLoadFromJson) {
 				Gson gson = new Gson();
+				Log.e("ASYNC", "Gson object created: "+System.currentTimeMillis());
 				Type type = new TypeToken<Collection<Section>>() {}.getType();
+				publishProgress(10);
 				try {
-					Log.e("ASYNC", "InputStream: "+System.currentTimeMillis());
+					Log.e("ASYNC", "TypeToken object created: "+System.currentTimeMillis());
 					InputStream is = mContext.getResources().getAssets().open(QuizzPlacesApplication.JSON_FILE);
-					Log.e("ASYNC", "reader: "+System.currentTimeMillis());
+					Log.e("ASYNC", "start reading json: "+System.currentTimeMillis());
 					Reader reader = new InputStreamReader(is);
-					Log.e("ASYNC", "sections: "+System.currentTimeMillis());
 					sections = gson.fromJson(reader, type);
-					Log.e("ASYNC", "setSections: "+System.currentTimeMillis());
+					Log.e("ASYNC", "DataManager.setSections: "+System.currentTimeMillis());
 					DataManager.setSections(sections);
-					Log.e("ASYNC", "for: "+System.currentTimeMillis());
+					publishProgress(30);
 					if (sections.size() > 0) {
 						int progress = 0;
-						Log.e("ASYNC", "before inserts: "+System.currentTimeMillis());
 						for (Section section : sections) {
 							section.status = (section.number == 1) ? Section.SECTION_UNLOCKED : Section.SECTION_LOCKED;
+							Log.e("ASYNC", "inserting section: "+System.currentTimeMillis());
 							QuizzDAO.INSTANCE.insertSection(section);
 							int progressTmp = (int) (++progress * 100.0f) / sections.size(); //(int) (n * 100.0f) / v;
 							Log.e("ASYNC", "progress: "+progressTmp+", time: "+System.currentTimeMillis());
-							publishProgress(progressTmp);
+							publishProgress((int) (30 + (progressTmp * 0.7f)));
 						}
 						Log.e("ASYNC", "after inserts: "+System.currentTimeMillis());
 					} else {
