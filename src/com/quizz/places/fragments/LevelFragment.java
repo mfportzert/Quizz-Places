@@ -58,6 +58,7 @@ public class LevelFragment extends BaseLevelFragment {
 	private ImageView mMediumStar;
 	private ImageView mHardStar;
 	private TextView mActionBarHints;
+	private TextView mLevelCompletedLabel;
 	
 	private Level mLevel;
 	private String mPartialResponse;
@@ -76,6 +77,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mLevelTitle = (TextView) view.findViewById(R.id.levelName);
 		mCheckButton = (Button) view.findViewById(R.id.levelCheckButton);
 		mInputText = (EditText) view.findViewById(R.id.levelInputResponse);
+		mLevelCompletedLabel = (TextView) view.findViewById(R.id.levelPictureFoundLabel);
 		mLettersTableLayout = (TableLayout) view.findViewById(R.id.tableLetters);
 		
 		// Init actionBar
@@ -131,6 +133,7 @@ public class LevelFragment extends BaseLevelFragment {
 			mLevelTitle.setText(level.response);
 			mInputText.setVisibility(View.GONE);
 			mCheckButton.setVisibility(View.GONE);
+			mLevelCompletedLabel.setVisibility(View.VISIBLE);
 		} else {
 			// Init partial response
 			mPartialResponse = "" + mLevel.response.charAt(0);
@@ -146,7 +149,7 @@ public class LevelFragment extends BaseLevelFragment {
 
 			
 			/* ADD INPUT CELLS */
-			
+			/*
 			Display display = getActivity().getWindowManager().getDefaultDisplay();
 		    DisplayMetrics outMetrics = new DisplayMetrics();
 		    display.getMetrics(outMetrics);
@@ -182,7 +185,7 @@ public class LevelFragment extends BaseLevelFragment {
 				currentRow.addView(letterTextView);
 				
 				currentRowWidth += cellWidth;
-			}
+			}*/
 		}
 		
 		// Fill action bar difficulty
@@ -274,6 +277,11 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		mLevel.status = Level.STATUS_LEVEL_CLEAR;
 		mLevel.update();
+		
+		mLevelTitle.setText(mLevel.response);
+		mInputText.setVisibility(View.GONE);
+		mCheckButton.setVisibility(View.GONE);
+		mLevelCompletedLabel.setVisibility(View.VISIBLE);
 		
 		// Launching LevelSuccessDialog
 		Intent intent = new Intent(getActivity(), LevelSuccessDialog.class);

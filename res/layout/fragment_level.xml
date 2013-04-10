@@ -54,11 +54,11 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="2dp"
             android:gravity="center_horizontal"
-            android:textColor="#666"
-            android:textScaleX="1.05"
             android:shadowColor="#cc000000"
             android:shadowDx="-1"
             android:shadowRadius="1"
+            android:textColor="#777"
+            android:textScaleX="1.05"
             android:textSize="32sp"
             android:textStyle="bold" />
 
@@ -104,16 +104,34 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>
-        
-         <TableLayout
-	        android:id="@+id/tableLetters"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:gravity="center_horizontal"
-	        android:layout_below="@+id/levelOpenedlayout" >
-            
-         </TableLayout>
-        
+
+        <TableLayout
+            android:id="@+id/tableLetters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/levelOpenedlayout"
+            android:gravity="center_horizontal" >
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/levelPictureFoundLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/levelName"
+            android:layout_marginTop="25dp"
+            android:drawableLeft="@drawable/ic_check"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:layout_centerHorizontal="true"
+            android:shadowColor="#666"
+            android:shadowDx="-1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="Picture found !"
+            android:textColor="#34C924"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
     </RelativeLayout>
-    
+
 </ScrollView>
