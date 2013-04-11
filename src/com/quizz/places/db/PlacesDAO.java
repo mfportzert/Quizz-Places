@@ -106,7 +106,8 @@ public class PlacesDAO {
 		cv.clear();
 		cv.put(DbHelper.COLUMN_UNLOCKED, Section.SECTION_LOCKED);
 		QuizzDAO.INSTANCE.getDbHelper().getWritableDatabase()
-			.update(DbHelper.TABLE_SECTIONS, cv, null, null);
+			.update(DbHelper.TABLE_SECTIONS, cv,
+					DbHelper.TABLE_SECTIONS + "." + DbHelper.COLUMN_ID + "!= 1", null);
 	}
 	
 	public List<Stat> cursorToStat(Cursor cursor) {

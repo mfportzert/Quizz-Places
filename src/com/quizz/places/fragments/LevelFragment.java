@@ -1,18 +1,24 @@
 package com.quizz.places.fragments;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,6 +44,7 @@ import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Level;
+import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.utils.StringUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
@@ -282,11 +289,37 @@ public class LevelFragment extends BaseLevelFragment {
 		mInputText.setVisibility(View.GONE);
 		mCheckButton.setVisibility(View.GONE);
 		mLevelCompletedLabel.setVisibility(View.VISIBLE);
+
+		// Run success vibrations
+		if (PreferencesUtils.isVibrationEnabled(this.getActivity()))
+			this.runSuccessVibration();
+				
+		// Play success sound
+		if (PreferencesUtils.isAudioEnabled(this.getActivity()))
+			this.playSuccessSound();
 		
 		// Launching LevelSuccessDialog
 		Intent intent = new Intent(getActivity(), LevelSuccessDialog.class);
 		intent.putExtra(LevelSuccessDialog.EXTRA_IS_LAST_LEVEL, DataManager.isLastLevel(mLevel));
 		startActivityForResult(intent, LEVEL_SUCCESS_REQUEST_CODE);
+	}
+	
+	public void runSuccessVibration() {
+		Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+		vibrator.vibrate(300);
+	}
+	
+	public void playSuccessSound() {
+		AssetFileDescriptor afd;
+		try {
+			afd = getActivity().getAssets().openFd("sounds/success.wav");
+			MediaPlayer player = new MediaPlayer();
+			player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+			player.prepare();
+			player.start();
+		} catch (IOException e) {
+			Log.d("IOException : ", e.getMessage());
+		}
 	}
 	
 	private void onError(int errorsCount) {
