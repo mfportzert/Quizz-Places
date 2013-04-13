@@ -73,6 +73,8 @@ public class LevelFragment extends BaseLevelFragment {
 	
 	private TableLayout mLettersTableLayout;
 	
+	private MediaPlayer mSuccessPlayer;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -115,8 +117,30 @@ public class LevelFragment extends BaseLevelFragment {
 		Level level = getArguments().getParcelable(ARG_LEVEL);
 		initLayout(level);
 		
+		initSounds();
+		
 		return view;
 	}
+	
+	public void initSounds() {
+		AssetFileDescriptor afd;
+		try {
+			Log.d("LevelSuccessDialog", "passe dans playSuccessSound");
+			afd = getActivity().getAssets().openFd("sounds/success.wav");
+			mSuccessPlayer = new MediaPlayer();
+			mSuccessPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+			mSuccessPlayer.prepare();
+		} catch (IOException e) {
+			Log.d("IOException : ", e.getMessage());
+		}
+	}
+	
+	public void playSuccessSound() {
+		if (mSuccessPlayer != null)
+			mSuccessPlayer.start();
+	}
+	
+
 
 	/**
 	 * Load, rotate picture, fill data
@@ -293,8 +317,7 @@ public class LevelFragment extends BaseLevelFragment {
 		// Run success vibrations
 		if (PreferencesUtils.isVibrationEnabled(this.getActivity()))
 			this.runSuccessVibration();
-				
-		// Play success sound
+		
 		if (PreferencesUtils.isAudioEnabled(this.getActivity()))
 			this.playSuccessSound();
 		
@@ -307,19 +330,6 @@ public class LevelFragment extends BaseLevelFragment {
 	public void runSuccessVibration() {
 		Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(300);
-	}
-	
-	public void playSuccessSound() {
-		AssetFileDescriptor afd;
-		try {
-			afd = getActivity().getAssets().openFd("sounds/success.wav");
-			MediaPlayer player = new MediaPlayer();
-			player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-			player.prepare();
-			player.start();
-		} catch (IOException e) {
-			Log.d("IOException : ", e.getMessage());
-		}
 	}
 	
 	private void onError(int errorsCount) {

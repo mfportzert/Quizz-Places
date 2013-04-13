@@ -57,6 +57,15 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		View background;
 	}
 
+	private int nbDoneLevels(Section section) {
+		int clearedLevels = 0;
+		for (Level level : section.levels) {
+			if (level.status == Level.STATUS_LEVEL_CLEAR)
+				clearedLevels++;
+		}
+		return clearedLevels;
+	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -84,6 +93,8 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		holder.name.setText(section.name);
 		holder.progress.setProgressDrawable(mProgressDrawables[position
 				% mProgressDrawables.length]);
+		
+		holder.levels.setText(this.nbDoneLevels(section) + " / " + section.levels.size());
 		
 		if (section.levels != null && section.levels.size() > 0) {
 			int nbLevelsCleared = 0;

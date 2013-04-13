@@ -41,10 +41,22 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 		mSectionsListView.setOnItemClickListener(mSectionItemClickListener);
 
 		mLoadingView = view.findViewById(R.id.loadingView);
-
+		
 		mAdapter = new SectionsItemAdapter(getActivity(), R.layout.item_list_sections);
 		mSectionsListView.setAdapter(mAdapter);
 
+		List<Section> sections = DataManager.getSections();
+		int unlockedCount = 0;
+		for (Section section : sections) {
+			section.name = "Level "+section.number;
+			mAdapter.add(section);
+			unlockedCount += (section.status == Section.SECTION_UNLOCKED) ? 1 : 0;
+		}
+		mAdapter.notifyDataSetChanged();
+		
+		setActionbarView(getActivity().getString(R.string.ab_sections_title), 
+				String.valueOf(unlockedCount) + "/" + String.valueOf(sections.size()));
+		
 		ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSectionsListView, "alpha", 0f, 1f);
 		listDisplay.setDuration(300);
 		listDisplay.start();
@@ -71,18 +83,6 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 			((BaseQuizzActivity) getActivity()).getQuizzActionBar()
 					.showIfNecessary(QuizzActionBar.MOVE_NORMAL);
 		}
-		
-		List<Section> sections = DataManager.getSections();
-		int unlockedCount = 0;
-		for (Section section : sections) {
-			section.name = "Level "+section.number;
-			mAdapter.add(section);
-			unlockedCount += (section.status == Section.SECTION_UNLOCKED) ? 1 : 0;
-		}
-		mAdapter.notifyDataSetChanged();
-		
-		setActionbarView(getActivity().getString(R.string.ab_sections_title), 
-				String.valueOf(unlockedCount) + "/" + String.valueOf(sections.size()));
 	}
 	
 	private void setActionbarView(String middleText, String rightText) {

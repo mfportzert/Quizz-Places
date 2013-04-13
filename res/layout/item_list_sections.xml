@@ -22,7 +22,7 @@
         android:layout_marginRight="2dp"
         android:layout_marginTop="10dp"
         android:layout_toLeftOf="@+id/sectionEnterButton"
-        android:text="10 / 22"
+        android:text=""
         android:textColor="#666"
         android:textSize="18sp"
         android:textStyle="bold" />

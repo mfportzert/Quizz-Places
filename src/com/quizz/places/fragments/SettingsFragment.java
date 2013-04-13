@@ -13,6 +13,7 @@ import android.widget.ToggleButton;
 
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseSettingsFragment;
+import com.quizz.core.managers.DataManager;
 import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
@@ -59,21 +60,18 @@ public class SettingsFragment extends BaseSettingsFragment {
 		// init Audio
 		if (!PreferencesUtils.containsAudioPreference(this.getActivity())) {
 			PreferencesUtils.setAudioEnabled(this.getActivity(), false);
-		} else {
-			mAudioOption.setChecked(PreferencesUtils.isAudioEnabled(this.getActivity()));
 		}
+		mAudioOption.setChecked(PreferencesUtils.isAudioEnabled(this.getActivity()));
 		// init Vibrations
 		if (!PreferencesUtils.containsVibrationPreference(this.getActivity())) {
 			PreferencesUtils.setVibrationEnabled(this.getActivity(), false);
-		} else {
-			mVibrationOption.setChecked(PreferencesUtils.isVibrationEnabled(this.getActivity()));
 		}
+		mVibrationOption.setChecked(PreferencesUtils.isVibrationEnabled(this.getActivity()));
 		// init Exit popup
 		if (!PreferencesUtils.containsExitPopupPreference(this.getActivity())) {
 			PreferencesUtils.setExitPopupEnabled(this.getActivity(), true);
-		} else {
-			mExitPopupOption.setChecked(PreferencesUtils.isExitPopupEnabled(this.getActivity()));
 		}
+		mExitPopupOption.setChecked(PreferencesUtils.isExitPopupEnabled(this.getActivity()));
 	}
 	
 	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -83,6 +81,7 @@ public class SettingsFragment extends BaseSettingsFragment {
 	        case DialogInterface.BUTTON_POSITIVE:
 	            //Yes button clicked
 	        	new PlacesDAO(getActivity()).resetDB();
+	        	DataManager.resetGame();
 	            break;
 	        case DialogInterface.BUTTON_NEGATIVE:
 	            //No button clicked
