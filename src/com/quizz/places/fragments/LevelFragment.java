@@ -17,21 +17,16 @@ import android.os.Vibrator;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
@@ -56,6 +51,8 @@ public class LevelFragment extends BaseLevelFragment {
 	public static final int LEVEL_SUCCESS_REQUEST_CODE = 1;
 	private static final int GREEN_LETTER = 0xff34C924;
 	
+	private static final String STATE_CURRENT_LEVEL = "LevelFragment.STATE_CURRENT_LEVEL";
+	
 	private ImageView mPictureBig;
 	private ImageButton mHintsButton;
 	private TextView mLevelTitle;
@@ -67,7 +64,7 @@ public class LevelFragment extends BaseLevelFragment {
 	private TextView mActionBarHints;
 	private TextView mLevelCompletedLabel;
 	
-	private Level mLevel;
+	private Level mCurrentLevel;
 	private String mPartialResponse;
 	private ImageLoader mImageLoader;
 	
@@ -113,13 +110,25 @@ public class LevelFragment extends BaseLevelFragment {
 				BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0);
 		
 		mActionBarHints.setText(String.valueOf(hintsAvailableToUnlock));
+		mInputText.setText("");
 		
-		Level level = getArguments().getParcelable(ARG_LEVEL);
+		Level level;
+		if (savedInstanceState != null && savedInstanceState.containsKey(STATE_CURRENT_LEVEL)) {
+			level = savedInstanceState.getParcelable(STATE_CURRENT_LEVEL);
+		} else {
+			level = getArguments().getParcelable(ARG_LEVEL);
+		}
+		
 		initLayout(level);
-		
 		initSounds();
 		
 		return view;
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putParcelable(STATE_CURRENT_LEVEL, mCurrentLevel);
+		super.onSaveInstanceState(outState);
 	}
 	
 	public void initSounds() {
@@ -151,31 +160,34 @@ public class LevelFragment extends BaseLevelFragment {
 		if (level == null) {
 			return;
 		}
+		mCurrentLevel = level;
 		
-		mLevel = level;
-		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + mLevel.imageName, 
+		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + mCurrentLevel.imageName, 
 				mPictureBig, ImageType.LOCAL);
 
-		ObjectAnimator.ofFloat(mPictureBig, "rotation", 0.0f, mLevel.rotation / 4)
+		ObjectAnimator.ofFloat(mPictureBig, "rotation", 0.0f, mCurrentLevel.rotation / 4)
 				.setDuration(0)
 				.start();		
 
-		if (level.status == Level.STATUS_LEVEL_CLEAR) {
-			mLevelTitle.setText(level.response);
+		if (mCurrentLevel.status == Level.STATUS_LEVEL_CLEAR) {
+			mLevelTitle.setText(mCurrentLevel.response);
 			mInputText.setVisibility(View.GONE);
 			mCheckButton.setVisibility(View.GONE);
 			mLevelCompletedLabel.setVisibility(View.VISIBLE);
 		} else {
 			// Init partial response
-			mPartialResponse = "" + mLevel.response.charAt(0);
-			for (int i = 1; i < mLevel.response.length(); i++) {
-				mPartialResponse += (mLevel.response.charAt(i) == ' ') ? ' ' : '_';
+			mPartialResponse = "" + mCurrentLevel.response.charAt(0);
+			for (int i = 1; i < mCurrentLevel.response.length(); i++) {
+				mPartialResponse += (mCurrentLevel.response.charAt(i) == ' ') ? ' ' : '_';
 			}
 			
 			mLevelTitle.setText(mPartialResponse);
+			mInputText.setVisibility(View.VISIBLE);
+			mCheckButton.setVisibility(View.VISIBLE);
+			mLevelCompletedLabel.setVisibility(View.GONE);
 			
 			InputFilter[] FilterArray = new InputFilter[1];
-			FilterArray[0] = new InputFilter.LengthFilter(mLevel.response.length());
+			FilterArray[0] = new InputFilter.LengthFilter(mCurrentLevel.response.length());
 			mInputText.setFilters(FilterArray);
 
 			
@@ -222,9 +234,9 @@ public class LevelFragment extends BaseLevelFragment {
 		// Fill action bar difficulty
 		mMediumStar.setEnabled(false);
 		mHardStar.setEnabled(false);
-		if (mLevel.difficulty.equals(Level.LEVEL_MEDIUM)) {
+		if (mCurrentLevel.difficulty.equals(Level.LEVEL_MEDIUM)) {
 			mHardStar.setEnabled(true);
-		} else if (mLevel.difficulty.equals(Level.LEVEL_HARD)) {
+		} else if (mCurrentLevel.difficulty.equals(Level.LEVEL_HARD)) {
 			mMediumStar.setEnabled(true);
 			mHardStar.setEnabled(true);
 		}
@@ -271,7 +283,7 @@ public class LevelFragment extends BaseLevelFragment {
 				// Remove accents
 				char userLetter = coloredUserResponse.charAt(i);
 				char responseLetter = Character.toUpperCase(
-						StringUtils.removeDiacritic(mLevel.response.charAt(i)));
+						StringUtils.removeDiacritic(mCurrentLevel.response.charAt(i)));
 				
 				// Check validity of the character
 				boolean isValid = isCharacterValid(userLetter, responseLetter);
@@ -306,10 +318,10 @@ public class LevelFragment extends BaseLevelFragment {
 		// update actionBar hints number
 		mActionBarHints.setText(String.valueOf(newHintsAvailableNb));
 		
-		mLevel.status = Level.STATUS_LEVEL_CLEAR;
-		mLevel.update();
+		mCurrentLevel.status = Level.STATUS_LEVEL_CLEAR;
+		mCurrentLevel.update();
 		
-		mLevelTitle.setText(mLevel.response);
+		mLevelTitle.setText(mCurrentLevel.response);
 		mInputText.setVisibility(View.GONE);
 		mCheckButton.setVisibility(View.GONE);
 		mLevelCompletedLabel.setVisibility(View.VISIBLE);
@@ -323,7 +335,7 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		// Launching LevelSuccessDialog
 		Intent intent = new Intent(getActivity(), LevelSuccessDialog.class);
-		intent.putExtra(LevelSuccessDialog.EXTRA_IS_LAST_LEVEL, DataManager.isLastLevel(mLevel));
+		intent.putExtra(LevelSuccessDialog.EXTRA_IS_LAST_LEVEL, DataManager.isLastLevel(mCurrentLevel));
 		startActivityForResult(intent, LEVEL_SUCCESS_REQUEST_CODE);
 	}
 	
@@ -337,6 +349,7 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 	
 	private void loadNewLevel(Level level) {
+		mInputText.setText("");
 		initLayout(level);
 	}
 	
@@ -383,7 +396,7 @@ public class LevelFragment extends BaseLevelFragment {
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(getActivity(), HintsDialog.class);
-			intent.putExtra(HintsDialog.EXTRA_LEVEL, mLevel);
+			intent.putExtra(HintsDialog.EXTRA_LEVEL, mCurrentLevel);
 			startActivity(intent);
 		}
 	};
@@ -400,7 +413,7 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		@Override
 		public void onAnimationEnd(Animator animation) {
-			Level nextLevel = DataManager.getNextLevel(mLevel);
+			Level nextLevel = DataManager.getNextLevel(mCurrentLevel);
 			if (nextLevel != null) {
 				loadNewLevel(nextLevel);
 			}
