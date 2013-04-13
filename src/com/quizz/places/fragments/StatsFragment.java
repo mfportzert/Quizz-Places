@@ -138,7 +138,7 @@ public class StatsFragment extends BaseStatsFragment {
 						.setProgressRes(mProgressDrawables[position
 			            % mProgressDrawables.length]/*R.drawable.fg_section_progress_blue_small*/);
 			((SectionProgressView) subview.findViewById(R.id.StatProgress))
-						.setProgressValue(stat.getProgressInPercent() > 0 ? stat.getProgressInPercent() : 1);
+						.setProgressValue(stat.getProgressInPercent());
 			if (stat.getDone() == stat.getTotal()) {
 				((ImageView) subview.findViewById(R.id.StatCupIcon))
 						.setImageDrawable(this.getActivity().getResources()

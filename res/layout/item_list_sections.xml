@@ -1,10 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
+    android:paddingBottom="10dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:paddingBottom="10dp" >
+    android:paddingTop="20dp" >
 
     <View
         android:id="@+id/section_content_bg"
@@ -22,9 +22,13 @@
         android:layout_marginRight="2dp"
         android:layout_marginTop="10dp"
         android:layout_toLeftOf="@+id/sectionEnterButton"
+        android:shadowColor="#aaffffff"
+        android:shadowDx="-1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
         android:text=""
         android:textColor="#666"
-        android:textSize="18sp"
+        android:textSize="19sp"
         android:textStyle="bold" />
 
     <ImageView
@@ -44,9 +48,9 @@
         android:id="@+id/sectionProgressContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/section_inner_separator"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_below="@+id/section_inner_separator"
         android:paddingBottom="15dp" >
 
         <com.quizz.core.widgets.SectionProgressView
@@ -55,9 +59,9 @@
             android:layout_height="19dp"
             android:layout_marginTop="12dp"
             android:adjustViewBounds="true"
+            android:alpha="0.9"
             android:scaleType="fitXY"
-            android:src="@drawable/bg_section_progress"
-            android:alpha="0.9" />
+            android:src="@drawable/bg_section_progress" />
     </LinearLayout>
 
     <View
@@ -75,14 +79,18 @@
         android:id="@+id/sectionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:drawablePadding="3dp"
+        android:layout_marginLeft="20dp"
+        android:drawableLeft="@drawable/ic_lock"
+        android:drawablePadding="5dp"
         android:gravity="bottom"
-        android:drawableRight="@drawable/ic_lock"
+        android:shadowColor="#ffffffff"
+        android:shadowDx="-1"
+        android:shadowDy="2"
+        android:shadowRadius="1"
         android:text="Level 1"
         android:textColor="#777"
-        android:textSize="22sp"
+        android:textSize="23sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

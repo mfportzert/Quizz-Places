@@ -101,8 +101,8 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 			for (Level lvl : section.levels) {
 				nbLevelsCleared += (lvl.status == Level.STATUS_LEVEL_CLEAR) ? 1 : 0;
 			}
-			int progressValue = (int) (nbLevelsCleared * 100.0f)  / section.levels.size();
-			holder.progress.setProgressValue(progressValue > 0 ? progressValue : 1);
+			float progressValue = (nbLevelsCleared * 100.0f)  / section.levels.size();
+			holder.progress.setProgressValue(progressValue);
 		} else {
 			holder.progress.setProgressValue(1);
 		}
@@ -113,11 +113,15 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 				horizontalPadding, verticalPadding);
 
 		// Level locked management
-		if (section.status == Section.SECTION_LOCKED) {
-			holder.name.setCompoundDrawablesWithIntrinsicBounds(null, null, mLockDrawable, null);
-		} else {
-			holder.name.setCompoundDrawables(null, null, null, null);
-		}
+		boolean levelLocked = (section.status == Section.SECTION_LOCKED);
+
+		holder.name.setCompoundDrawablesWithIntrinsicBounds(
+				(levelLocked) ? mLockDrawable : null, null, null, null);
+		holder.progress.setDisplayInitialProgressIfEmpty((levelLocked) ? false : true);
+		holder.buttonEnter.setVisibility((levelLocked) ? View.GONE : View.VISIBLE);
+		holder.levels.setVisibility((levelLocked) ? View.GONE : View.VISIBLE);
+		holder.progress.setAlpha((levelLocked) ? 0 : 225);
+		holder.name.setTextColor((levelLocked) ? 0xee666666 : 0xff666666);
 		
 		return convertView;
 	}

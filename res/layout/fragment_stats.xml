@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/bg_section_rounded"
+            android:background="@drawable/bg_rounded"
             android:orientation="vertical" />
 
         <LinearLayout
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/bg_section_rounded"
+            android:background="@drawable/bg_rounded"
             android:orientation="vertical" />
     </LinearLayout>
 
