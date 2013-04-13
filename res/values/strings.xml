@@ -43,5 +43,6 @@
    	
    	<!-- Level -->
    	<string name="level_success_title">Well done !</string>
+   	<string name="level_not_enough_hints">You don\'t have any hint left!</string>
    	
 </resources>

@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator.AnimatorListener;
@@ -54,7 +55,8 @@ public class LevelFragment extends BaseLevelFragment {
 	private static final String STATE_CURRENT_LEVEL = "LevelFragment.STATE_CURRENT_LEVEL";
 	
 	private ImageView mPictureBig;
-	private ImageButton mHintsButton;
+	private ImageButton mInfoButton;
+	private ImageButton mHintLettersButton;
 	private TextView mLevelTitle;
 	private Button mCheckButton;
 	private EditText mInputText;
@@ -71,6 +73,7 @@ public class LevelFragment extends BaseLevelFragment {
 	private TableLayout mLettersTableLayout;
 	
 	private MediaPlayer mSuccessPlayer;
+	private Toast mInfoToast;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,7 +82,8 @@ public class LevelFragment extends BaseLevelFragment {
 
 		View view = inflater.inflate(R.layout.fragment_level, container, false);
 		mPictureBig = (ImageView) view.findViewById(R.id.levelPictureBig);
-		mHintsButton = (ImageButton) view.findViewById(R.id.levelHints);
+		mInfoButton = (ImageButton) view.findViewById(R.id.levelInfo);
+		mHintLettersButton = (ImageButton) view.findViewById(R.id.levelHintLetters);
 		mLevelTitle = (TextView) view.findViewById(R.id.levelName);
 		mCheckButton = (Button) view.findViewById(R.id.levelCheckButton);
 		mInputText = (EditText) view.findViewById(R.id.levelInputResponse);
@@ -97,7 +101,8 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		mImageLoader = new ImageLoader(getActivity());
 		mCheckButton.setOnClickListener(mCheckButtonClickListener);
-		mHintsButton.setOnClickListener(mHintsButtonClickListener);
+		mInfoButton.setOnClickListener(mInfoButtonClickListener);
+		mHintLettersButton.setOnClickListener(mHintLettersClickListener);
 		
 		// Load special font
 		Typeface face = Typeface.createFromAsset(getActivity().getAssets(),
@@ -105,11 +110,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mLevelTitle.setTypeface(face);
 
 		// get number of hints the user can reveal
-		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
-		int hintsAvailableToUnlock = sharedPreferences.getInt(
-				BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0);
-		
-		mActionBarHints.setText(String.valueOf(hintsAvailableToUnlock));
+		mActionBarHints.setText(String.valueOf(getHintsAvailable()));
 		mInputText.setText("");
 		
 		Level level;
@@ -122,7 +123,21 @@ public class LevelFragment extends BaseLevelFragment {
 		initLayout(level);
 		initSounds();
 		
+		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
+		
 		return view;
+	}
+	
+	private int getHintsAvailable() {
+		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
+		return sharedPreferences.getInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0);
+	}
+	
+	private void setHintsAvailable(int hintsNumber) {
+		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
+		Editor prefEditor = sharedPreferences.edit();
+		prefEditor.putInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, hintsNumber);
+		prefEditor.commit();
 	}
 	
 	@Override
@@ -148,8 +163,6 @@ public class LevelFragment extends BaseLevelFragment {
 		if (mSuccessPlayer != null)
 			mSuccessPlayer.start();
 	}
-	
-
 
 	/**
 	 * Load, rotate picture, fill data
@@ -379,6 +392,24 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 	}
 	
+	private void addLetters() {
+		
+	}
+	
+	private void useHintLetters() {
+		int hints = getHintsAvailable();
+		if (hints > 0) {
+			addLetters();
+			hints--;
+			// update action bar and shared preferences
+			mActionBarHints.setText(String.valueOf(hints));
+			setHintsAvailable(hints);
+		} else {
+			mInfoToast.setText(R.string.level_not_enough_hints);
+			mInfoToast.show();
+		}
+	}
+	
 	// ===========================================================
 	// Listeners
 	// ===========================================================
@@ -391,13 +422,21 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 	};
 
-	OnClickListener mHintsButtonClickListener = new OnClickListener() {
+	OnClickListener mInfoButtonClickListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(getActivity(), HintsDialog.class);
 			intent.putExtra(HintsDialog.EXTRA_LEVEL, mCurrentLevel);
 			startActivity(intent);
+		}
+	};
+	
+	OnClickListener mHintLettersClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			useHintLetters();
 		}
 	};
 	
