@@ -319,7 +319,7 @@ public class LevelFragment extends BaseLevelFragment {
 			onError(errorsCount);
 		}
 	}
-
+	
 	private void onSuccess() {
 		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
 
@@ -337,10 +337,19 @@ public class LevelFragment extends BaseLevelFragment {
 		mCurrentLevel.update();
 		
 		mLevelTitle.setText(mCurrentLevel.response);
+		mInputText.setText("");
+		mHintLettersButton.setVisibility(View.GONE);
 		mInputText.setVisibility(View.GONE);
 		mCheckButton.setVisibility(View.GONE);
 		mLevelCompletedLabel.setVisibility(View.VISIBLE);
 
+		// Unlock next section if necessary
+		boolean unlocked = DataManager.unlockNextSectionIfNecessary(mCurrentLevel.sectionId);
+		if (unlocked) {
+			mInfoToast.setText("You unlocked the next level!");
+			mInfoToast.show();
+		}
+		
 		// Run success vibrations
 		if (PreferencesUtils.isVibrationEnabled(this.getActivity()))
 			this.runSuccessVibration();
@@ -364,7 +373,6 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 	
 	private void loadNewLevel(Level level) {
-		mInputText.setText("");
 		initLayout(level);
 	}
 	
