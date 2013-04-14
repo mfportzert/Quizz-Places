@@ -1,9 +1,11 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@drawable/dialog_border_black" >
+    android:gravity="center"
+    android:layout_gravity="center_vertical"
+    android:weightSum="1" >
 
+    <!--
     <LinearLayout
         android:id="@+id/hints_tabs"
         android:layout_width="wrap_content"
@@ -62,5 +64,37 @@
         android:layout_below="@+id/hints_tabs_divider"
         android:layout_alignLeft="@+id/hints_tabs"
         android:layout_alignRight="@+id/hints_tabs" />
-        
-</RelativeLayout>
+    -->
+
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:background="@drawable/dialog_border_white" >
+
+        <TextView
+            android:id="@+id/infoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cultural Tip"
+            android:layout_marginTop="10dp"
+            android:textColor="#666"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/infoContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/infoTitle"
+            android:text="Some letters"
+            android:textColor="#666"
+            android:layout_centerHorizontal="true"
+            android:textSize="14sp" 
+            android:paddingBottom="10dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

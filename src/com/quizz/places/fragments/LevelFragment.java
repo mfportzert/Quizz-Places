@@ -187,6 +187,7 @@ public class LevelFragment extends BaseLevelFragment {
 			mInputText.setVisibility(View.GONE);
 			mCheckButton.setVisibility(View.GONE);
 			mLevelCompletedLabel.setVisibility(View.VISIBLE);
+			mHintLettersButton.setVisibility(View.GONE);
 		} else {
 			// Init partial response
 			mPartialResponse = "" + mCurrentLevel.response.charAt(0);
@@ -198,6 +199,7 @@ public class LevelFragment extends BaseLevelFragment {
 			mInputText.setVisibility(View.VISIBLE);
 			mCheckButton.setVisibility(View.VISIBLE);
 			mLevelCompletedLabel.setVisibility(View.GONE);
+			mHintLettersButton.setVisibility(View.VISIBLE);
 			
 			InputFilter[] FilterArray = new InputFilter[1];
 			FilterArray[0] = new InputFilter.LengthFilter(mCurrentLevel.response.length());
@@ -348,7 +350,7 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		// Launching LevelSuccessDialog
 		Intent intent = new Intent(getActivity(), LevelSuccessDialog.class);
-		intent.putExtra(LevelSuccessDialog.EXTRA_IS_LAST_LEVEL, DataManager.isLastLevel(mCurrentLevel));
+		intent.putExtra(LevelSuccessDialog.EXTRA_LEVEL, mCurrentLevel);
 		startActivityForResult(intent, LEVEL_SUCCESS_REQUEST_CODE);
 	}
 	

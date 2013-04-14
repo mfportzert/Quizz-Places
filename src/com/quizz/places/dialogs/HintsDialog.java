@@ -23,21 +23,27 @@ public class HintsDialog extends BaseHintsDialog {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.dialog_hints);
-		mHintsContainer = (ViewGroup) findViewById(R.id.hints_content);
+		setContentView(R.layout.dialog_info);
+		//mHintsContainer = (ViewGroup) findViewById(R.id.hints_content);
 		
 		mLevel = getIntent().getExtras().getParcelable(EXTRA_LEVEL);
 		mCulturalHint = mLevel.getHints().get(0);
 		mMapHint = mLevel.getHints().get(1);
 		
-		addTab(R.id.tab_hat, R.layout.include_hint_text);
+		String title = "Info culture";
+		TextView titleTextView = (TextView) findViewById(R.id.infoTitle);
+		TextView messageTextView = (TextView) findViewById(R.id.infoContent);
+		titleTextView.setText(title);
+		messageTextView.setText(mCulturalHint.hint);
+		
+		/*addTab(R.id.tab_hat, R.layout.include_hint_text);
 		addTab(R.id.tab_map, R.layout.include_hint_map);
-		selectTab(R.id.tab_hat);
+		selectTab(R.id.tab_hat);*/
 	}
 	
 	@Override
 	protected void onInitTab(int tabId, View contentView) {
-		
+		/*
 		switch (tabId) {
 		
 		case R.id.tab_hat:
@@ -51,7 +57,7 @@ public class HintsDialog extends BaseHintsDialog {
 		case R.id.tab_map:
 			ImageView map = (ImageView) contentView.findViewById(R.id.mapLocation);
 			break;
-		}
+		}*/
 	}
 
 	@Override
