@@ -32,6 +32,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 	private LayoutInflater mInflater;
 	private Drawable[] mProgressDrawables = new Drawable[PROGRESS_DRAWABLES.length];
 	private Drawable mLockDrawable;
+	private Drawable mCompleteDrawable;
 	
 	public SectionsItemAdapter(Context context, int lineLayout) {
 		super(context, lineLayout);
@@ -45,6 +46,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 			mProgressDrawables[i] = context.getResources().getDrawable(PROGRESS_DRAWABLES[i]);
 		}
 		mLockDrawable = context.getResources().getDrawable(R.drawable.ic_lock);
+		mCompleteDrawable = context.getResources().getDrawable(R.drawable.ic_complete);
 	}
 
 	static class ViewHolder {
@@ -112,16 +114,21 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		holder.progress.setPaddingProgress(horizontalPadding, verticalPadding,
 				horizontalPadding, verticalPadding);
 
-		// Level locked management
-		boolean levelLocked = (section.status == Section.SECTION_LOCKED);
-
-		holder.name.setCompoundDrawablesWithIntrinsicBounds(
-				(levelLocked) ? mLockDrawable : null, null, null, null);
-		holder.progress.setDisplayInitialProgressIfEmpty((levelLocked) ? false : true);
-		holder.buttonEnter.setVisibility((levelLocked) ? View.GONE : View.VISIBLE);
-		holder.levels.setVisibility((levelLocked) ? View.GONE : View.VISIBLE);
-		holder.progress.setAlpha((levelLocked) ? 0 : 225);
-		holder.name.setTextColor((levelLocked) ? 0xee666666 : 0xff666666);
+		// Section locked management
+		boolean sectionLocked = (section.status == Section.SECTION_LOCKED);
+		Drawable sectionDrawable = null;
+		if (sectionLocked) {
+			sectionDrawable = mLockDrawable;
+		} else if (section.isComplete()) {
+			sectionDrawable = mCompleteDrawable;
+		}
+		
+		holder.name.setCompoundDrawablesWithIntrinsicBounds(sectionDrawable, null, null, null);
+		holder.progress.setDisplayInitialProgressIfEmpty((sectionLocked) ? false : true);
+		holder.buttonEnter.setVisibility((sectionLocked) ? View.GONE : View.VISIBLE);
+		holder.levels.setVisibility((sectionLocked) ? View.GONE : View.VISIBLE);
+		holder.progress.setAlpha((sectionLocked) ? 0 : 225);
+		holder.name.setTextColor((sectionLocked) ? 0xee666666 : 0xff666666);
 		
 		return convertView;
 	}

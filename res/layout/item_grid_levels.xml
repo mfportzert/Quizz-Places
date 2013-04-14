@@ -40,7 +40,7 @@
             android:layout_alignTop="@+id/levelAdjustedLayout"
             android:layout_marginRight="8dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_check" />
+            android:src="@drawable/ic_check_small" />
     </RelativeLayout>
 
     <include layout="@layout/include_difficulty" />
