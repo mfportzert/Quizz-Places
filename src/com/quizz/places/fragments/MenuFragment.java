@@ -97,7 +97,9 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 
 	@Override
 	public void onGameLoadingSuccess(List<Section> sections) {
-		mDataLoadingProgressBar.setVisibility(View.GONE);
+		if (mDataLoadingProgressBar != null) {
+			mDataLoadingProgressBar.setVisibility(View.GONE);
+		}
 		displayButtons();
 	}
 
