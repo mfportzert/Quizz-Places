@@ -42,12 +42,5 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_check_small" />
     </RelativeLayout>
-
-    <include layout="@layout/include_difficulty" />
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_below="@+id/levelDifficulty" />
-
+    
 </RelativeLayout>

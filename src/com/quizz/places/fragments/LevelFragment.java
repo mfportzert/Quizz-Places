@@ -61,8 +61,6 @@ public class LevelFragment extends BaseLevelFragment {
 	private Button mCheckButton;
 	private EditText mInputText;
 
-	private ImageView mMediumStar;
-	private ImageView mHardStar;
 	private TextView mActionBarHints;
 	private TextView mLevelCompletedLabel;
 	
@@ -95,8 +93,6 @@ public class LevelFragment extends BaseLevelFragment {
 		actionBar.setCustomView(R.layout.ab_view_level);
 
 		View customView = actionBar.getCustomViewContainer();
-		mMediumStar = (ImageView) customView.findViewById(R.id.levelStarMedium);
-		mHardStar = (ImageView) customView.findViewById(R.id.levelStarHard);
 		mActionBarHints = (TextView) customView.findViewById(R.id.ab_level_hints_nb);
 		
 		mImageLoader = new ImageLoader(getActivity());
@@ -244,16 +240,6 @@ public class LevelFragment extends BaseLevelFragment {
 				
 				currentRowWidth += cellWidth;
 			}*/
-		}
-		
-		// Fill action bar difficulty
-		mMediumStar.setEnabled(false);
-		mHardStar.setEnabled(false);
-		if (mCurrentLevel.difficulty.equals(Level.LEVEL_MEDIUM)) {
-			mHardStar.setEnabled(true);
-		} else if (mCurrentLevel.difficulty.equals(Level.LEVEL_HARD)) {
-			mMediumStar.setEnabled(true);
-			mHardStar.setEnabled(true);
 		}
 	}
 	

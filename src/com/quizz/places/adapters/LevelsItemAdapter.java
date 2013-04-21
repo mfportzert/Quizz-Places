@@ -44,11 +44,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 		RelativeLayout levelLayout;
 		View pictureLayout;
 		ImageView picture;
-		LinearLayout difficulty;
 		ImageView statusIcon;
-		ImageView easyStar;
-		ImageView mediumStar;
-		ImageView hardStar;
 		ObjectAnimator alphaAnim;
 
 		@Override
@@ -87,7 +83,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 			if (getItem(position).status == Level.STATUS_LEVEL_CLEAR) {
 				statusIcon.setVisibility(View.VISIBLE);
 			}
-			difficulty.setVisibility(View.VISIBLE);
+			
 			picture.setVisibility(View.VISIBLE);
 		}
 	}
@@ -107,14 +103,6 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 					.findViewById(R.id.levelPictureLayout);
 			holder.statusIcon = (ImageView) convertView
 					.findViewById(R.id.levelStatusIcon);
-			holder.difficulty = (LinearLayout) convertView
-					.findViewById(R.id.levelDifficulty);
-			holder.easyStar = (ImageView) convertView
-					.findViewById(R.id.levelStarEasy);
-			holder.mediumStar = (ImageView) convertView
-					.findViewById(R.id.levelStarMedium);
-			holder.hardStar = (ImageView) convertView
-					.findViewById(R.id.levelStarHard);
 
 			convertView.setTag(holder);
 		} else {
@@ -124,19 +112,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 		Level level = getItem(position);
 		holder.position = position;
 
-		/* --- Difficulty stars management --- */
-		holder.mediumStar.setEnabled(true);
-		holder.hardStar.setEnabled(true);
-
-		if (level.difficulty.equals(Level.LEVEL_MEDIUM)) {
-			holder.hardStar.setEnabled(false);
-		} else if (!level.difficulty.equals(Level.LEVEL_HARD)) {
-			holder.mediumStar.setEnabled(false);
-			holder.hardStar.setEnabled(false);
-		}
-
 		holder.statusIcon.setVisibility(View.INVISIBLE);
-		holder.difficulty.setVisibility(View.INVISIBLE);
 		holder.picture.setVisibility(View.INVISIBLE);
 
 		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR

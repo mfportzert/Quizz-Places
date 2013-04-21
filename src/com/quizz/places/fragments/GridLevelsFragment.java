@@ -56,9 +56,7 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 		mTransitionLevel = (View) view.findViewById(R.id.transitionLevel);
 		mTransitionLevelImage = (ImageView) mTransitionLevel
 				.findViewById(R.id.levelPicture);
-		View difficulty = mTransitionLevel.findViewById(R.id.levelDifficulty);
 		View statusIcon = mTransitionLevel.findViewById(R.id.levelStatusIcon);
-		difficulty.setVisibility(View.GONE);
 		statusIcon.setVisibility(View.GONE);
 
 		mLevelsGridView = (GridView) view.findViewById(R.id.gridLevels);
