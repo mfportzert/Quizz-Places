@@ -68,6 +68,10 @@ public class LevelFragment extends BaseLevelFragment {
 	private String mPartialResponse;
 	private ImageLoader mImageLoader;
 	
+	private ImageButton mPreviousButton;
+	private ImageButton mNextButton;
+	private ImageButton mPictureGridButton;
+	
 	private TableLayout mLettersTableLayout;
 	
 	private MediaPlayer mSuccessPlayer;
@@ -93,7 +97,14 @@ public class LevelFragment extends BaseLevelFragment {
 		actionBar.setCustomView(R.layout.ab_view_level);
 
 		View customView = actionBar.getCustomViewContainer();
+		mPreviousButton = (ImageButton) customView.findViewById(R.id.previous_level_button);
+		mNextButton = (ImageButton) customView.findViewById(R.id.next_level_button);
+		mPictureGridButton = (ImageButton) customView.findViewById(R.id.grid_pictures_button);
 		mActionBarHints = (TextView) customView.findViewById(R.id.ab_level_hints_nb);
+		
+		mPreviousButton.setOnClickListener(mOnPreviousButtonClickListener);
+		mNextButton.setOnClickListener(mOnNextButtonClickListener);
+		mPictureGridButton.setOnClickListener(mOnPictureGridButtonClickListener);
 		
 		mImageLoader = new ImageLoader(getActivity());
 		mCheckButton.setOnClickListener(mCheckButtonClickListener);
@@ -358,16 +369,33 @@ public class LevelFragment extends BaseLevelFragment {
 		
 	}
 	
-	private void loadNewLevel(Level level) {
-		initLayout(level);
-	}
-	
 	private void onNextLevel() {
 		// Fade out current level, load next level when animation end
 		ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(getView(), "alpha", 1f, 0f);
 		alphaAnimator.setDuration(200);
-		alphaAnimator.addListener(mStartLoadLevelAnimatorListener);			
+		alphaAnimator.addListener(mStartLoadNextLevelAnimatorListener);			
 		alphaAnimator.start();
+	}
+	
+	private void onPreviousLevel() {
+		// Fade out current level, load next level when animation end
+		ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(getView(), "alpha", 1f, 0f);
+		alphaAnimator.setDuration(200);
+		alphaAnimator.addListener(mStartLoadPreviousLevelAnimatorListener);			
+		alphaAnimator.start();
+	}
+	
+	private void displayNewLevel(Level newLevel) {
+		if (newLevel != null) {
+			initLayout(newLevel);
+		}
+		
+		// Fade in new level
+		if (getView() != null) {
+			ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(getView(), "alpha", 0f, 1f);
+			alphaAnimator.setDuration(200);
+			alphaAnimator.start();
+		}
 	}
 	
 	@Override
@@ -436,7 +464,7 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 	};
 	
-	AnimatorListener mStartLoadLevelAnimatorListener = new AnimatorListener() {
+	AnimatorListener mStartLoadPreviousLevelAnimatorListener = new AnimatorListener() {
 		
 		@Override
 		public void onAnimationStart(Animator animation) {
@@ -448,21 +476,56 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		@Override
 		public void onAnimationEnd(Animator animation) {
-			Level nextLevel = DataManager.getNextLevel(mCurrentLevel);
-			if (nextLevel != null) {
-				loadNewLevel(nextLevel);
-			}
-			
-			// Fade in new level
-			if (getView() != null) {
-				ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(getView(), "alpha", 0f, 1f);
-				alphaAnimator.setDuration(200);
-				alphaAnimator.start();
-			}
+			displayNewLevel(DataManager.getPreviousLevel(mCurrentLevel));
 		}
 		
 		@Override
 		public void onAnimationCancel(Animator animation) {
+		}
+	};
+	
+	AnimatorListener mStartLoadNextLevelAnimatorListener = new AnimatorListener() {
+		
+		@Override
+		public void onAnimationStart(Animator animation) {
+		}
+		
+		@Override
+		public void onAnimationRepeat(Animator animation) {
+		}
+		
+		@Override
+		public void onAnimationEnd(Animator animation) {
+			displayNewLevel(DataManager.getNextLevel(mCurrentLevel));
+		}
+		
+		@Override
+		public void onAnimationCancel(Animator animation) {
+		}
+	};
+	
+	OnClickListener mOnNextButtonClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			onNextLevel();
+		}
+	};
+	
+
+	OnClickListener mOnPreviousButtonClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			onPreviousLevel();
+		}
+	};
+	
+	OnClickListener mOnPictureGridButtonClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			
 		}
 	};
 }
