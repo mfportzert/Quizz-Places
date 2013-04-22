@@ -1,8 +1,8 @@
 package com.quizz.places.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +18,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseGridLevelsFragment;
-import com.quizz.core.fragments.BaseLevelFragment;
-import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.models.Level;
-import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.adapters.LevelsItemAdapter;
@@ -171,25 +168,19 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 			@Override
 			public void onAnimationEnd(Animation animation) {
 				if (isVisible()) {
-					FragmentContainer container = (FragmentContainer) getActivity();
 					FragmentManager fragmentManager = getActivity()
 							.getSupportFragmentManager();
 
-					FragmentTransaction transaction = fragmentManager
-							.beginTransaction();
-					transaction.setCustomAnimations(R.anim.fade_in,
-							R.anim.none, R.anim.slide_in_left,
-							R.anim.slide_out_right);
-
-					/*
-					 * R.anim.slide_in_right, R.anim.slide_out_left,
-					 * R.anim.slide_in_left, R.anim.slide_out_right
-					 */
-					Bundle args = new Bundle();
-					args.putParcelable(BaseLevelFragment.ARG_LEVEL,
-							mAdapter.getItem(mPosition));
-					NavigationUtils.directNavigationTo(LevelFragment.class, 
-							fragmentManager, container, true, transaction, args);
+					// Set the new level
+					Fragment fragment = fragmentManager.findFragmentByTag(
+							LevelFragment.class.getSimpleName());
+					if (fragment != null) {
+						LevelFragment levelFragment = (LevelFragment) fragment;
+						levelFragment.overrideCurrentLevelArgument(mAdapter.getItem(mPosition));
+					}
+					
+					// Get back to the level
+					getActivity().onBackPressed();
 				}
 			}
 

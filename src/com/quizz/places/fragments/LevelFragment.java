@@ -14,6 +14,8 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -35,11 +37,14 @@ import com.actionbarsherlock.internal.nineoldandroids.animation.Animator.Animato
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.application.BaseQuizzApplication;
+import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
+import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Level;
+import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.utils.StringUtils;
 import com.quizz.core.widgets.QuizzActionBar;
@@ -73,6 +78,7 @@ public class LevelFragment extends BaseLevelFragment {
 	private ImageButton mPictureGridButton;
 	
 	private TableLayout mLettersTableLayout;
+	private boolean mLevelGivenFromPicturesGrid = false;
 	
 	private MediaPlayer mSuccessPlayer;
 	private Toast mInfoToast;
@@ -121,10 +127,15 @@ public class LevelFragment extends BaseLevelFragment {
 		mInputText.setText("");
 		
 		Level level;
-		if (savedInstanceState != null && savedInstanceState.containsKey(STATE_CURRENT_LEVEL)) {
-			level = savedInstanceState.getParcelable(STATE_CURRENT_LEVEL);
+		if (mLevelGivenFromPicturesGrid) {
+			level = mCurrentLevel;
+			mLevelGivenFromPicturesGrid = false;
 		} else {
-			level = getArguments().getParcelable(ARG_LEVEL);
+			if (savedInstanceState != null && savedInstanceState.containsKey(STATE_CURRENT_LEVEL)) {
+				level = savedInstanceState.getParcelable(STATE_CURRENT_LEVEL);
+			} else {
+				level = getArguments().getParcelable(ARG_LEVEL);
+			}
 		}
 		
 		initLayout(level);
@@ -151,6 +162,15 @@ public class LevelFragment extends BaseLevelFragment {
 	public void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable(STATE_CURRENT_LEVEL, mCurrentLevel);
 		super.onSaveInstanceState(outState);
+	}
+	
+	/**
+	 * This method is used when fragment is already added in backstack
+	 * but we need to change the level argument from the pictures grid
+	 */
+	public void overrideCurrentLevelArgument(Level level) {
+		mCurrentLevel = level;
+		mLevelGivenFromPicturesGrid = true;
 	}
 	
 	public void initSounds() {
@@ -525,7 +545,21 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		@Override
 		public void onClick(View v) {
+			FragmentContainer container = (FragmentContainer) getActivity();
+			FragmentManager fragmentManager = getActivity()
+					.getSupportFragmentManager();
+
+			FragmentTransaction transaction = fragmentManager
+					.beginTransaction();
+			transaction.setCustomAnimations(R.anim.slide_in_right,
+					R.anim.slide_out_left, R.anim.slide_in_left,
+					R.anim.slide_out_right);
 			
+			Bundle args = new Bundle();
+			args.putParcelable(BaseGridLevelsFragment.ARG_SECTION,
+					DataManager.getSection(mCurrentLevel.sectionId));
+			NavigationUtils.directNavigationTo(GridLevelsFragment.class,
+					fragmentManager, container, true, transaction, args);
 		}
 	};
 }

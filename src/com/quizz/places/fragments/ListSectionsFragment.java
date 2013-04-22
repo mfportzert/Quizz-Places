@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseGridLevelsFragment;
+import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.fragments.BaseListSectionsFragment;
 import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.managers.DataManager;
@@ -113,11 +114,11 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 				transaction.setCustomAnimations(R.anim.slide_in_right,
 						R.anim.slide_out_left, R.anim.slide_in_left,
 						R.anim.slide_out_right);
-	
+
 				Bundle args = new Bundle();
-				args.putParcelable(BaseGridLevelsFragment.ARG_SECTION,
-						mAdapter.getItem(position));
-				NavigationUtils.directNavigationTo(GridLevelsFragment.class,
+				Section section = mAdapter.getItem(position);
+				args.putParcelable(BaseLevelFragment.ARG_LEVEL, section.levels.get(0));
+				NavigationUtils.directNavigationTo(LevelFragment.class, 
 						fragmentManager, container, true, transaction, args);
 			}
 		}
