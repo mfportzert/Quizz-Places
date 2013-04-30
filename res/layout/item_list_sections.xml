@@ -84,7 +84,7 @@
         android:drawableLeft="@drawable/ic_lock"
         android:drawablePadding="5dp"
         android:gravity="bottom"
-        android:shadowColor="#ccffffff"
+        android:shadowColor="#c0ffffff"
         android:shadowDx="-1"
         android:shadowDy="1"
         android:shadowRadius="1"

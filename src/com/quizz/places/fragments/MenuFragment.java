@@ -39,7 +39,6 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 	private ImageView mTitleSign;
 	private ImageView mFooter;
 
-	private ProgressBar mDataLoadingProgressBar;
 	private AnimatorSet mHideUiAnimatorSet;
 	private ConfirmQuitDialog mConfirmQuitDialog;
 	
@@ -65,7 +64,6 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		mTitleSign = (ImageView) view.findViewById(R.id.titleSign);
 		mFooter = (ImageView) view.findViewById(R.id.footer);
 		mMenuButtonsContainer = (LinearLayout) view.findViewById(R.id.menuButtonsContainer);
-		mDataLoadingProgressBar = (ProgressBar) view.findViewById(R.id.dataLoadingProgress);
 		
 		mHideUiAnimatorSet = createHideUiAnimation();
 		FragmentTransaction fadeTransaction = getActivity()
@@ -92,14 +90,10 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 	
 	@Override
 	public void onGameLoadingProgress(int progress) {
-		mDataLoadingProgressBar.setProgress(progress);
 	}
 
 	@Override
 	public void onGameLoadingSuccess(List<Section> sections) {
-		if (mDataLoadingProgressBar != null) {
-			mDataLoadingProgressBar.setVisibility(View.GONE);
-		}
 		displayButtons();
 	}
 
@@ -151,7 +145,6 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		AnimatorUtils.bounceAnimator(footerPopup, footerMovementValues, 5, 100);
 		
 		if (DataManager.dataLoaded) {
-			mDataLoadingProgressBar.setVisibility(View.GONE);
 			displayButtons();
 		}
 	}

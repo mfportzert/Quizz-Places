@@ -5,11 +5,16 @@ import java.util.Random;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.animation.AnimationSet;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
@@ -28,7 +33,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 	private LayoutInflater mInflater;
 	private ImageLoader mImageLoader;
 	private Random mRandom = new Random();
-
+	private OnPictureClickListener mPictureClickListener;
 	
 	public LevelsItemAdapter(Context context, int lineLayout) {
 		super(context, lineLayout);
@@ -85,6 +90,49 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 			}
 			
 			picture.setVisibility(View.VISIBLE);
+			picture.setOnTouchListener(new OnTouchListener() {
+				
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_DOWN) {
+						float pivotX = picture.getLeft() + (picture.getWidth() / 2);
+						float pivotY = picture.getTop() + (picture.getHeight() / 2);
+
+						AnimationSet animationSet = new AnimationSet(false);
+						animationSet.addAnimation(new ScaleAnimation(1f, 1.1f, 1f, 1.1f,
+								pivotX, pivotY));
+						animationSet.addAnimation(new RotateAnimation(0f, 0.5f));
+						animationSet.setDuration(0);
+						animationSet.setInterpolator(new LinearInterpolator());
+						animationSet.setFillAfter(true);
+						picture.startAnimation(animationSet);
+					} else if (event.getAction() == MotionEvent.ACTION_UP
+							|| event.getAction() == MotionEvent.ACTION_OUTSIDE
+							|| event.getAction() == MotionEvent.ACTION_CANCEL) {
+						
+						if (event.getAction() == MotionEvent.ACTION_UP) {
+							if (mPictureClickListener != null) {
+								// Send click event
+								mPictureClickListener.onClick(levelLayout, picture, position);
+								return true;
+							}
+						}
+						
+						float pivotX = picture.getLeft() + (picture.getWidth() / 2);
+						float pivotY = picture.getTop() + (picture.getHeight() / 2);
+
+						AnimationSet animationSet = new AnimationSet(false);
+						animationSet.addAnimation(new ScaleAnimation(1.1f, 1f, 1.1f, 1f,
+								pivotX, pivotY));
+						animationSet.addAnimation(new RotateAnimation(0.5f, 0f));
+						animationSet.setDuration(0);
+						animationSet.setInterpolator(new LinearInterpolator());
+						animationSet.setFillAfter(true);
+						picture.startAnimation(animationSet);
+					}
+					return true;
+				}
+			});
 		}
 	}
 
@@ -119,5 +167,19 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 				+ level.imageName, holder.picture, ImageType.LOCAL, holder);
 
 		return convertView;
+	}
+	
+	public void setOnPictureClickListener(OnPictureClickListener listener) {
+		mPictureClickListener = listener;
+	}
+	
+	/**
+	 * Triggered inside onTouch Action Up (needed more flexibility with the touch events)
+	 * 
+	 * @author M-F.P
+	 *
+	 */
+	public interface OnPictureClickListener {
+		public void onClick(View itemView, ImageView pictureView, int position);
 	}
 }

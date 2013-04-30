@@ -6,34 +6,21 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.ScaleAnimation;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.models.Level;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.adapters.LevelsItemAdapter;
+import com.quizz.places.adapters.LevelsItemAdapter.OnPictureClickListener;
 
 public class GridLevelsFragment extends BaseGridLevelsFragment {
 
 	private GridView mLevelsGridView;
-	private View mTransitionLevel;
-	private ImageView mTransitionLevelImage;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,17 +36,11 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 
 		View view = inflater.inflate(R.layout.fragment_grid_levels, container,
 				false);
-
-		mTransitionLevel = (View) view.findViewById(R.id.transitionLevel);
-		mTransitionLevelImage = (ImageView) mTransitionLevel
-				.findViewById(R.id.levelPicture);
-		View statusIcon = mTransitionLevel.findViewById(R.id.levelStatusIcon);
-		statusIcon.setVisibility(View.GONE);
-
+		
 		mLevelsGridView = (GridView) view.findViewById(R.id.gridLevels);
 		mLevelsGridView.setAdapter(mAdapter);
-		mLevelsGridView.setOnItemClickListener(mLevelItemClickListener);
-
+		
+		((LevelsItemAdapter) mAdapter).setOnPictureClickListener(mLevelPictureItemClickListener);
 		mAdapter.notifyDataSetChanged();
 
 		int picturesClearedCount = 0;
@@ -84,113 +65,23 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 	// Listeners
 	// ===========================================================
 
-	OnItemClickListener mLevelItemClickListener = new OnItemClickListener() {
+	OnPictureClickListener mLevelPictureItemClickListener = new OnPictureClickListener() {
 
 		@Override
-		public void onItemClick(AdapterView<?> adapter, View view,
-				int position, long id) {
-			new LevelClickTransition(view, position).start();
+		public void onClick(View itemView, ImageView pictureView, int position) {
+			FragmentManager fragmentManager = getActivity()
+					.getSupportFragmentManager();
+
+			// Set the new level
+			Fragment fragment = fragmentManager.findFragmentByTag(
+					LevelFragment.class.getSimpleName());
+			if (fragment != null) {
+				LevelFragment levelFragment = (LevelFragment) fragment;
+				levelFragment.overrideCurrentLevelArgument(mAdapter.getItem(position));
+			}
+			
+			// Get back to the level
+			getActivity().onBackPressed();
 		}
-	};
-
-	// ===========================================================
-	// Inner classes
-	// ===========================================================
-
-	/**
-	 * Transition Animation
-	 * 
-	 * Scale and translate a View corresponding to the level view clicked inside
-	 * the grid Scale to 2x and translate to 0 x - 0 y
-	 * 
-	 * @author M-F.P
-	 * 
-	 */
-	public class LevelClickTransition {
-
-		private final int mPosition;
-		private View mView;
-
-		public LevelClickTransition(View view, int position) {
-			mView = view;
-			mPosition = position;
-		}
-
-		public void start() {
-			/* Clone the clicked View inside the transition View */
-			ImageView picture = (ImageView) mView
-					.findViewById(R.id.levelPicture);
-			if (picture != null) {
-				mTransitionLevelImage.setImageDrawable(picture.getDrawable());
-			}
-
-			RelativeLayout.LayoutParams params = (LayoutParams) mTransitionLevel
-					.getLayoutParams();
-			params.width = mView.getWidth();
-			params.height = (mView.getHeight() < picture.getHeight()) ? picture
-					.getHeight() : mView.getHeight();
-			params.leftMargin = mView.getLeft();
-			params.rightMargin = mView.getRight();
-			params.topMargin = mView.getTop();
-			params.bottomMargin = mView.getBottom();
-
-			/* Create scale & translate animations */
-			float pivotX = picture.getLeft() + (picture.getWidth() / 2);
-			float pivotY = picture.getTop() + (picture.getHeight() / 2);
-
-			AnimationSet animationSet = new AnimationSet(false);
-			animationSet.addAnimation(new ScaleAnimation(1f, 1.4f, 1f, 1.4f,
-					pivotX, pivotY));
-			animationSet.addAnimation(new AlphaAnimation(1f, 0f));
-			animationSet.setInterpolator(new LinearInterpolator());
-			animationSet.setFillAfter(true);
-			animationSet.setDuration(200);
-
-			ObjectAnimator
-					.ofFloat(mTransitionLevelImage, "rotation", 0.0f,
-							mAdapter.getItem(mPosition).rotation)
-					.setDuration(0).start();
-
-			/* Fade out the grid */
-			Animation alphaAnimation = AnimationUtils.loadAnimation(
-					getActivity(), R.anim.fade_out);
-			alphaAnimation.setFillAfter(true);
-			alphaAnimation.setAnimationListener(mTransitionListener);
-			mLevelsGridView.startAnimation(alphaAnimation);
-
-			/* Scale & translate the transition View */
-			mTransitionLevel.setVisibility(View.VISIBLE);
-			mTransitionLevel.startAnimation(animationSet);
-		}
-
-		AnimationListener mTransitionListener = new AnimationListener() {
-
-			@Override
-			public void onAnimationEnd(Animation animation) {
-				if (isVisible()) {
-					FragmentManager fragmentManager = getActivity()
-							.getSupportFragmentManager();
-
-					// Set the new level
-					Fragment fragment = fragmentManager.findFragmentByTag(
-							LevelFragment.class.getSimpleName());
-					if (fragment != null) {
-						LevelFragment levelFragment = (LevelFragment) fragment;
-						levelFragment.overrideCurrentLevelArgument(mAdapter.getItem(mPosition));
-					}
-					
-					// Get back to the level
-					getActivity().onBackPressed();
-				}
-			}
-
-			@Override
-			public void onAnimationRepeat(Animation animation) {
-			}
-
-			@Override
-			public void onAnimationStart(Animation animation) {
-			}
-		};
 	};
 }
