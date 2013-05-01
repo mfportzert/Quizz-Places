@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PictureFullscreenActivity" >
+
+    <!-- <com.quizz.places.widgets.PinchZoomImageView -->
+    <ImageView
+        android:id="@+id/fullscreen_picture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true" />
+
+    <TextView
+        android:id="@+id/dummy_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#55000000"
+        android:gravity="bottom|right"
+        android:padding="5dp"
+        android:text="© dfs sdfsdf"
+        android:textSize="12sp" />
+
+</RelativeLayout>

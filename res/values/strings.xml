@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">Word Tour Quiz</string>
+    <string name="app_name">Word Tour Quiz</string>
     <string name="hello_world">Hello world!</string>
-	<string name="yes">Yes</string>
-	<string name="no">No</string>
-    
-   	<!-- ActionBar -->
-  	<string name="ab_stats_title">Statistics</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- ActionBar -->
+    <string name="ab_stats_title">Statistics</string>
     <string name="ab_settings_title">Settings</string>
     <string name="ab_sections_title">Levels</string>
     <string name="ab_levels_grid_title">Pictures</string>
-    
+
     <!-- Menu -->
     <string name="label_button_play">PLAY</string>
     <string name="label_button_rate_this_app">RATE THIS APP</string>
     <string name="label_button_stats">STATS</string>
-   	<string name="label_button_settings">SETTINGS</string>   	
-   		
-   	<!-- Settings -->
-   	<string name="audio">Audio</string>
-<!--    	<string name="audio">Audio off</string> -->
-   	<string name="vibration">Vibration</string>
-<!--    	<string name="vibration">Vibration off</string> -->
-   	<string name="exit_popup">Confirm before exit</string>
-	<string name="reset_game">Reset game</string>
-	<string name="setting_game_data">Game data</string>
-	<string name="setting_global_setup">Global setup</string>
-	<string name="clear_cache">Clear cache</string>
-   	<string name="confirm_reset">Your progression and all your unlocked hints will be cleared. Are you sure you want to reset the game ?</string>
+    <string name="label_button_settings">SETTINGS</string>
 
-   	<!-- Stats -->
-   	<string name="unlocked_lvl">Unlocked level</string>
-   	<string name="places_found">Total found</string>
-   	<string name="easy_found">Easy found</string>
-   	<string name="medium_found">Medium found</string>
-   	<string name="hard_found">Hard found</string>
-   	<string name="used_hints">Used hints</string>
-   	
-   	<!-- Grid levels -->
-   	<string name="complete">cleared</string>
-   	
-   	<!-- Level -->
-   	<string name="level_success_title">Well done !</string>
-   	<string name="level_not_enough_hints">You don\'t have any hint left!</string>
-   	
+    <!-- Settings -->
+    <string name="audio">Audio</string>
+    <!-- <string name="audio">Audio off</string> -->
+    <string name="vibration">Vibration</string>
+    <!-- <string name="vibration">Vibration off</string> -->
+    <string name="exit_popup">Confirm before exit</string>
+    <string name="reset_game">Reset game</string>
+    <string name="setting_game_data">Game data</string>
+    <string name="setting_global_setup">Global setup</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="confirm_reset">Your progression and all your unlocked hints will be cleared. Are you sure you want to reset the game ?</string>
+
+    <!-- Stats -->
+    <string name="unlocked_lvl">Unlocked level</string>
+    <string name="places_found">Total found</string>
+    <string name="easy_found">Easy found</string>
+    <string name="medium_found">Medium found</string>
+    <string name="hard_found">Hard found</string>
+    <string name="used_hints">Used hints</string>
+
+    <!-- Grid levels -->
+    <string name="complete">cleared</string>
+
+    <!-- Level -->
+    <string name="level_success_title">Well done !</string>
+    <string name="level_not_enough_hints">You don\'t have any hint left!</string>
+    <string name="title_activity_picture_fullscreen">PictureFullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

@@ -49,6 +49,7 @@ import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.utils.StringUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
+import com.quizz.places.activities.PictureFullscreenActivity;
 import com.quizz.places.application.QuizzPlacesApplication;
 import com.quizz.places.dialogs.HintsDialog;
 import com.quizz.places.dialogs.LevelSuccessDialog;
@@ -97,6 +98,14 @@ public class LevelFragment extends BaseLevelFragment {
 		mInputText = (EditText) view.findViewById(R.id.levelInputResponse);
 		mLevelCompletedLabel = (TextView) view.findViewById(R.id.levelPictureFoundLabel);
 		mLettersTableLayout = (TableLayout) view.findViewById(R.id.tableLetters);
+		
+		mPictureBig.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(getActivity(), PictureFullscreenActivity.class));
+			}
+		});
 		
 		// Init actionBar
 		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
