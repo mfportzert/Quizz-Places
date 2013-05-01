@@ -11,7 +11,6 @@ import android.util.Log;
 
 import com.quizz.core.db.DbHelper;
 import com.quizz.core.db.QuizzDAO;
-import com.quizz.core.models.Hint;
 import com.quizz.core.models.Level;
 import com.quizz.core.models.Section;
 import com.quizz.core.models.Stat;
@@ -71,14 +70,7 @@ public class PlacesDAO {
 				+ DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_ID + ")"
 				+ " FROM " + DbHelper.TABLE_LEVELS + " WHERE "
 				+ DbHelper.TABLE_LEVELS + "." + DbHelper.COLUMN_DIFFICULTY
-				+ " = \"" + Level.LEVEL_HARD + "\"" + ") AS levels_hard_total,"
-				+ " (SELECT" + " COUNT(" + DbHelper.TABLE_HINTS + "."
-				+ DbHelper.COLUMN_ID + ")" + " FROM " + DbHelper.TABLE_HINTS
-				+ " WHERE " + DbHelper.TABLE_HINTS + "."
-				+ DbHelper.COLUMN_UNLOCKED + "=" + Hint.STATUS_HINT_REVEALED
-				+ ") AS revealed_hints, " + " (SELECT" + " COUNT("
-				+ DbHelper.TABLE_HINTS + "." + DbHelper.COLUMN_ID + ")"
-				+ " FROM " + DbHelper.TABLE_HINTS + ") AS total_hints"
+				+ " = \"" + Level.LEVEL_HARD + "\"" + ") AS levels_hard_total"
 				+ " FROM " + DbHelper.TABLE_SECTIONS + " LEFT JOIN "
 				+ DbHelper.TABLE_LEVELS;
 
@@ -89,25 +81,18 @@ public class PlacesDAO {
 	}
 
 	public void resetDB() {
-//		String query = 
-//			"UPDATE " + DbHelper.TABLE_LEVELS +
-//				"SET " + DbHelper.COLUMN_UNLOCKED + " = " + Level.STATUS_LEVEL_UNCLEAR +
-//			"; " +
-//			"UPDATE " + DbHelper.TABLE_SECTIONS +
-//				"SET " + DbHelper.COLUMN_UNLOCKED + " = " + Section.SECTION_UNLOCKED;
 		ContentValues cv = new ContentValues();
 		cv.put(DbHelper.COLUMN_STATUS, Level.STATUS_LEVEL_UNCLEAR);
 		QuizzDAO.INSTANCE.getDbHelper().getWritableDatabase()
-				.update(DbHelper.TABLE_LEVELS, cv, null, null);
-		cv.clear();
-		cv.put(DbHelper.COLUMN_UNLOCKED, Hint.STATUS_HINT_UNREVEALED);
-		QuizzDAO.INSTANCE.getDbHelper().getWritableDatabase()
-				.update(DbHelper.TABLE_HINTS, cv, null, null);
+				.update(DbHelper.TABLE_USERDATA, cv, 
+						DbHelper.COLUMN_REF_FROM_TABLE + " = \"" + DbHelper.TABLE_LEVELS + "\"",
+						null);
 		cv.clear();
 		cv.put(DbHelper.COLUMN_UNLOCKED, Section.SECTION_LOCKED);
 		QuizzDAO.INSTANCE.getDbHelper().getWritableDatabase()
-			.update(DbHelper.TABLE_SECTIONS, cv,
-					DbHelper.TABLE_SECTIONS + "." + DbHelper.COLUMN_ID + "!= 1", null);
+			.update(DbHelper.TABLE_USERDATA, cv, 
+					DbHelper.COLUMN_REF_FROM_TABLE + " = \"" + DbHelper.TABLE_LEVELS + "\""
+					+ " AND " + DbHelper.COLUMN_REF + " != section_1", null);
 	}
 	
 	public List<Stat> cursorToStat(Cursor cursor) {

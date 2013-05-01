@@ -94,7 +94,17 @@ public class GameDataLoading {
 	}
 	
 	public void executeAsyncGameLoading(boolean loadFromJson) {
-		new AsyncDataLoader(loadFromJson).execute();
+		
+		 try {
+				QuizzDAO.INSTANCE.getDbHelper().createDatabases();
+//			 	List<Section> sections = DataManager.getSections();
+//			 	mGameDataLoadingListener.onGameLoadingSuccess(sections);
+				new AsyncDataLoader(loadFromJson).execute();
+
+		 } catch (IOException e) {
+			 throw new Error("Unable to create database");
+		 }
+		
 	}
 
 	// ===========================================================
@@ -141,43 +151,7 @@ public class GameDataLoading {
 
 		@Override
 		protected List<Section> doInBackground(Void... arg0) {
-			Log.e("ASYNC", "doInBackground: "+System.currentTimeMillis());
-			List<Section> sections = null;
-			if (mLoadFromJson) {
-				Gson gson = new Gson();
-				Log.e("ASYNC", "Gson object created: "+System.currentTimeMillis());
-				Type type = new TypeToken<Collection<Section>>() {}.getType();
-				publishProgress(10);
-				try {
-					Log.e("ASYNC", "TypeToken object created: "+System.currentTimeMillis());
-					InputStream is = mContext.getResources().getAssets().open(QuizzPlacesApplication.JSON_FILE);
-					Log.e("ASYNC", "start reading json: "+System.currentTimeMillis());
-					Reader reader = new InputStreamReader(is);
-					sections = gson.fromJson(reader, type);
-					Log.e("ASYNC", "DataManager.setSections: "+System.currentTimeMillis());
-					DataManager.setSections(sections);
-					publishProgress(30);
-					if (sections.size() > 0) {
-						int progress = 0;
-						for (Section section : sections) {
-							section.status = (section.number == 1) ? Section.SECTION_UNLOCKED : Section.SECTION_LOCKED;
-							Log.e("ASYNC", "inserting section: "+System.currentTimeMillis());
-							QuizzDAO.INSTANCE.insertSection(section);
-							int progressTmp = (int) (++progress * 100.0f) / sections.size(); //(int) (n * 100.0f) / v;
-							Log.e("ASYNC", "progress: "+progressTmp+", time: "+System.currentTimeMillis());
-							publishProgress((int) (30 + (progressTmp * 0.7f)));
-						}
-						Log.e("ASYNC", "after inserts: "+System.currentTimeMillis());
-					} else {
-						publishProgress(100);
-					}
-				} catch (IOException e) {
-					Log.e(DEBUG_TAG, e.getMessage(), e);
-					mException = e;
-				}
-			} else {
-				DataManager.getSections();
-			}
+			List<Section> sections = DataManager.getSections();
 			DataManager.dataLoaded = true;
 			return sections;
 		}

@@ -226,9 +226,11 @@ public class LevelFragment extends BaseLevelFragment {
 			mHintLettersButton.setVisibility(View.GONE);
 		} else {
 			// Init partial response
-			mPartialResponse = "" + mCurrentLevel.response.charAt(0);
-			for (int i = 1; i < mCurrentLevel.response.length(); i++) {
-				mPartialResponse += (mCurrentLevel.response.charAt(i) == ' ') ? ' ' : '_';
+			if (mPartialResponse != null) {
+				mPartialResponse = "" + mCurrentLevel.response.charAt(0);
+				for (int i = 1; i < mCurrentLevel.response.length(); i++) {
+					mPartialResponse += (mCurrentLevel.response.charAt(i) == ' ') ? ' ' : '_';
+				}
 			}
 			
 			mLevelTitle.setText(mPartialResponse);

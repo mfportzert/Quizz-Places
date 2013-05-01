@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.quizz.core.dialogs.BaseHintsDialog;
-import com.quizz.core.models.Hint;
+//import com.quizz.core.models.Hint;
 import com.quizz.core.models.Level;
 import com.quizz.places.R;
 
@@ -16,8 +16,8 @@ public class HintsDialog extends BaseHintsDialog {
 	public static final String EXTRA_LEVEL = "HintsDialog.EXTRA_LEVEL";
 	
 	private Level mLevel;
-	private Hint mCulturalHint;
-	private Hint mMapHint;
+//	private Hint mCulturalHint;
+//	private Hint mMapHint;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +27,14 @@ public class HintsDialog extends BaseHintsDialog {
 		//mHintsContainer = (ViewGroup) findViewById(R.id.hints_content);
 		
 		mLevel = getIntent().getExtras().getParcelable(EXTRA_LEVEL);
-		mCulturalHint = mLevel.getHints().get(0);
-		mMapHint = mLevel.getHints().get(1);
+//		mCulturalHint = mLevel.getHints().get(0);
+//		mMapHint = mLevel.getHints().get(1);
 		
 		String title = "Info culture";
 		TextView titleTextView = (TextView) findViewById(R.id.infoTitle);
 		TextView messageTextView = (TextView) findViewById(R.id.infoContent);
-		titleTextView.setText(title);
-		messageTextView.setText(mCulturalHint.hint);
+//		titleTextView.setText(title);
+//		messageTextView.setText(mCulturalHint.hint);
 		
 		/*addTab(R.id.tab_hat, R.layout.include_hint_text);
 		addTab(R.id.tab_map, R.layout.include_hint_map);
