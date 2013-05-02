@@ -20,6 +20,7 @@ import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.fragments.BaseListSectionsFragment;
 import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.managers.DataManager;
+import com.quizz.core.models.Level;
 import com.quizz.core.models.Section;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.widgets.QuizzActionBar;
@@ -117,7 +118,10 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 
 				Bundle args = new Bundle();
 				Section section = mAdapter.getItem(position);
-				args.putParcelable(BaseLevelFragment.ARG_LEVEL, section.levels.get(0));
+				
+				Level levelToDisplay = (section.isComplete()) ? section.levels.get(0) :
+						DataManager.getFirstOpenedLevelInSection(section);
+				args.putParcelable(BaseLevelFragment.ARG_LEVEL, levelToDisplay);
 				NavigationUtils.directNavigationTo(LevelFragment.class, 
 						fragmentManager, container, true, transaction, args);
 			}

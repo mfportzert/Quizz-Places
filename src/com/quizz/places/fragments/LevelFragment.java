@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -18,7 +15,6 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -38,7 +34,6 @@ import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator.AnimatorListener;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
-import com.quizz.core.application.BaseQuizzApplication;
 import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.imageloader.ImageLoader;
@@ -61,7 +56,6 @@ public class LevelFragment extends BaseLevelFragment {
 	private static final int GREEN_LETTER = 0xff34C924;
 	
 	private static final String STATE_CURRENT_LEVEL = "LevelFragment.STATE_CURRENT_LEVEL";
-	private static final char[] NOT_LETTERS = new char[] { ' ', '\'', '-' };
 	
 	private ImageView mPictureBig;
 	private ImageButton mInfoButton;
@@ -202,12 +196,11 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 
 	private boolean isLetter(char c) {
-		for (char notLetter : NOT_LETTERS) {
-			if (c == notLetter) {
-				return false;
-			}
+		// uppercase, lowercase and digits are considered as guessable letters
+		if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122) || (c >= 48 && c <= 57)) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -247,7 +240,8 @@ public class LevelFragment extends BaseLevelFragment {
 			mLettersTotal = 1;
 			char currentChar;
 			for (int i = 1; i < totalLetters; i++) {
-				currentChar = mCurrentLevel.response.charAt(i);
+				// important, remove accent before checking if a valid letter
+				currentChar = StringUtils.removeDiacritic(mCurrentLevel.response.charAt(i));
 				if (isLetter(currentChar)) {
 					mPartialResponse.append('_');
 					mLetterStateArray[i] = LetterState.NOT_FOUND;
@@ -422,11 +416,12 @@ public class LevelFragment extends BaseLevelFragment {
 		
 	}
 	
-	private void onNextLevel() {
+	private void onNextLevel(boolean skipClosedLevels) {
 		// Fade out current level, load next level when animation end
 		ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(getView(), "alpha", 1f, 0f);
 		alphaAnimator.setDuration(200);
-		alphaAnimator.addListener(mStartLoadNextLevelAnimatorListener);			
+		alphaAnimator.addListener((skipClosedLevels) ? mStartLoadNextOpenLevelAnimatorListener :
+			mStartLoadNextLevelAnimatorListener);			
 		alphaAnimator.start();
 	}
 	
@@ -459,7 +454,7 @@ public class LevelFragment extends BaseLevelFragment {
 			switch (resultCode) {
 			
 				case LevelSuccessDialog.RESULT_CODE_NEXT:
-					onNextLevel();
+					onNextLevel(true);
 					break;
 					
 				case LevelSuccessDialog.RESULT_CODE_BACK:
@@ -477,7 +472,6 @@ public class LevelFragment extends BaseLevelFragment {
 		if (lettersToUnlock > (mLettersTotal - mLettersFoundNb)) {
 			onSuccess();
 		} else {
-
 			ArrayList<Integer> notFoundPositions = new ArrayList<Integer>();
 			for (int i = 0; i < mLetterStateArray.length; i++) {
 				if (mLetterStateArray[i] == LetterState.NOT_FOUND) {
@@ -496,8 +490,9 @@ public class LevelFragment extends BaseLevelFragment {
 				int letterPosition = notFoundPositions.get(randomPosition);
 				
 				mLetterStateArray[letterPosition] = LetterState.UNLOCKED;
-				mPartialResponse.setCharAt(letterPosition, 
-						StringUtils.removeDiacritic(mCurrentLevel.response.charAt(letterPosition)));
+				// set letter in response, in uppercase
+				mPartialResponse.setCharAt(letterPosition, (char) (StringUtils.removeDiacritic(
+						mCurrentLevel.response.charAt(letterPosition)) - 32));
 				mLettersFoundNb++;
 				notFoundPositions.remove(randomPosition);
 			}
@@ -571,6 +566,26 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 	};
 	
+	AnimatorListener mStartLoadNextOpenLevelAnimatorListener = new AnimatorListener() {
+		
+		@Override
+		public void onAnimationStart(Animator animation) {
+		}
+		
+		@Override
+		public void onAnimationRepeat(Animator animation) {
+		}
+		
+		@Override
+		public void onAnimationEnd(Animator animation) {
+			displayNewLevel(DataManager.getNextOpenedLevelInSection(mCurrentLevel));
+		}
+		
+		@Override
+		public void onAnimationCancel(Animator animation) {
+		}
+	};
+	
 	AnimatorListener mStartLoadNextLevelAnimatorListener = new AnimatorListener() {
 		
 		@Override
@@ -595,7 +610,7 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		@Override
 		public void onClick(View v) {
-			onNextLevel();
+			onNextLevel(false);
 		}
 	};
 	
