@@ -43,7 +43,7 @@
             android:maxWidth="40dp"
             android:scaleType="fitCenter"
             android:src="@drawable/hints_button_selector" />
-        
+
         <TextView
             android:id="@+id/levelName"
             android:layout_width="match_parent"
@@ -119,11 +119,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/levelName"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:drawableLeft="@drawable/ic_check"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
-            android:layout_centerHorizontal="true"
             android:shadowColor="#666"
             android:shadowDx="-1"
             android:shadowDy="1"
@@ -138,8 +138,8 @@
             android:id="@+id/levelHintLetters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_above="@+id/levelName"
+            android:layout_alignParentLeft="true"
             android:layout_margin="8dp"
             android:adjustViewBounds="true"
             android:background="#00000000"
@@ -148,6 +148,22 @@
             android:scaleType="fitCenter"
             android:src="@drawable/letter_writer" />
 
+        <TextView
+            android:id="@+id/levelNbHints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_alignRight="@+id/levelHintLetters"
+			android:layout_alignTop="@+id/levelHintLetters"
+            android:background="@drawable/hints_shape"
+            android:text="12"
+            android:textStyle="bold"
+            android:textColor="#eee"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginRight="-4dp"
+            android:includeFontPadding="false"
+            android:textSize="10sp" />
     </RelativeLayout>
 
 </ScrollView>

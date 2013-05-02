@@ -1,7 +1,9 @@
 package com.quizz.places.fragments;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import android.app.Application;
 import android.content.Context;
@@ -59,6 +61,7 @@ public class LevelFragment extends BaseLevelFragment {
 	private static final int GREEN_LETTER = 0xff34C924;
 	
 	private static final String STATE_CURRENT_LEVEL = "LevelFragment.STATE_CURRENT_LEVEL";
+	private static final char[] NOT_LETTERS = new char[] { ' ', '\'', '-' };
 	
 	private ImageView mPictureBig;
 	private ImageButton mInfoButton;
@@ -67,11 +70,11 @@ public class LevelFragment extends BaseLevelFragment {
 	private Button mCheckButton;
 	private EditText mInputText;
 
-	private TextView mActionBarHints;
+	private TextView mHintsNbView;
 	private TextView mLevelCompletedLabel;
 	
 	private Level mCurrentLevel;
-	private String mPartialResponse;
+	private StringBuilder mPartialResponse;
 	private ImageLoader mImageLoader;
 	
 	private ImageButton mPreviousButton;
@@ -83,6 +86,14 @@ public class LevelFragment extends BaseLevelFragment {
 	
 	private MediaPlayer mSuccessPlayer;
 	private Toast mInfoToast;
+
+	private int mLettersTotal;
+	private int mLettersFoundNb;
+	private LetterState[] mLetterStateArray;
+	
+	private enum LetterState {
+		FOUND, NOT_FOUND, GIVEN, UNLOCKED, NOT_LETTER
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,6 +109,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mInputText = (EditText) view.findViewById(R.id.levelInputResponse);
 		mLevelCompletedLabel = (TextView) view.findViewById(R.id.levelPictureFoundLabel);
 		mLettersTableLayout = (TableLayout) view.findViewById(R.id.tableLetters);
+		mHintsNbView = (TextView) view.findViewById(R.id.levelNbHints);
 		
 		mPictureBig.setOnClickListener(new OnClickListener() {
 			
@@ -115,7 +127,6 @@ public class LevelFragment extends BaseLevelFragment {
 		mPreviousButton = (ImageButton) customView.findViewById(R.id.previous_level_button);
 		mNextButton = (ImageButton) customView.findViewById(R.id.next_level_button);
 		mPictureGridButton = (ImageButton) customView.findViewById(R.id.grid_pictures_button);
-		mActionBarHints = (TextView) customView.findViewById(R.id.ab_level_hints_nb);
 		
 		mPreviousButton.setOnClickListener(mOnPreviousButtonClickListener);
 		mNextButton.setOnClickListener(mOnNextButtonClickListener);
@@ -131,8 +142,8 @@ public class LevelFragment extends BaseLevelFragment {
 				"fonts/OpenSans-CondBold.ttf");
 		mLevelTitle.setTypeface(face);
 
-		// get number of hints the user can reveal
-		mActionBarHints.setText(String.valueOf(getHintsAvailable()));
+		// get number of hints the user can use
+		mHintsNbView.setText(String.valueOf(PreferencesUtils.getHintsAvailable(getActivity())));
 		mInputText.setText("");
 		
 		Level level;
@@ -153,18 +164,6 @@ public class LevelFragment extends BaseLevelFragment {
 		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
 		
 		return view;
-	}
-	
-	private int getHintsAvailable() {
-		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
-		return sharedPreferences.getInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0);
-	}
-	
-	private void setHintsAvailable(int hintsNumber) {
-		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
-		Editor prefEditor = sharedPreferences.edit();
-		prefEditor.putInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, hintsNumber);
-		prefEditor.commit();
 	}
 	
 	@Override
@@ -200,6 +199,15 @@ public class LevelFragment extends BaseLevelFragment {
 			mSuccessPlayer.start();
 	}
 
+	private boolean isLetter(char c) {
+		for (char notLetter : NOT_LETTERS) {
+			if (c == notLetter) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	/**
 	 * Load, rotate picture, fill data
 	 * 
@@ -210,7 +218,6 @@ public class LevelFragment extends BaseLevelFragment {
 			return;
 		}
 		mCurrentLevel = level;
-		
 		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + mCurrentLevel.imageName, 
 				mPictureBig, ImageType.LOCAL);
 
@@ -226,21 +233,42 @@ public class LevelFragment extends BaseLevelFragment {
 			mHintLettersButton.setVisibility(View.GONE);
 		} else {
 			// Init partial response
-			mPartialResponse = "" + mCurrentLevel.response.charAt(0);
-			for (int i = 1; i < mCurrentLevel.response.length(); i++) {
-				mPartialResponse += (mCurrentLevel.response.charAt(i) == ' ') ? ' ' : '_';
-			}
+			int totalLetters = mCurrentLevel.response.length();
+			mPartialResponse = new StringBuilder(totalLetters);
+			// Init letters state
+			mLetterStateArray = new LetterState[totalLetters];
 			
+			// we offer the first letter
+			mPartialResponse.append(StringUtils.removeDiacritic(mCurrentLevel.response.charAt(0)));
+			mLetterStateArray[0] = LetterState.GIVEN;
+			mLettersFoundNb = 1;
+			mLettersTotal = 1;
+			char currentChar;
+			for (int i = 1; i < totalLetters; i++) {
+				currentChar = mCurrentLevel.response.charAt(i);
+				if (isLetter(currentChar)) {
+					mPartialResponse.append('_');
+					mLetterStateArray[i] = LetterState.NOT_FOUND;
+					mLettersTotal++;
+				} else {
+					mPartialResponse.append(currentChar);
+					mLetterStateArray[i] = LetterState.NOT_LETTER;
+				}
+			}
+						
 			mLevelTitle.setText(mPartialResponse);
 			mInputText.setVisibility(View.VISIBLE);
 			mCheckButton.setVisibility(View.VISIBLE);
 			mLevelCompletedLabel.setVisibility(View.GONE);
 			mHintLettersButton.setVisibility(View.VISIBLE);
 			
+			/*
+			 * Don't limit response length..
+			 * 
 			InputFilter[] FilterArray = new InputFilter[1];
 			FilterArray[0] = new InputFilter.LengthFilter(mCurrentLevel.response.length());
 			mInputText.setFilters(FilterArray);
-
+*/
 			
 			/* ADD INPUT CELLS */
 			/*
@@ -283,61 +311,37 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 	}
 	
-	private boolean isCharacterValid(char userLetter, char responseLetter) {
-		if (userLetter == responseLetter) {
-			return true;
-		}
-		return false;
-	}
-
-	// TODO: Move to BaseLevelFragment
-	private void checkResponse(String inputContent) {
-		// Normalize and uppercase: Colisée => COLISEE
-		inputContent = StringUtils.removeDiacritic(inputContent).toUpperCase(Locale.getDefault());
-		String partialResponse = StringUtils.removeDiacritic(mPartialResponse).toUpperCase(Locale.getDefault());
-
-		// Using StringBuilder for convenience
-		StringBuilder userResponse = new StringBuilder(partialResponse);
-		
-		// We will replace all '_' from partial response to the corresponding
-		// input response characters
-		for (int i = 0; i < inputContent.length(); i++) {
-			// Assure the response entered isn't (for any reason) longer than
-			// the current partial response
-			if (i > userResponse.length()) {
-				break;
-			}
-
-			// We replace the first '_' found, leaving alone spaces and
-			// already discovered characters
-			if (userResponse.charAt(i) == '_') {
-				userResponse.setCharAt(i, inputContent.charAt(i));
-			}
-		}
-
+	private void displayColoredPartialResponse() {
 		int errorsCount = 0;
 		// We now apply the colors
-		SpannableString coloredUserResponse = new SpannableString(userResponse);
+		SpannableString coloredUserResponse = new SpannableString(mPartialResponse);
 		for (int i = 0; i < coloredUserResponse.length(); i++) {
 			// We color only the '_' characters of the base partial response
-			if (mPartialResponse.charAt(i) == '_') {
+			if (mLetterStateArray[i] == LetterState.FOUND
+					|| mLetterStateArray[i] == LetterState.NOT_FOUND) {
 				// Remove accents
 				char userLetter = coloredUserResponse.charAt(i);
 				char responseLetter = Character.toUpperCase(
 						StringUtils.removeDiacritic(mCurrentLevel.response.charAt(i)));
 				
 				// Check validity of the character
-				boolean isValid = isCharacterValid(userLetter, responseLetter);
+				boolean isValid = (userLetter == responseLetter);
 				int color = (isValid) ? GREEN_LETTER : Color.RED;
+				mLetterStateArray[i] = (isValid) ? LetterState.FOUND : LetterState.NOT_FOUND;
 				coloredUserResponse.setSpan(new ForegroundColorSpan(color), i, i + 1, 0);
 				
 				// Increment errorsCount if not valid in order to know if we show success dialog
 				errorsCount += (!isValid) ? 1 : 0;
+			} else if (mLetterStateArray[i] == LetterState.UNLOCKED) {
+				// UNLOCKED means revealed by a hint
+				int color = Color.YELLOW;
+				coloredUserResponse.setSpan(new ForegroundColorSpan(color), i, i + 1, 0);
 			}
 		}
 		
-		mLevelTitle.setText(coloredUserResponse);
-
+		mLevelTitle.setText(coloredUserResponse);		
+		mLettersFoundNb = mLettersTotal - errorsCount;
+		
 		// if we didn't find any error, display success dialog
 		if (errorsCount == 0) {
 			onSuccess();
@@ -346,18 +350,36 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 	}
 	
+	// TODO: Move to BaseLevelFragment
+	private void checkResponse(String inputContent) {
+		// Normalize and uppercase: Colisée => COLISEE
+		inputContent = StringUtils.removeDiacritic(inputContent).toUpperCase(Locale.getDefault());
+		
+		// We will replace all letters from partial response to the corresponding
+		// input response characters, except GIVEN and UNLOCKED letters
+		for (int i = 0; i < inputContent.length(); i++) {
+			// Assure the response entered isn't (for any reason) longer than
+			// the current partial response
+			if (i >= mPartialResponse.length()) {
+				break;
+			}
+
+			// We leave alone spaces and 'given' characters
+			if (mLetterStateArray[i] == LetterState.FOUND
+					|| mLetterStateArray[i] == LetterState.NOT_FOUND) {
+				mPartialResponse.setCharAt(i, inputContent.charAt(i));
+			}
+		}
+
+		displayColoredPartialResponse();
+	}
+	
 	private void onSuccess() {
-		SharedPreferences sharedPreferences = getActivity().getPreferences(Application.MODE_PRIVATE);
-
-		int newHintsAvailableNb = sharedPreferences.getInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 0) + 
-				sharedPreferences.getInt(BaseQuizzApplication.PREF_DEFAULT_NB_HINTS_ONSUCCESS_KEY, 2);
-
-		Editor editor = sharedPreferences.edit();
-		editor.putInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, newHintsAvailableNb);
-		editor.commit();
+		int newHintsAvailableNb = PreferencesUtils.getHintsAvailable(getActivity()) + 2;
+		PreferencesUtils.setHintsAvailable(getActivity(), newHintsAvailableNb);
 		
 		// update actionBar hints number
-		mActionBarHints.setText(String.valueOf(newHintsAvailableNb));
+		mHintsNbView.setText(String.valueOf(newHintsAvailableNb));
 		
 		mCurrentLevel.status = Level.STATUS_LEVEL_CLEAR;
 		mCurrentLevel.update();
@@ -446,17 +468,51 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 	
 	private void addLetters() {
+		// LettersTotal just includes ... letters
+		int lettersToUnlock = mLettersTotal / 3;
 		
+		// If we know that using a hint will reveal the answer..
+		if (lettersToUnlock > (mLettersTotal - mLettersFoundNb)) {
+			onSuccess();
+		} else {
+
+			ArrayList<Integer> notFoundPositions = new ArrayList<Integer>();
+			for (int i = 0; i < mLetterStateArray.length; i++) {
+				if (mLetterStateArray[i] == LetterState.NOT_FOUND) {
+					notFoundPositions.add(i);
+				}
+			}
+			
+			// just for safety..
+			if (lettersToUnlock > notFoundPositions.size()) {
+				onSuccess();
+			}
+
+			Random randomGenerator = new Random();
+			for (int i = lettersToUnlock; i > 0; i--) {
+				int randomPosition = randomGenerator.nextInt(notFoundPositions.size());
+				int letterPosition = notFoundPositions.get(randomPosition);
+				
+				mLetterStateArray[letterPosition] = LetterState.UNLOCKED;
+				mPartialResponse.setCharAt(letterPosition, 
+						StringUtils.removeDiacritic(mCurrentLevel.response.charAt(letterPosition)));
+				mLettersFoundNb++;
+				notFoundPositions.remove(randomPosition);
+			}
+			displayColoredPartialResponse();
+			// notify database of temporary result
+		}
 	}
 	
 	private void useHintLetters() {
-		int hints = getHintsAvailable();
+		int hints = PreferencesUtils.getHintsAvailable(getActivity());
 		if (hints > 0) {
-			addLetters();
 			hints--;
 			// update action bar and shared preferences
-			mActionBarHints.setText(String.valueOf(hints));
-			setHintsAvailable(hints);
+			mHintsNbView.setText(String.valueOf(hints));
+			PreferencesUtils.setHintsAvailable(getActivity(), hints);
+			// Add letters to partial response
+			addLetters();
 		} else {
 			mInfoToast.setText(R.string.level_not_enough_hints);
 			mInfoToast.show();
