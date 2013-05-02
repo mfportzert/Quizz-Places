@@ -14,6 +14,7 @@ import com.actionbarsherlock.internal.nineoldandroids.animation.ValueAnimator;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ValueAnimator.AnimatorUpdateListener;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Level;
+import com.quizz.core.models.Section;
 import com.quizz.places.R;
 import com.quizz.places.widgets.RotatingSunEffect;
 
@@ -44,8 +45,8 @@ public class LevelSuccessDialog extends Activity {
 		closeButton.setOnClickListener(mOnCloseButtonClickListener);
 		levelName.setText(level.response);
 		
-		boolean isLastLevel = DataManager.isLastLevel(level);
-		if (!isLastLevel) {
+		Section section = DataManager.getSection(level.sectionId);
+		if (section == null || !section.isComplete()) {
 			nextButton.setOnClickListener(mOnNextButtonClickListener);
 		} else {
 			nextButton.setVisibility(View.GONE);

@@ -95,6 +95,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:background="@drawable/button_level_success_dialog_selector"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/ic_section_back"
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
