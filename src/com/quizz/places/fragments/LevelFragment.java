@@ -111,14 +111,6 @@ public class LevelFragment extends BaseLevelFragment {
 		mLettersTableLayout = (TableLayout) view.findViewById(R.id.tableLetters);
 		mHintsNbView = (TextView) view.findViewById(R.id.levelNbHints);
 		
-		mPictureBig.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(getActivity(), PictureFullscreenActivity.class));
-			}
-		});
-		
 		// Init actionBar
 		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
 		actionBar.setCustomView(R.layout.ab_view_level);
@@ -160,6 +152,16 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		initLayout(level);
 		initSounds();
+		
+		mPictureBig.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), PictureFullscreenActivity.class);
+				intent.putExtra(PictureFullscreenActivity.EXTRA_LEVEL, mCurrentLevel);
+				startActivity(intent);
+			}
+		});
 		
 		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
 		

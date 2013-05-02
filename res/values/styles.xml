@@ -36,7 +36,7 @@
     <style name="FullscreenTheme" parent="android:Theme.Translucent">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@null</item>
+        <item name="android:windowBackground">@drawable/fullscreen_picture_background</item>
     </style>
 
 </resources>

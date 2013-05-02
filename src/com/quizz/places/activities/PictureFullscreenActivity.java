@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
+import com.quizz.core.models.Level;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
 
@@ -24,8 +25,9 @@ import com.quizz.places.application.QuizzPlacesApplication;
  */
 public class PictureFullscreenActivity extends Activity implements
 		OnTouchListener {
-
 	private static final String TAG = "Touch";
+	
+	public static final String EXTRA_LEVEL = "PictureFullscreenActivity.EXTRA_LEVEL"; 
 	@SuppressWarnings("unused")
 	private static final float MIN_ZOOM = 1f, MAX_ZOOM = 1f;
 
@@ -49,14 +51,18 @@ public class PictureFullscreenActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_picture_fullscreen);
-
+		
 		final ImageView contentView = (ImageView) findViewById(R.id.fullscreen_picture);
-
 		contentView.setOnTouchListener(this);
 
-		ImageLoader imageLoader = new ImageLoader(this);
-		imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR
-				+ "big_ben.jpg", contentView, ImageType.LOCAL);
+		Bundle extras = getIntent().getExtras();
+		if (extras.containsKey(EXTRA_LEVEL)) {
+			Level level = extras.getParcelable(EXTRA_LEVEL);
+			
+			ImageLoader imageLoader = new ImageLoader(this);
+			imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + level.imageName, 
+					contentView, ImageType.LOCAL);
+		}
 	}
 	
 	@Override

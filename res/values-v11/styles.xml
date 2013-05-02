@@ -15,7 +15,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowActionBar">false</item>
-        <item name="android:windowBackground">@drawable/ab_bg_black</item>
+        <item name="android:windowBackground">@drawable/fullscreen_picture_background</item>
     </style>
 
 </resources>
