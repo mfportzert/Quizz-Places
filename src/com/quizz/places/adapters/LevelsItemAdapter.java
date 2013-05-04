@@ -2,6 +2,7 @@ package com.quizz.places.adapters;
 
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.models.Level;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
+import com.quizz.places.widgets.AntiAliasPicture;
 
 public class LevelsItemAdapter extends ArrayAdapter<Level> {
 
@@ -51,20 +53,7 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 		ImageView picture;
 		ImageView statusIcon;
 		ObjectAnimator alphaAnim;
-
-		@Override
-		public void onStartImageLoading(Bitmap bitmap, String url,
-				ImageView imageView, ImageType imageType) {
-
-			if (alphaAnim != null && alphaAnim.isRunning()) {
-				alphaAnim.cancel();
-			}
-
-			ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(levelLayout,
-					"alpha", 0f);
-			alphaAnimator.setDuration(0);
-			alphaAnimator.start();
-		}
+		String currentPicturePath = "";
 
 		@Override
 		public void onImageLoaded(Bitmap bitmap, String url,
@@ -151,20 +140,23 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 					.findViewById(R.id.levelPictureLayout);
 			holder.statusIcon = (ImageView) convertView
 					.findViewById(R.id.levelStatusIcon);
-
+			
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
 		Level level = getItem(position);
-		holder.position = position;
-
-		holder.statusIcon.setVisibility(View.INVISIBLE);
-		holder.picture.setVisibility(View.INVISIBLE);
-
-		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR
-				+ level.imageName, holder.picture, ImageType.LOCAL, holder);
+		String imagePath = QuizzPlacesApplication.IMAGES_DIR + level.imageName;
+		if (holder.currentPicturePath.compareTo(imagePath) != 0) {
+			holder.position = position;
+			holder.currentPicturePath = imagePath;
+			
+			holder.statusIcon.setVisibility(View.INVISIBLE);
+			holder.picture.setVisibility(View.INVISIBLE);
+			
+			mImageLoader.displayImage(imagePath, holder.picture, ImageType.SMALL, holder);
+		}
 
 		return convertView;
 	}

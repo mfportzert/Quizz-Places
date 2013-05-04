@@ -34,8 +34,7 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 
-		View view = inflater.inflate(R.layout.fragment_grid_levels, container,
-				false);
+		View view = inflater.inflate(R.layout.fragment_grid_levels, container, false);
 		
 		mLevelsGridView = (GridView) view.findViewById(R.id.gridLevels);
 		mLevelsGridView.setAdapter(mAdapter);
@@ -44,8 +43,10 @@ public class GridLevelsFragment extends BaseGridLevelsFragment {
 		mAdapter.notifyDataSetChanged();
 
 		int picturesClearedCount = 0;
-		for (int i = 0; i < mAdapter.getCount(); i++)
-			picturesClearedCount += (((Level) mAdapter.getItem(i)).status == Level.STATUS_LEVEL_CLEAR) ? 1 : 0;
+		for (int i = 0; i < mAdapter.getCount(); i++) {
+			picturesClearedCount += (((Level) mAdapter.getItem(i)).status == 
+					Level.STATUS_LEVEL_CLEAR) ? 1 : 0;
+		}
 		setActionbarView(getActivity().getString(R.string.ab_levels_grid_title),
 				String.valueOf(picturesClearedCount) + "/" + String.valueOf(mAdapter.getCount()));
 		

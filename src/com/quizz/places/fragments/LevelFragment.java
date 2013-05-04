@@ -8,6 +8,7 @@ import java.util.Random;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -22,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -144,9 +146,30 @@ public class LevelFragment extends BaseLevelFragment {
 			}
 		}
 		
+		
+		mLevelTitle.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// focus response input
+				mInputText.requestFocus();
+				InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+					      Context.INPUT_METHOD_SERVICE);
+				if (imm != null){
+			        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+			          }
+			}
+		});
+		
 		initLayout(level);
 		initSounds();
 		
+		int screenHeight = getActivity().getResources().getDisplayMetrics().heightPixels;
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+			mPictureBig.setMaxHeight((int) (screenHeight / 2.5f));
+		} else {
+			mPictureBig.setMaxHeight((int) (screenHeight / 1.5f));
+		}
 		mPictureBig.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -156,6 +179,10 @@ public class LevelFragment extends BaseLevelFragment {
 				startActivity(intent);
 			}
 		});
+		
+		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+			      Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(mInputText.getWindowToken(), 0);
 		
 		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
 		
@@ -203,6 +230,13 @@ public class LevelFragment extends BaseLevelFragment {
 		return false;
 	}
 	
+	private boolean isLowercase(char c) {
+		if (c >= 97 && c <= 122) {
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Load, rotate picture, fill data
 	 * 
@@ -214,7 +248,7 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 		mCurrentLevel = level;
 		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + mCurrentLevel.imageName, 
-				mPictureBig, ImageType.LOCAL);
+				mPictureBig, ImageType.MEDIUM);
 
 		ObjectAnimator.ofFloat(mPictureBig, "rotation", 0.0f, mCurrentLevel.rotation / 4)
 				.setDuration(0)
@@ -496,8 +530,12 @@ public class LevelFragment extends BaseLevelFragment {
 				
 				mLetterStateArray[letterPosition] = LetterState.UNLOCKED;
 				// set letter in response, in uppercase
-				mPartialResponse.setCharAt(letterPosition, (char) (StringUtils.removeDiacritic(
-						mCurrentLevel.response.charAt(letterPosition)) - 32));
+				char unlockedLetter = StringUtils.removeDiacritic(
+						mCurrentLevel.response.charAt(letterPosition));
+				if (isLowercase(unlockedLetter)) {
+					unlockedLetter -= 32;
+				}
+				mPartialResponse.setCharAt(letterPosition, unlockedLetter);
 				mLettersFoundNb++;
 				notFoundPositions.remove(randomPosition);
 			}

@@ -61,7 +61,7 @@ public class PictureFullscreenActivity extends Activity implements
 			
 			ImageLoader imageLoader = new ImageLoader(this);
 			imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + level.imageName, 
-					contentView, ImageType.LOCAL);
+					contentView, ImageType.NORMAL);
 		}
 	}
 	

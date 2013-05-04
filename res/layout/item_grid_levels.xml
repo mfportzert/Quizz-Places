@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            <ImageView
+            <com.quizz.places.widgets.AntiAliasPicture
                 android:id="@+id/levelPicture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,8 +27,9 @@
                 android:background="@drawable/photo_border_white"
                 android:paddingBottom="11dp"
                 android:paddingLeft="9dp"
-                android:paddingRight="12dp"
+                android:paddingRight="11dp"
                 android:paddingTop="8dp"
+                android:antialias="true"
                 android:scaleType="centerInside" />
         </LinearLayout>
 
