@@ -10,10 +10,10 @@
             android:id="@+id/levelPictureBigLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
             android:gravity="center" >
 
             <com.quizz.places.widgets.AntiAliasPicture
@@ -25,12 +25,12 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
-                android:antialias="true"
                 android:background="@drawable/photo_border_white"
                 android:paddingBottom="13dp"
                 android:paddingLeft="11dp"
                 android:paddingRight="14dp"
                 android:paddingTop="10dp"
+                android:antialias="true"
                 android:scaleType="centerInside" />
         </LinearLayout>
 
@@ -38,12 +38,12 @@
             android:id="@+id/levelInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/levelPictureBigLayout"
-            android:layout_alignTop="@+id/levelPictureBigLayout"
-            android:layout_marginLeft="-8dp"
-            android:layout_marginTop="-10dp"
             android:adjustViewBounds="true"
             android:background="#00000000"
+            android:layout_alignLeft="@+id/levelPictureBigLayout"
+            android:layout_alignTop="@+id/levelPictureBigLayout"
+            android:layout_marginTop="-10dp"
+            android:layout_marginLeft="-8dp"
             android:maxWidth="40dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_hints" />
@@ -56,9 +56,6 @@
             android:layout_below="@+id/levelPictureBigLayout"
             android:layout_centerVertical="true"
             android:layout_marginTop="2dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="12dp"
-            android:layout_toRightOf="@+id/levelNbHints"
             android:gravity="center_horizontal"
             android:shadowColor="#cc000000"
             android:shadowDx="-1"
@@ -67,13 +64,14 @@
             android:textScaleX="1.05"
             android:textSize="32sp"
             android:textStyle="bold" />
+
         <RelativeLayout
             android:id="@+id/levelOpenedlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/levelName"
-            android:layout_marginLeft="5dp"
             android:layout_marginRight="8dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="22dp" >
 
             <LinearLayout
@@ -82,9 +80,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/levelCheckButton"
                 android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+	            android:layout_toLeftOf="@+id/levelCheckButton"
+	            android:layout_toRightOf="@+id/levelHintLetters"
                 android:layout_alignTop="@+id/levelCheckButton"
-                android:layout_marginLeft="10dp"
-                android:layout_toLeftOf="@+id/levelCheckButton"
                 android:gravity="center_vertical" >
 
                 <EditText
@@ -97,6 +96,36 @@
                     android:singleLine="true" />
             </LinearLayout>
 
+	        <ImageButton
+	            android:id="@+id/levelHintLetters"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+				android:layout_above="@+id/levelName"
+	            android:layout_marginTop="5dp"
+	            android:adjustViewBounds="true"
+                android:layout_alignParentLeft="true"
+	            android:background="#00000000"
+	            android:maxWidth="40dp"
+	            android:scaleType="fitCenter"
+	            android:src="@drawable/letter_writer" />
+	
+	        <TextView
+	            android:id="@+id/levelNbHints"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+				android:layout_alignRight="@+id/levelHintLetters"
+				android:layout_alignTop="@+id/levelHintLetters"
+	            android:background="@drawable/hints_shape"
+	            android:text="12"
+	            android:textStyle="bold"
+	            android:textColor="#eee"
+	            android:paddingLeft="4dp"
+	            android:paddingRight="4dp"
+	            android:layout_marginTop="-5dp"
+	            android:layout_marginRight="-4dp"
+	            android:includeFontPadding="false"
+	            android:textSize="10sp" />
+            
             <Button
                 android:id="@+id/levelCheckButton"
                 android:layout_width="80dp"
@@ -139,37 +168,6 @@
             android:textStyle="bold"
             android:visibility="gone" />
 
-        <ImageButton
-            android:id="@+id/levelHintLetters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/levelName"
-            android:adjustViewBounds="true"
-            android:background="#00000000"
-            android:maxWidth="40dp"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:src="@drawable/letter_writer" />
-        
-
-        <TextView
-            android:id="@+id/levelNbHints"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/levelHintLetters"
-            android:layout_alignTop="@+id/levelHintLetters"
-            android:layout_marginRight="-4dp"
-            android:layout_marginTop="-5dp"
-            android:background="@drawable/hints_shape"
-            android:includeFontPadding="false"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:text="12"
-            android:textColor="#eee"
-            android:textSize="10sp"
-            android:textStyle="bold" />
         
     </RelativeLayout>
 
