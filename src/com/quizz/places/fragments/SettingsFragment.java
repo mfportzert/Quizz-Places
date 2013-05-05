@@ -12,11 +12,13 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.quizz.core.activities.BaseQuizzActivity;
+import com.quizz.core.application.BaseQuizzApplication;
 import com.quizz.core.fragments.BaseSettingsFragment;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
+import com.quizz.places.application.QuizzPlacesApplication;
 import com.quizz.places.db.PlacesDAO;
 
 public class SettingsFragment extends BaseSettingsFragment {
@@ -82,6 +84,8 @@ public class SettingsFragment extends BaseSettingsFragment {
 	            //Yes button clicked
 	        	new PlacesDAO(getActivity()).resetDB();
 	        	DataManager.resetGame();
+	    		PreferencesUtils.setHintsAvailable(getActivity(),
+	    				BaseQuizzApplication.PREF_DEFAULT_UNLOCKED_HINTS_COUNT_VALUE);
 	            break;
 	        case DialogInterface.BUTTON_NEGATIVE:
 	            //No button clicked

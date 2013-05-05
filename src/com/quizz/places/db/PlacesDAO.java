@@ -83,16 +83,16 @@ public class PlacesDAO {
 	public void resetDB() {
 		ContentValues cv = new ContentValues();
 		cv.put(DbHelper.COLUMN_STATUS, Level.STATUS_LEVEL_UNCLEAR);
-		QuizzDAO.INSTANCE.getDbHelper().getWritableDatabase()
+		QuizzDAO.INSTANCE.getDbHelper().getWritableUserdataDatabase()
 				.update(DbHelper.TABLE_USERDATA, cv, 
 						DbHelper.COLUMN_REF_FROM_TABLE + " = \"" + DbHelper.TABLE_LEVELS + "\"",
 						null);
 		cv.clear();
-		cv.put(DbHelper.COLUMN_UNLOCKED, Section.SECTION_LOCKED);
-		QuizzDAO.INSTANCE.getDbHelper().getWritableDatabase()
+		cv.put(DbHelper.COLUMN_STATUS, Section.SECTION_LOCKED);
+		QuizzDAO.INSTANCE.getDbHelper().getWritableUserdataDatabase()
 			.update(DbHelper.TABLE_USERDATA, cv, 
 					DbHelper.COLUMN_REF_FROM_TABLE + " = \"" + DbHelper.TABLE_LEVELS + "\""
-					+ " AND " + DbHelper.COLUMN_REF + " != section_1", null);
+					+ " AND " + DbHelper.COLUMN_REF + " != \"section_1\"", null);
 	}
 	
 	public List<Stat> cursorToStat(Cursor cursor) {
