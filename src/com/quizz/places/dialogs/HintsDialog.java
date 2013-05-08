@@ -1,67 +1,42 @@
 package com.quizz.places.dialogs;
 
+import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.text.Html;
+import android.view.Window;
 import android.widget.TextView;
 
-import com.quizz.core.dialogs.BaseHintsDialog;
-//import com.quizz.core.models.Hint;
 import com.quizz.core.models.Level;
+import com.quizz.core.utils.StringUtils;
 import com.quizz.places.R;
 
-public class HintsDialog extends BaseHintsDialog {
+public class HintsDialog extends Activity {
 
 	public static final String EXTRA_LEVEL = "HintsDialog.EXTRA_LEVEL";
 	
 	private Level mLevel;
-//	private Hint mCulturalHint;
-//	private Hint mMapHint;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 
+		// To remove the background of the 'Dialog'
+		getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
 		setContentView(R.layout.dialog_info);
-		//mHintsContainer = (ViewGroup) findViewById(R.id.hints_content);
 		
 		mLevel = getIntent().getExtras().getParcelable(EXTRA_LEVEL);
-//		mCulturalHint = mLevel.getHints().get(0);
-//		mMapHint = mLevel.getHints().get(1);
 		
-		String title = "Info culture";
+		String title = getResources().getString(R.string.level_info_title);
 		TextView titleTextView = (TextView) findViewById(R.id.infoTitle);
 		TextView messageTextView = (TextView) findViewById(R.id.infoContent);
-//		titleTextView.setText(title);
-//		messageTextView.setText(mCulturalHint.hint);
-		
-		/*addTab(R.id.tab_hat, R.layout.include_hint_text);
-		addTab(R.id.tab_map, R.layout.include_hint_map);
-		selectTab(R.id.tab_hat);*/
-	}
-	
-	@Override
-	protected void onInitTab(int tabId, View contentView) {
-		/*
-		switch (tabId) {
-		
-		case R.id.tab_hat:
-			String title = "Cultural tip";
-			TextView titleTextView = (TextView) contentView.findViewById(R.id.hintTitle);
-			TextView messageTextView = (TextView) contentView.findViewById(R.id.hintMessage);
-			titleTextView.setText(title);
-			messageTextView.setText(mCulturalHint.hint);
-			break;
-
-		case R.id.tab_map:
-			ImageView map = (ImageView) contentView.findViewById(R.id.mapLocation);
-			break;
-		}*/
-	}
-
-	@Override
-	protected void onSelectTab(int tabId, View contentView) {
-		
+		titleTextView.setText(title);
+		if (StringUtils.isEmpty(mLevel.indication)) {
+			messageTextView.setText(R.string.level_no_info_found);
+		} else {
+			messageTextView.setText(Html.fromHtml(mLevel.indication));
+		}
 	}
 }
