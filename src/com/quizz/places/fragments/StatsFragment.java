@@ -71,8 +71,6 @@ public class StatsFragment extends BaseStatsFragment {
 			}
 		}
 		
-		Log.d("StatsFragments : l.74", String.valueOf(simples.size()));
-		
 		ViewGroup parentGroup = (ViewGroup)view.findViewById(R.id.StatsAchievementsContainer);
 		this.fillAchivementLinearLayout(inflater, parentGroup, achievements);
 		

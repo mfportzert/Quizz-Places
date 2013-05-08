@@ -19,6 +19,13 @@ public class AntiAliasPicture extends ImageView {
 	private Matrix mPictureMatrix = new Matrix(); 
 	private boolean mImageReady = false;
 	
+	private int mPadLeft;
+	private int mPadTop;
+	private int mPadRight;
+	private int mPadBottom;
+	private int mBmpWidth;
+	private int mBmpHeight;
+	
 	public AntiAliasPicture(Context context) {
 		super(context);
 	}
@@ -41,25 +48,28 @@ public class AntiAliasPicture extends ImageView {
 			if (getDrawable() != null && getDrawable() instanceof BitmapDrawable) {
 				bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
 
-				int left = getPaddingLeft();
-				int top = getPaddingTop();
-				int right = getPaddingRight();
-				int bottom = getPaddingBottom();
+				mPadLeft = getPaddingLeft();
+				mPadTop = getPaddingTop();
+				mPadRight = getPaddingRight();
+				mPadBottom = getPaddingBottom();
 
-				mPictureRect.set(getPaddingLeft(), getPaddingTop(), 
-						getWidth() - getPaddingRight(), getHeight() - getPaddingBottom());
+				mPictureRect.set(mPadLeft, mPadTop, 
+						getWidth() - mPadRight, getHeight() - mPadBottom);
 				
-			    Bitmap newbitmap = Bitmap.createScaledBitmap(bitmap, getWidth() - left - right, 
-			    		getHeight() - top - bottom, false);
-			    
-			    BitmapShader bitmapShader = new BitmapShader(newbitmap,
-		                TileMode.CLAMP, TileMode.CLAMP);
-		        
-			    mPictureMatrix.postTranslate(left, top); 
-		        bitmapShader.setLocalMatrix(mPictureMatrix); 
-
-		        mPaint.setShader(bitmapShader);
-		        mImageReady = true;
+				mBmpWidth = getWidth() - mPadLeft - mPadRight;
+				mBmpHeight = getHeight() - mPadTop - mPadBottom;
+				if (mBmpWidth > 0 && mBmpHeight > 0) {
+				    Bitmap newbitmap = Bitmap.createScaledBitmap(bitmap, mBmpWidth, mBmpHeight, false);
+				    
+				    BitmapShader bitmapShader = new BitmapShader(newbitmap,
+			                TileMode.CLAMP, TileMode.CLAMP);
+			        
+				    mPictureMatrix.postTranslate(mPadLeft, mPadTop); 
+			        bitmapShader.setLocalMatrix(mPictureMatrix); 
+		
+			        mPaint.setShader(bitmapShader);
+			        mImageReady = true;
+				}
 			} else {
 				return;
 			}

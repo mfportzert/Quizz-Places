@@ -116,8 +116,7 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 	}
 	
 	private void displayButtons() {
-		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(
-				mMenuButtonsContainer, "alpha", 0f, 1f);
+		ObjectAnimator buttonsDisplay = ObjectAnimator.ofFloat(mMenuButtonsContainer, "alpha", 0f, 1f);
 		buttonsDisplay.setDuration(500);
 		buttonsDisplay.setStartDelay(700);
 		buttonsDisplay.addListener(new VisibilityAnimatorListener(
@@ -150,16 +149,13 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 	}
 
 	private AnimatorSet createHideUiAnimation() {
-		ObjectAnimator signHiding = ObjectAnimator.ofFloat(mTitleSign,
-				"translationY", 0, -200);
+		ObjectAnimator signHiding = ObjectAnimator.ofFloat(mTitleSign, "translationY", 0, -200);
 		signHiding.setDuration(300);
 
-		ObjectAnimator footerHiding = ObjectAnimator.ofFloat(mFooter,
-				"translationY", 0, 500);
+		ObjectAnimator footerHiding = ObjectAnimator.ofFloat(mFooter, "translationY", 0, 500);
 		footerHiding.setDuration(700);
 
-		ObjectAnimator buttonsHiding = ObjectAnimator.ofFloat(
-				mMenuButtonsContainer, "alpha", 1f, 0f);
+		ObjectAnimator buttonsHiding = ObjectAnimator.ofFloat(mMenuButtonsContainer, "alpha", 1f, 0f);
 		buttonsHiding.setDuration(500);
 
 		AnimatorSet uiHidingAnimation = new AnimatorSet();
