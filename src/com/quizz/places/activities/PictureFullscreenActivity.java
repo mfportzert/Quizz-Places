@@ -10,10 +10,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.models.Level;
+import com.quizz.core.utils.StringUtils;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
 
@@ -53,11 +55,16 @@ public class PictureFullscreenActivity extends Activity implements
 		setContentView(R.layout.activity_picture_fullscreen);
 		
 		final ImageView contentView = (ImageView) findViewById(R.id.fullscreen_picture);
+		TextView copyright = (TextView) findViewById(R.id.picture_copyright);
 		contentView.setOnTouchListener(this);
-
+		
 		Bundle extras = getIntent().getExtras();
 		if (extras.containsKey(EXTRA_LEVEL)) {
 			Level level = extras.getParcelable(EXTRA_LEVEL);
+			if (!StringUtils.isEmpty(level.copyright)) {
+				copyright.setText("© "+level.copyright);
+				copyright.setVisibility(View.VISIBLE);
+			}
 			
 			ImageLoader imageLoader = new ImageLoader(this);
 			imageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + level.imageName, 
