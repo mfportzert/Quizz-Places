@@ -1,11 +1,6 @@
 package com.quizz.places.db;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.List;
 
 import android.app.Activity;
@@ -16,13 +11,10 @@ import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.quizz.core.application.BaseQuizzApplication;
 import com.quizz.core.db.QuizzDAO;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Section;
-import com.quizz.places.application.QuizzPlacesApplication;
+import com.quizz.core.utils.PreferencesUtils;
 
 public class GameDataLoading {
 
@@ -50,8 +42,8 @@ public class GameDataLoading {
 	private boolean initVersionInPreferences() {
 		SharedPreferences sharedPreferences = ((Activity) mContext).getPreferences(Application.MODE_PRIVATE);
 		Editor editor = sharedPreferences.edit();
-		if (!sharedPreferences.contains(BaseQuizzApplication.PREF_VERSION_KEY)) {
-			editor.putInt(BaseQuizzApplication.PREF_VERSION_KEY, BaseQuizzApplication.PREF_VERSION_VALUE);
+		if (!sharedPreferences.contains(PreferencesUtils.PREF_VERSION_KEY)) {
+			editor.putInt(PreferencesUtils.PREF_VERSION_KEY, PreferencesUtils.PREF_VERSION_VALUE);
 		}
 		return editor.commit();
 	}
@@ -59,15 +51,15 @@ public class GameDataLoading {
 	private boolean initNbHintsAvailableInPreferences() {
 		SharedPreferences sharedPreferences = ((Activity) mContext).getPreferences(Application.MODE_PRIVATE);
 		Editor editor = sharedPreferences.edit();
-		editor.putInt(BaseQuizzApplication.PREF_UNLOCKED_HINTS_COUNT_KEY, 
-				BaseQuizzApplication.PREF_DEFAULT_UNLOCKED_HINTS_COUNT_VALUE);
+		editor.putInt(PreferencesUtils.PREF_UNLOCKED_HINTS_COUNT_KEY, 
+				PreferencesUtils.PREF_DEFAULT_UNLOCKED_HINTS_COUNT_VALUE);
 		return editor.commit();
 	}
 
 	public boolean upgradeVersionInPreferences() {
 		SharedPreferences sharedPreferences = ((Activity) mContext).getPreferences(Application.MODE_PRIVATE);
 		Editor editor = sharedPreferences.edit();
-		editor.putInt(BaseQuizzApplication.PREF_VERSION_KEY, BaseQuizzApplication.PREF_VERSION_VALUE);
+		editor.putInt(PreferencesUtils.PREF_VERSION_KEY, PreferencesUtils.PREF_VERSION_VALUE);
 		return editor.commit();
 	}
 
@@ -78,8 +70,8 @@ public class GameDataLoading {
 	
 	public boolean isDbUpgradeNeeded() {
 		SharedPreferences sharedPreferences = ((Activity) mContext).getPreferences(Application.MODE_PRIVATE);
-		if (sharedPreferences.getInt(BaseQuizzApplication.PREF_VERSION_KEY, 0) 
-				< BaseQuizzApplication.PREF_VERSION_VALUE) {
+		if (sharedPreferences.getInt(PreferencesUtils.PREF_VERSION_KEY, 0) 
+				< PreferencesUtils.PREF_VERSION_VALUE) {
 			return true;
 		}
 		return false;
@@ -87,7 +79,7 @@ public class GameDataLoading {
 	
 	public boolean isFirstLaunch() {
 		SharedPreferences sharedPreferences = ((Activity) mContext).getPreferences(Application.MODE_PRIVATE);
-		if (!sharedPreferences.contains(BaseQuizzApplication.PREF_VERSION_KEY)) {
+		if (!sharedPreferences.contains(PreferencesUtils.PREF_VERSION_KEY)) {
 			return true;
 		}
 		return false;
