@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -78,7 +80,7 @@ public class LevelFragment extends BaseLevelFragment {
 	private ImageButton mPictureGridButton;
 	
 	private TableLayout mLettersTableLayout;
-	private boolean mLevelGivenFromPicturesGrid = false;
+	private boolean mBackFromPicturesGrid = false;
 	
 	private MediaPlayer mSuccessPlayer;
 	private Toast mInfoToast;
@@ -88,7 +90,7 @@ public class LevelFragment extends BaseLevelFragment {
 	private LetterState[] mLetterStateArray;
 	
 	private enum LetterState {
-		FOUND, NOT_FOUND, GIVEN, UNLOCKED, NOT_LETTER
+		FOUND, NOT_FOUND, NOT_ANSWERED, GIVEN, UNLOCKED, NOT_LETTER
 	}
 	
 	@Override
@@ -135,9 +137,9 @@ public class LevelFragment extends BaseLevelFragment {
 		mInputText.setText("");
 		
 		Level level;
-		if (mLevelGivenFromPicturesGrid) {
+		if (mBackFromPicturesGrid) {
 			level = mCurrentLevel;
-			mLevelGivenFromPicturesGrid = false;
+			mBackFromPicturesGrid = false;
 		} else {
 			if (savedInstanceState != null && savedInstanceState.containsKey(STATE_CURRENT_LEVEL)) {
 				level = savedInstanceState.getParcelable(STATE_CURRENT_LEVEL);
@@ -145,7 +147,6 @@ public class LevelFragment extends BaseLevelFragment {
 				level = getArguments().getParcelable(ARG_LEVEL);
 			}
 		}
-		
 		
 		mLevelTitle.setOnClickListener(new OnClickListener() {
 			
@@ -160,6 +161,8 @@ public class LevelFragment extends BaseLevelFragment {
 			          }
 			}
 		});
+
+		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
 		
 		initLayout(level);
 		initSounds();
@@ -184,8 +187,6 @@ public class LevelFragment extends BaseLevelFragment {
 			      Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(mInputText.getWindowToken(), 0);
 		
-		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
-		
 		return view;
 	}
 	
@@ -201,13 +202,18 @@ public class LevelFragment extends BaseLevelFragment {
 	 */
 	public void overrideCurrentLevelArgument(Level level) {
 		mCurrentLevel = level;
-		mLevelGivenFromPicturesGrid = true;
+		saveCurrentLevelAsLastPlayerLevel();
+	}
+	
+	private void saveCurrentLevelAsLastPlayerLevel() {
+		// Store this new level as the new last level played
+		PreferencesUtils.setLastPlayedLevel(getActivity(), 
+				mCurrentLevel.sectionId, mCurrentLevel.id);
 	}
 	
 	public void initSounds() {
 		AssetFileDescriptor afd;
 		try {
-			Log.d("LevelSuccessDialog", "passe dans playSuccessSound");
 			afd = getActivity().getAssets().openFd("sounds/success.wav");
 			mSuccessPlayer = new MediaPlayer();
 			mSuccessPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
@@ -249,11 +255,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mCurrentLevel = level;
 		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + mCurrentLevel.imageName, 
 				mPictureBig, ImageType.MEDIUM);
-
-		ObjectAnimator.ofFloat(mPictureBig, "rotation", 0.0f, mCurrentLevel.rotation / 4)
-				.setDuration(0)
-				.start();		
-
+		
 		if (mCurrentLevel.status == Level.STATUS_LEVEL_CLEAR) {
 			mLevelTitle.setText(mCurrentLevel.response);
 			mInputText.setVisibility(View.GONE);
@@ -277,21 +279,35 @@ public class LevelFragment extends BaseLevelFragment {
 				mLettersFoundNb = 0;
 				mLettersTotal = 0;
 			}
+			
+			// Get previously unlocked letters
+			String unlockedLetters = PreferencesUtils.getUnlockedLetters(getActivity(), mCurrentLevel);
+			
 			char currentChar;
 			for (int i = mLettersTotal; i < totalLetters; i++) {
-				// important, remove accent before checking if a valid letter
+				// important, remove accent before checking if a letter is valid
 				currentChar = StringUtils.removeDiacritic(mCurrentLevel.response.charAt(i));
-				if (isLetter(currentChar)) {
+				
+				// We stored unlocked letters as '1' and locked ones as '0' 
+				if (i < unlockedLetters.length() && unlockedLetters.charAt(i) == '1') {
+					if (isLowercase(currentChar)) {
+						currentChar -= 32;
+					}
+					mPartialResponse.append(currentChar);
+					mLetterStateArray[i] = LetterState.UNLOCKED;
+				} else if (isLetter(currentChar)) {
 					mPartialResponse.append('_');
-					mLetterStateArray[i] = LetterState.NOT_FOUND;
+					mLetterStateArray[i] = LetterState.NOT_ANSWERED;
 					mLettersTotal++;
 				} else {
 					mPartialResponse.append(currentChar);
 					mLetterStateArray[i] = LetterState.NOT_LETTER;
 				}
 			}
-						
-			mLevelTitle.setText(mPartialResponse);
+			
+			// For the unlocked letters
+			displayColoredPartialResponse();
+			
 			mInputText.setVisibility(View.VISIBLE);
 			mCheckButton.setVisibility(View.VISIBLE);
 			mLevelCompletedLabel.setVisibility(View.GONE);
@@ -347,7 +363,8 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 	
 	private void displayColoredPartialResponse() {
-		int errorsCount = 0;
+		mLettersFoundNb = mLettersTotal;
+		
 		// We now apply the colors
 		SpannableString coloredUserResponse = new SpannableString(mPartialResponse);
 		for (int i = 0; i < coloredUserResponse.length(); i++) {
@@ -365,23 +382,27 @@ public class LevelFragment extends BaseLevelFragment {
 				mLetterStateArray[i] = (isValid) ? LetterState.FOUND : LetterState.NOT_FOUND;
 				coloredUserResponse.setSpan(new ForegroundColorSpan(color), i, i + 1, 0);
 				
-				// Increment errorsCount if not valid in order to know if we show success dialog
-				errorsCount += (!isValid) ? 1 : 0;
+				if (!isValid) {
+					mLettersFoundNb--;
+				}
 			} else if (mLetterStateArray[i] == LetterState.UNLOCKED) {
 				// UNLOCKED means revealed by a hint
 				int color = Color.YELLOW;
 				coloredUserResponse.setSpan(new ForegroundColorSpan(color), i, i + 1, 0);
+			} else if (mLetterStateArray[i] == LetterState.NOT_ANSWERED) {
+				mLettersFoundNb--;
 			}
 		}
 		
 		mLevelTitle.setText(coloredUserResponse);		
-		mLettersFoundNb = mLettersTotal - errorsCount;
+		
+		Log.e("level", "LETTERS FOUND: "+mLettersFoundNb+", LETTERS TOTAL: "+mLettersTotal);
 		
 		// if we didn't find any error, display success dialog
-		if (errorsCount == 0) {
+		if (mLettersFoundNb == mLettersTotal) {
 			onSuccess();
 		} else {
-			onError(errorsCount);
+			onError(mLettersTotal - mLettersFoundNb);
 		}
 	}
 	
@@ -399,10 +420,13 @@ public class LevelFragment extends BaseLevelFragment {
 				break;
 			}
 
-			// We leave alone spaces and 'given' characters
+			// We leave alone 'not_letters', 'unlocked' and 'given' characters
 			if (mLetterStateArray[i] == LetterState.FOUND
-					|| mLetterStateArray[i] == LetterState.NOT_FOUND) {
+					|| mLetterStateArray[i] == LetterState.NOT_FOUND
+					|| mLetterStateArray[i] == LetterState.NOT_ANSWERED) {
+				
 				mPartialResponse.setCharAt(i, inputContent.charAt(i));
+				mLetterStateArray[i] = LetterState.NOT_FOUND;
 			}
 		}
 
@@ -433,12 +457,22 @@ public class LevelFragment extends BaseLevelFragment {
 			mInfoToast.show();
 		}
 		
-		// Run success vibrations
-		if (PreferencesUtils.isVibrationEnabled(this.getActivity()))
-			this.runSuccessVibration();
+		PreferencesUtils.removeUnlockedLetters(getActivity(), mCurrentLevel);
+		/*
+		 * Not useful
+		 * 
+		if (DataManager.getSection(mCurrentLevel.sectionId).isComplete()) {
+			PreferencesUtils.removeLastPlayedLevel(getActivity(), mCurrentLevel.sectionId);
+		}*/
 		
-		if (PreferencesUtils.isAudioEnabled(this.getActivity()))
+		// Run success vibrations
+		if (PreferencesUtils.isVibrationEnabled(this.getActivity())) {
+			this.runSuccessVibration();
+		}
+		
+		if (PreferencesUtils.isAudioEnabled(this.getActivity())) {
 			this.playSuccessSound();
+		}
 		
 		// Launching LevelSuccessDialog
 		Intent intent = new Intent(getActivity(), LevelSuccessDialog.class);
@@ -475,6 +509,7 @@ public class LevelFragment extends BaseLevelFragment {
 	private void displayNewLevel(Level newLevel) {
 		if (newLevel != null) {
 			initLayout(newLevel);
+			saveCurrentLevelAsLastPlayerLevel();
 		}
 		
 		// Fade in new level
@@ -513,13 +548,15 @@ public class LevelFragment extends BaseLevelFragment {
 		} else {
 			ArrayList<Integer> notFoundPositions = new ArrayList<Integer>();
 			for (int i = 0; i < mLetterStateArray.length; i++) {
-				if (mLetterStateArray[i] == LetterState.NOT_FOUND) {
+				if (mLetterStateArray[i] == LetterState.NOT_FOUND
+						|| mLetterStateArray[i] == LetterState.NOT_ANSWERED) {
 					notFoundPositions.add(i);
 				}
 			}
 			
 			// just for safety..
-			if (lettersToUnlock > notFoundPositions.size()) {
+			if (lettersToUnlock > notFoundPositions.size()
+					|| notFoundPositions.size() == 0) {
 				onSuccess();
 			}
 
@@ -540,7 +577,12 @@ public class LevelFragment extends BaseLevelFragment {
 				notFoundPositions.remove(randomPosition);
 			}
 			displayColoredPartialResponse();
-			// notify database of temporary result
+			
+			StringBuilder unlockedLetters = new StringBuilder(mLetterStateArray.length);
+			for (int i = 0; i < unlockedLetters.capacity(); i++) {
+				unlockedLetters.append((mLetterStateArray[i] == LetterState.UNLOCKED) ? '1' : '0');
+			}
+			PreferencesUtils.setUnlockedLetters(getActivity(), mCurrentLevel, unlockedLetters.toString());
 		}
 	}
 	
@@ -670,6 +712,10 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		@Override
 		public void onClick(View v) {
+			// We set a flag indicating that on the next onCreateView, we'll be back from the 
+			// pictures grid
+			mBackFromPicturesGrid = true;
+			
 			FragmentContainer container = (FragmentContainer) getActivity();
 			FragmentManager fragmentManager = getActivity()
 					.getSupportFragmentManager();
