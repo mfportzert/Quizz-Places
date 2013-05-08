@@ -75,24 +75,6 @@ public class SettingsFragment extends BaseSettingsFragment {
 		}
 		mExitPopupOption.setChecked(PreferencesUtils.isExitPopupEnabled(this.getActivity()));
 	}
-	
-	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-	    @Override
-	    public void onClick(DialogInterface dialog, int which) {
-	        switch (which){
-	        case DialogInterface.BUTTON_POSITIVE:
-	            //Yes button clicked
-	        	new PlacesDAO(getActivity()).resetDB();
-	        	DataManager.resetGame();
-	    		PreferencesUtils.setHintsAvailable(getActivity(),
-	    				BaseQuizzApplication.PREF_DEFAULT_UNLOCKED_HINTS_COUNT_VALUE);
-	            break;
-	        case DialogInterface.BUTTON_NEGATIVE:
-	            //No button clicked
-	        	break;
-	        }
-	    }
-	};
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -163,13 +145,30 @@ public class SettingsFragment extends BaseSettingsFragment {
 		}
 	};
 
+	DialogInterface.OnClickListener mDialogClickListener = new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+	        switch (which){
+	        case DialogInterface.BUTTON_POSITIVE:
+	            //Yes button clicked
+	        	new PlacesDAO(getActivity()).resetDB();
+	        	DataManager.resetGame();
+	        	PreferencesUtils.resetGame(getActivity());
+	            break;
+	        case DialogInterface.BUTTON_NEGATIVE:
+	            //No button clicked
+	        	break;
+	        }
+	    }
+	};
+	
 	private View.OnClickListener mResetListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setMessage(R.string.confirm_reset)
-				.setPositiveButton(R.string.yes, dialogClickListener)
-			    .setNegativeButton(R.string.no, dialogClickListener).show();
+				.setPositiveButton(R.string.yes, mDialogClickListener)
+			    .setNegativeButton(R.string.no, mDialogClickListener).show();
 		}
 	};	
 	
