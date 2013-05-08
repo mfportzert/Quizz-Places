@@ -23,6 +23,7 @@ import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Level;
 import com.quizz.core.models.Section;
 import com.quizz.core.utils.NavigationUtils;
+import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.adapters.SectionsItemAdapter;
@@ -110,8 +111,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 	
-				FragmentTransaction transaction = fragmentManager
-						.beginTransaction();
+				FragmentTransaction transaction = fragmentManager.beginTransaction();
 				transaction.setCustomAnimations(R.anim.slide_in_right,
 						R.anim.slide_out_left, R.anim.slide_in_left,
 						R.anim.slide_out_right);
@@ -119,8 +119,21 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 				Bundle args = new Bundle();
 				Section section = mAdapter.getItem(position);
 				
-				Level levelToDisplay = (section.isComplete()) ? section.levels.get(0) :
+				// Get last level played
+				int lastPlayedLevelId = PreferencesUtils.getLastPlayedLevel(getActivity(), section.id);
+
+				Level levelToDisplay = null;
+				if (lastPlayedLevelId > -1 && lastPlayedLevelId < section.levels.size()) {
+					for (Level level : section.levels) {
+						if (level.id == lastPlayedLevelId) {
+							levelToDisplay = level;
+						}
+					}
+				} else {
+					levelToDisplay = (section.isComplete()) ? section.levels.get(0) :
 						DataManager.getFirstOpenedLevelInSection(section);
+				}
+				
 				args.putParcelable(BaseLevelFragment.ARG_LEVEL, levelToDisplay);
 				NavigationUtils.directNavigationTo(LevelFragment.class, 
 						fragmentManager, container, true, transaction, args);
