@@ -12,14 +12,15 @@
         android:keepScreenOn="true" />
 
     <TextView
-        android:id="@+id/dummy_button"
+        android:id="@+id/picture_copyright"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#55000000"
         android:gravity="bottom|right"
         android:padding="5dp"
-        android:text="© dfs sdfsdf"
+        android:text="©"
+        android:visibility="gone"
         android:textSize="12sp" />
 
 </RelativeLayout>

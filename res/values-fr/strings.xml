@@ -44,5 +44,7 @@
    	<!-- Level -->
    	<string name="level_success_title">Bien joué !</string>
    	<string name="level_not_enough_hints">Vous n\'avez plus d\'indices en stock!</string>
-   	
+   	<string name="level_info_title">Description</string>
+   	<string name="level_no_info_found">Pas d\'informations trouvées.</string>
+   		
 </resources>

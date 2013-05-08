@@ -16,7 +16,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center" >
 
-            <com.quizz.places.widgets.AntiAliasPicture
+            <ImageView
                 android:id="@+id/levelPictureBig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,10 +52,13 @@
             android:id="@+id/levelName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/levelOpenedlayout"
             android:layout_alignRight="@+id/levelOpenedlayout"
             android:layout_below="@+id/levelPictureBigLayout"
             android:layout_centerVertical="true"
             android:layout_marginTop="2dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="5dp"
             android:gravity="center_horizontal"
             android:shadowColor="#cc000000"
             android:shadowDx="-1"

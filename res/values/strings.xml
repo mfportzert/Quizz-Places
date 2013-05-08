@@ -44,8 +44,7 @@
     <!-- Level -->
     <string name="level_success_title">Well done !</string>
     <string name="level_not_enough_hints">You don\'t have any hint left!</string>
-    <string name="title_activity_picture_fullscreen">PictureFullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-
+   	<string name="level_info_title">Information</string>
+   	<string name="level_no_info_found">No information found.</string>
+   	
 </resources>
