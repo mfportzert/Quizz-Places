@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.quizz.core.models.Level;
 import com.quizz.core.models.Section;
@@ -53,9 +54,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		TextView levels;
 		ImageView buttonEnter;
 		SectionProgressView progress;
-		
-		// In order to bring the background in top of the view when section is locked
-		View background;
+		ViewSwitcher progressSwitcher;
 	}
 
 	private int nbDoneLevels(Section section) {
@@ -79,8 +78,8 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 			holder.name = (TextView) convertView.findViewById(R.id.sectionName);
 			holder.levels = (TextView) convertView.findViewById(R.id.sectionNbLevels);
 			holder.buttonEnter = (ImageView) convertView.findViewById(R.id.sectionEnterButton);
+			holder.progressSwitcher = (ViewSwitcher) convertView.findViewById(R.id.sectionProgressSwitcher);
 			holder.progress = (SectionProgressView) convertView.findViewById(R.id.sectionProgress);
-			holder.background = convertView.findViewById(R.id.section_content_bg);
 			
 			holder.buttonEnter.setAlpha(225);
 
@@ -126,9 +125,15 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		holder.progress.setDisplayInitialProgressIfEmpty((sectionLocked) ? false : true);
 		holder.buttonEnter.setVisibility((sectionLocked) ? View.GONE : View.VISIBLE);
 		holder.levels.setVisibility((sectionLocked) ? View.GONE : View.VISIBLE);
-		holder.progress.setAlpha((sectionLocked) ? 0 : 225);
 		holder.name.setTextColor((sectionLocked) ? 0xee666666 : 0xff666666);
 		
+		if (sectionLocked) {
+			if (holder.progressSwitcher.getNextView() != holder.progress) {
+				holder.progressSwitcher.showNext();
+			}
+		} else if (holder.progressSwitcher.getNextView() == holder.progress) {
+			holder.progressSwitcher.showNext();
+		}
 		return convertView;
 	}
 }

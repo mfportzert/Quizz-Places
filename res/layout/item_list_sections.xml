@@ -44,8 +44,8 @@
         android:adjustViewBounds="true"
         android:src="@drawable/but_enter" />
 
-    <LinearLayout
-        android:id="@+id/sectionProgressContainer"
+    <ViewSwitcher
+        android:id="@+id/sectionProgressSwitcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/section_inner_separator"
@@ -61,9 +61,21 @@
             android:adjustViewBounds="true"
             android:alpha="0.9"
             android:scaleType="fitXY"
-            android:src="@drawable/bg_section_progress" />
-    </LinearLayout>
-
+            android:src="@drawable/bg_section_progress"
+            android:visibility="gone" />
+        
+        <TextView
+	        android:id="@+id/sectionUnlockLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Find 53 pictures to unlock"
+	        android:textColor="#666"
+	        android:textSize="18sp"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginLeft="5dp" />
+	        
+    </ViewSwitcher>
+    
     <View
         android:id="@+id/section_inner_separator"
         android:layout_width="match_parent"
