@@ -1,0 +1,49 @@
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toast_layout_root"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="20dp"
+    android:background="@drawable/notification_shape" >
+
+    <TextView 
+        android:id="@+id/toastTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:paddingTop="2dp"
+        android:textStyle="bold"
+        android:textColor="#FFF"
+        android:text="Congrats"
+        android:gravity="center_horizontal"
+        android:layout_alignRight="@+id/toastText"
+        android:layout_toRightOf="@+id/toastImage" />
+    
+    <ImageView 
+        android:id="@+id/toastImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:maxHeight="60dp"
+        android:adjustViewBounds="true"
+        android:layout_marginLeft="2dp"
+        android:src="@drawable/unlock" />
+
+    <TextView 
+        android:id="@+id/toastText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="#FFF"
+        android:text="You unlocked a new section"
+        android:layout_toRightOf="@+id/toastImage"
+        android:layout_below="@+id/toastTitle"
+        android:paddingRight="10dp"
+        android:paddingLeft="5dp"
+        android:layout_alignBottom="@+id/toastImage"
+        android:gravity="center"  />
+
+</RelativeLayout>

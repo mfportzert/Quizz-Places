@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -18,9 +16,11 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -162,7 +162,11 @@ public class LevelFragment extends BaseLevelFragment {
 			}
 		});
 
-		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
+		View notificationLayout = getActivity().getLayoutInflater().inflate(
+				R.layout.toast_notification, null);
+		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_LONG);
+		mInfoToast.setGravity(Gravity.BOTTOM, 0, 50);
+		mInfoToast.setView(notificationLayout);
 		
 		initLayout(level);
 		initSounds();
@@ -185,7 +189,7 @@ public class LevelFragment extends BaseLevelFragment {
 		
 		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
 			      Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(mInputText.getWindowToken(), 0);
+		imm.hideSoftInputFromWindow(mInputText.getWindowToken(), 0);
 		
 		return view;
 	}
@@ -453,7 +457,10 @@ public class LevelFragment extends BaseLevelFragment {
 		// Unlock next section if necessary
 		int unlockedSectionNumber = DataManager.unlockNextSectionIfNecessary();
 		if (unlockedSectionNumber != -1) {
-			mInfoToast.setText("You've now unlocked level " + String.valueOf(unlockedSectionNumber) + "!");
+			// mInfoToast.setText("You've now unlocked level " + String.valueOf(unlockedSectionNumber) + "!");
+			TextView content = (TextView) mInfoToast.getView().findViewById(R.id.toastText);
+			content.setText(Html.fromHtml("You've unlocked <b><u>level " + 
+					String.valueOf(unlockedSectionNumber) + "</u></b> !"));
 			mInfoToast.show();
 		}
 		
