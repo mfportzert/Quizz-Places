@@ -33,10 +33,12 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 	private Drawable[] mProgressDrawables = new Drawable[PROGRESS_DRAWABLES.length];
 	private Drawable mLockDrawable;
 	private Drawable mCompleteDrawable;
+	private Context mContext;
 	
 	public SectionsItemAdapter(Context context, int lineLayout) {
 		super(context, lineLayout);
 
+		mContext = context;
 		mLineLayout = lineLayout;
 		mInflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,6 +57,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		ImageView buttonEnter;
 		SectionProgressView progress;
 		ViewSwitcher progressSwitcher;
+		TextView sectionUnlockLabel;
 	}
 
 	private int nbDoneLevels(Section section) {
@@ -80,6 +83,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 			holder.buttonEnter = (ImageView) convertView.findViewById(R.id.sectionEnterButton);
 			holder.progressSwitcher = (ViewSwitcher) convertView.findViewById(R.id.sectionProgressSwitcher);
 			holder.progress = (SectionProgressView) convertView.findViewById(R.id.sectionProgress);
+			holder.sectionUnlockLabel = (TextView) convertView.findViewById(R.id.sectionUnlockLabel);
 			
 			holder.buttonEnter.setAlpha(225);
 
@@ -115,8 +119,17 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		// Section locked management
 		boolean sectionLocked = (section.status == Section.SECTION_LOCKED);
 		Drawable sectionDrawable = null;
+		
 		if (sectionLocked) {
 			sectionDrawable = mLockDrawable;
+			
+			int levelCountToUnlockSection = section.remainingClearedLevelCount();
+			if (levelCountToUnlockSection != -1) {
+				String unlockLabel = mContext.getString(R.string.unlock_section_requirement);
+				unlockLabel = unlockLabel.replace("X", String.valueOf(levelCountToUnlockSection));
+				holder.sectionUnlockLabel.setText(unlockLabel);
+			}
+			
 		} else if (section.isComplete()) {
 			sectionDrawable = mCompleteDrawable;
 		}

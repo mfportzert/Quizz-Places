@@ -451,7 +451,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mLevelCompletedLabel.setVisibility(View.VISIBLE);
 
 		// Unlock next section if necessary
-		int unlockedSectionNumber = DataManager.unlockNextSectionIfNecessary(mCurrentLevel.sectionId);
+		int unlockedSectionNumber = DataManager.unlockNextSectionIfNecessary();
 		if (unlockedSectionNumber != -1) {
 			mInfoToast.setText("You've now unlocked level " + String.valueOf(unlockedSectionNumber) + "!");
 			mInfoToast.show();
