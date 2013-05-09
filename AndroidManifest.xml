@@ -36,7 +36,7 @@
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name="com.quizz.places.activities.PictureFullscreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity

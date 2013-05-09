@@ -1,8 +1,11 @@
 package com.quizz.places.activities;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
@@ -31,7 +34,7 @@ public class PictureFullscreenActivity extends Activity implements
 	
 	public static final String EXTRA_LEVEL = "PictureFullscreenActivity.EXTRA_LEVEL"; 
 	@SuppressWarnings("unused")
-	private static final float MIN_ZOOM = 1f, MAX_ZOOM = 1f;
+	private static final float MIN_ZOOM = 1f, MAX_ZOOM = 7.5f;
 
 	// These matrices will be used to scale points of the image
 	Matrix matrix = new Matrix();
@@ -47,10 +50,21 @@ public class PictureFullscreenActivity extends Activity implements
 	PointF start = new PointF();
 	PointF mid = new PointF();
 	float oldDist = 1f;
-
+	
+	// used to detect if the user has moved his finger before lifting it
+	boolean mHasMoved = false;
+	
+	long mTouchDuration = 0;
+	boolean mAutoRescaled = false;
+	float mCurrentScale = 1f;
+	float mTmpScale = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		mAutoRescaled = false;
+		mCurrentScale = 1f;
 
 		setContentView(R.layout.activity_picture_fullscreen);
 		
@@ -72,11 +86,48 @@ public class PictureFullscreenActivity extends Activity implements
 		}
 	}
 	
+	private void autoRescale(ImageView view) {
+
+		// drawable must be a bitmap
+		Drawable drawable = view.getDrawable();
+		if (drawable != null && drawable instanceof BitmapDrawable) {
+			Bitmap image = ((BitmapDrawable) drawable).getBitmap();
+			int imageWidth = image.getWidth();
+			int imageHeight = image.getHeight();
+			// Check that bitmap is already set and bigger than 0
+			if (imageWidth > 0 && imageHeight > 0) {
+				int screenHeight = view.getHeight();
+				int screenWidth = view.getWidth();
+				// calculate ratio screen/image
+				float ratioHeight = (float) screenHeight / (float) imageHeight;
+				float ratioWidth = (float) screenWidth / (float) imageWidth;
+				if (ratioHeight <= 1 || ratioWidth <= 1) {
+					// find the right scale (should be the smallest between width and height)
+					float usedRatio = Math.min(ratioWidth, ratioHeight);
+					matrix.postScale(usedRatio, usedRatio);
+					
+					// center image on screen
+					int adjustedWidth = (int) (imageWidth * usedRatio);
+					int adjustedHeight = (int) (imageHeight * usedRatio);
+					int distX = (adjustedWidth < screenWidth) ? (screenWidth - adjustedWidth) / 2: 0;
+					int distY = (adjustedHeight < screenHeight) ? (screenHeight - adjustedHeight) / 2: 0;
+					matrix.postTranslate(distX, distY);
+				}
+				
+				mAutoRescaled = true;
+			}
+		}
+	}
+	
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		ImageView view = (ImageView) v;
+		if (!mAutoRescaled) {
+			// The matrix should start at scale of 1f if the bitmap is bigger than the screen
+			// and has been scaled during display..
+			autoRescale(view);
+		}
 		view.setScaleType(ImageView.ScaleType.MATRIX);
-		float scale;
 
 		dumpEvent(event);
 		// Handle touch events here...
@@ -87,22 +138,32 @@ public class PictureFullscreenActivity extends Activity implements
 			start.set(event.getX(), event.getY());
 			Log.d(TAG, "mode=DRAG"); // write to LogCat
 			mode = DRAG;
+			mHasMoved = false;
+			mTouchDuration = System.currentTimeMillis();
 			break;
 
 		case MotionEvent.ACTION_UP: // first finger lifted
+			mTouchDuration = System.currentTimeMillis() - mTouchDuration;
+			if (!mHasMoved && mTouchDuration < 200) {
+				// closes fullscreen for simple tap
+				finish();
+			}
+			break;
 
 		case MotionEvent.ACTION_POINTER_UP: // second finger lifted
 
 			mode = NONE;
 			Log.d(TAG, "mode=NONE");
+			mCurrentScale *= mTmpScale;
 			break;
 
 		case MotionEvent.ACTION_POINTER_DOWN: // first and second finger down
-
+			
 			oldDist = spacing(event);
 			Log.d(TAG, "oldDist=" + oldDist);
 			if (oldDist > 5f) {
 				savedMatrix.set(matrix);
+				mTmpScale = 1f;
 				midPoint(mid, event);
 				mode = ZOOM;
 				Log.d(TAG, "mode=ZOOM");
@@ -122,13 +183,27 @@ public class PictureFullscreenActivity extends Activity implements
 				Log.d(TAG, "newDist=" + newDist);
 				if (newDist > 5f) {
 					matrix.set(savedMatrix);
-					scale = newDist / oldDist; // setting the scaling of the
+					mTmpScale = newDist / oldDist; // setting the scaling of the
 												// matrix...if scale > 1 means
 												// zoom in...if scale < 1 means
 												// zoom out
-					matrix.postScale(scale, scale, mid.x, mid.y);
+					/*
+					float realScale = mInitialScale * tmpScale;
+					Log.e("dsfsdfsd", "INITIAL SCALE: "+ mInitialScale + ", TMP SCALE: "+tmpScale+", REAL SCALE: "+realScale);
+					*/
+					float realScale = mCurrentScale * mTmpScale;
+					if (realScale < MIN_ZOOM) {
+						mTmpScale *= (MIN_ZOOM / realScale);
+					}
+					
+					if (realScale > MAX_ZOOM) {
+						mTmpScale *= (MAX_ZOOM / realScale);
+					}
+
+					matrix.postScale(mTmpScale, mTmpScale, mid.x, mid.y);
 				}
 			}
+			mHasMoved = true;
 			break;
 		}
 
