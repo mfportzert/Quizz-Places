@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseStatsFragment;
+import com.quizz.core.models.Badge;
 import com.quizz.core.models.Section;
 import com.quizz.core.models.Stat;
 import com.quizz.core.utils.ConvertUtils;
@@ -27,6 +28,19 @@ import com.quizz.places.adapters.StatsItemAdapter;
 import com.quizz.places.db.PlacesDAO;
 
 public class StatsFragment extends BaseStatsFragment {
+	private static List<Badge> sBadges = new ArrayList<Badge>();
+	
+	static {
+		sBadges.add(new Badge(R.string.badge_traveler, R.drawable.badge_traveler, 0));
+		sBadges.add(new Badge(R.string.badge_tourist, R.drawable.badge_tourist, 10));
+		sBadges.add(new Badge(R.string.badge_explorer, R.drawable.badge_explorer, 21));
+		sBadges.add(new Badge(R.string.badge_discovery, R.drawable.badge_discovery, 39));
+		sBadges.add(new Badge(R.string.badge_extreme_vacationer, R.drawable.badge_extreme, 56));
+		sBadges.add(new Badge(R.string.badge_globe_trotter, R.drawable.badge_globe_trotter, 78));
+		sBadges.add(new Badge(R.string.badge_emblem, R.drawable.badge_emblem, 100));
+		sBadges.add(new Badge(R.string.badge_legend, R.drawable.badge_legend, 120));
+	}
+	
 	private StatsItemAdapter mAchievementAdapter;
 	private ListView mAchievementStatsListView;
 	private StatsItemAdapter mSimpleAdapter;

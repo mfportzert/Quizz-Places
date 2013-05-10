@@ -49,5 +49,15 @@
    	
    	<!-- sections list -->
    	<string name="unlock_section_requirement">Find X pictures to unlock</string>
-   		
+   	
+   	<!-- Badges -->
+   	<string name="badge_traveler">Casual traveler</string>
+   	<string name="badge_tourist">Tourist</string>
+   	<string name="badge_explorer">Exploration enthusiast</string>
+   	<string name="badge_discovery">Hungry for discovery</string>
+	<string name="badge_extreme_vacationer">Extreme vacationner</string>
+  	<string name="badge_globe_trotter">Globetrotter</string>
+  	<string name="badge_emblem">Emblem of adventure</string>
+  	<string name="badge_legend">Legendary traveler</string>
+  	
 </resources>

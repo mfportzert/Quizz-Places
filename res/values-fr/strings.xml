@@ -49,5 +49,15 @@
    	
    	<!-- sections list -->
    	<string name="unlock_section_requirement">Trouve X images pour débloquer</string>
-   			
+   	
+   	<!-- Badges -->
+   	<string name="badge_traveler">Voyageur occasionnel</string>
+   	<string name="badge_tourist">Touriste</string>
+   	<string name="badge_explorer">Mordu d\'exploration</string>
+   	<string name="badge_discovery">Assoiffé de découvertes</string>
+	<string name="badge_extreme_vacationer">Vacancier de l\'extrême</string>
+  	<string name="badge_globe_trotter">Globe-Trotter</string>
+  	<string name="badge_emblem">Emblème des aventuriers</string>
+  	<string name="badge_legend">Voyageur légendaire</string>
+
 </resources>
