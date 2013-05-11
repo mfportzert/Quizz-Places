@@ -29,6 +29,12 @@
 	<string name="clear_cache">Effacer le cache</string>
 	<string name="setting_global_setup">Configuration générale</string>
    	<string name="confirm_reset">Votre progression et tous vos indices débloqués seront effacés.\nÊtes vous sur de vouloir réinitialiser le jeu ?</string>
+   	<string name="rate_app">Noter l\'application</string>
+    <string name="rate_app_info">Donnez votre avis et aidez-nous à améliorer cette application ;)</string>
+    <string name="rate_app_button">Noter</string>
+    <string name="remove_ads">Enlever les pubs</string>
+    <string name="remove_ads_info">Soit vous voulez nous soutenir, soit les pubs vous rendent fous…</string>
+    <string name="remove_ads_button">Soutenir</string>
    	
    	<!-- Stats -->
    	<string name="unlocked_lvl">Niveaux débloqués</string>

@@ -5,7 +5,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+    	android:paddingBottom="20dp" >
 
         <LinearLayout
             android:id="@+id/general_config_group_container"
@@ -121,6 +122,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/game_actions_group_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/general_config_group_container"
@@ -170,7 +172,132 @@
                     android:textStyle="bold" />
             </RelativeLayout>
         </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/support_us_group_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/game_actions_group_container"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_rounded"
+            android:orientation="vertical"
+            android:paddingBottom="2dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp" >
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" >
+
+                <TextView
+                    android:id="@+id/RateAppLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/rate_app"
+                    android:textColor="#606060"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                
+                <TextView
+                    android:id="@+id/RateAppInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/RateAppLabel"
+                    android:layout_toLeftOf="@+id/RateAppButton"
+                    android:layout_marginTop="2dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/rate_app_info"
+                    android:textColor="#505050"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/RateAppButton"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/setting_blue_button_selector"
+                    android:gravity="center"
+                    android:shadowColor="#333"
+                    android:shadowRadius="2"
+                    android:text="@string/rate_app_button"
+                    android:textColor="#F7F7F7"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="2dp"
+                android:background="#88aaaaaa" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" >
+
+                <TextView
+                    android:id="@+id/DonateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/remove_ads"
+                    android:textColor="#606060"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                
+                <TextView
+                    android:id="@+id/DonateInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/DonateLabel"
+                    android:layout_toLeftOf="@+id/DonateButton"
+                    android:layout_marginTop="2dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/remove_ads_info"
+                    android:textColor="#505050"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/DonateButton"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/setting_blue_button_selector"
+                    android:gravity="center"
+                    android:shadowColor="#333"
+                    android:shadowRadius="2"
+                    android:text="@string/remove_ads_button"
+                    android:textColor="#F7F7F7"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+        
     </RelativeLayout>
 
 </ScrollView>
