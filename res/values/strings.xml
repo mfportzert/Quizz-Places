@@ -16,7 +16,7 @@
     <string name="label_button_play">PLAY</string>
     <string name="label_button_rate_this_app">RATE THIS APP</string>
     <string name="label_button_stats">STATS</string>
-    <string name="label_button_settings">SETTINGS</string>
+    <string name="label_button_settings">OPTIONS</string>
 
     <!-- Settings -->
     <string name="audio">Audio</string>
