@@ -56,7 +56,7 @@
    	<string name="level_unlock_badge">Vous êtes maintenant un &lt;b>&lt;u>%1$s&lt;/u>&lt;/b> !</string>
    	
    	<!-- sections list -->
-   	<string name="unlock_section_requirement">Trouve X images pour débloquer</string>
+   	<string name="unlock_section_requirement">Trouve %d images pour débloquer</string>
    	
    	<!-- Badges -->
    	<string name="badge_traveler">Voyageur occasionnel</string>

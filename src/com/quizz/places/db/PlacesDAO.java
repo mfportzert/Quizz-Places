@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.util.Log;
 
+import com.google.ads.c;
 import com.quizz.core.db.DbHelper;
 import com.quizz.core.db.QuizzDAO;
 import com.quizz.core.models.Level;
@@ -82,16 +83,19 @@ public class PlacesDAO {
 
 	public void resetDB() {
 		ContentValues cv = new ContentValues();
+		
 		cv.put(DbHelper.COLUMN_STATUS, Level.STATUS_LEVEL_UNCLEAR);
 		QuizzDAO.INSTANCE.getDbHelper().getWritableUserdataDatabase()
 				.update(DbHelper.TABLE_USERDATA, cv, 
 						DbHelper.COLUMN_REF_FROM_TABLE + " = \"" + DbHelper.TABLE_LEVELS + "\"",
 						null);
+		
 		cv.clear();
+		
 		cv.put(DbHelper.COLUMN_STATUS, Section.SECTION_LOCKED);
 		QuizzDAO.INSTANCE.getDbHelper().getWritableUserdataDatabase()
 			.update(DbHelper.TABLE_USERDATA, cv, 
-					DbHelper.COLUMN_REF_FROM_TABLE + " = \"" + DbHelper.TABLE_LEVELS + "\""
+					DbHelper.COLUMN_REF_FROM_TABLE + " = \"" + DbHelper.TABLE_SECTIONS + "\""
 					+ " AND " + DbHelper.COLUMN_REF + " != \"section_1\"", null);
 	}
 	
