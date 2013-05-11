@@ -55,6 +55,8 @@
             android:layout_below="@+id/level_success_title_divider"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:gravity="center"
             android:includeFontPadding="false"
             android:text=""

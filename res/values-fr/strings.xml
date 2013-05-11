@@ -53,7 +53,7 @@
    	<string name="level_info_title">Description</string>
    	<string name="level_no_info_found">Pas d\'informations trouvées.</string>
    	<string name="level_unlock_section">Vous avez débloqué le &lt;b>&lt;u>niveau %1$s&lt;/u>&lt;/b> !</string>
-   	<string name="level_unlock_badge">Vous êtes maintenant un &lt;b>&lt;u>%1&lt;/u>&lt;/b> !</string>
+   	<string name="level_unlock_badge">Vous êtes maintenant un &lt;b>&lt;u>%1$s&lt;/u>&lt;/b> !</string>
    	
    	<!-- sections list -->
    	<string name="unlock_section_requirement">Trouve X images pour débloquer</string>
