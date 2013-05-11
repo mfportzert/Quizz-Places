@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseStatsFragment;
+import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Badge;
 import com.quizz.core.models.Section;
 import com.quizz.core.models.Stat;
@@ -28,8 +29,10 @@ import com.quizz.places.adapters.StatsItemAdapter;
 import com.quizz.places.db.PlacesDAO;
 
 public class StatsFragment extends BaseStatsFragment {
+	// TODO: Bouger dans Badge
 	private static List<Badge> sBadges = new ArrayList<Badge>();
 	
+	// TODO: Bouger les valeurs dans arrays.xml
 	static {
 		sBadges.add(new Badge(R.string.badge_traveler, R.drawable.badge_traveler, 0));
 		sBadges.add(new Badge(R.string.badge_tourist, R.drawable.badge_tourist, 10));
@@ -39,6 +42,19 @@ public class StatsFragment extends BaseStatsFragment {
 		sBadges.add(new Badge(R.string.badge_globe_trotter, R.drawable.badge_globe_trotter, 78));
 		sBadges.add(new Badge(R.string.badge_emblem, R.drawable.badge_emblem, 100));
 		sBadges.add(new Badge(R.string.badge_legend, R.drawable.badge_legend, 120));
+	}
+	
+	public static Badge getCurrentBadge() {
+		int totalCleared = DataManager.getClearedLevelTotalCount();
+		Badge currentBadge = null;
+		for (Badge badge : sBadges) {
+			if (totalCleared >= badge.requiredLevelProgression) {
+				currentBadge = badge;
+			} else {
+				break;
+			}
+		}
+		return currentBadge;
 	}
 	
 	private StatsItemAdapter mAchievementAdapter;

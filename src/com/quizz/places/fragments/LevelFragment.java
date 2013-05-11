@@ -44,6 +44,7 @@ import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.managers.DataManager;
+import com.quizz.core.models.Badge;
 import com.quizz.core.models.Level;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.utils.PreferencesUtils;
@@ -165,7 +166,8 @@ public class LevelFragment extends BaseLevelFragment {
 		View notificationLayout = getActivity().getLayoutInflater().inflate(
 				R.layout.toast_notification, null);
 		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_LONG);
-		mInfoToast.setGravity(Gravity.BOTTOM, 0, 50);
+		float density = getActivity().getResources().getDisplayMetrics().density;
+		mInfoToast.setGravity(Gravity.BOTTOM, 0, (int) (40 * density));
 		mInfoToast.setView(notificationLayout);
 		
 		initLayout(level);
@@ -455,16 +457,45 @@ public class LevelFragment extends BaseLevelFragment {
 		mLevelCompletedLabel.setVisibility(View.VISIBLE);
 
 		// Unlock next section if necessary
+		boolean sectionUnlocked = false;
 		int unlockedSectionNumber = DataManager.unlockNextSectionIfNecessary();
 		if (unlockedSectionNumber != -1) {
-			// mInfoToast.setText("You've now unlocked level " + String.valueOf(unlockedSectionNumber) + "!");
+			sectionUnlocked = true;
+			
 			TextView content = (TextView) mInfoToast.getView().findViewById(R.id.toastText);
-			content.setText(Html.fromHtml("You've unlocked <b><u>level " + 
-					String.valueOf(unlockedSectionNumber) + "</u></b> !"));
+			ImageView icon = (ImageView) mInfoToast.getView().findViewById(R.id.toastImage);
+			icon.setImageResource(R.drawable.unlock);
+			String sectionNumber = String.valueOf(unlockedSectionNumber);
+			content.setText(Html.fromHtml(String.format(getString(
+					R.string.level_unlock_section, sectionNumber))));
 			mInfoToast.show();
 		}
 		
 		PreferencesUtils.removeUnlockedLetters(getActivity(), mCurrentLevel);
+
+		int totalCleared = DataManager.getClearedLevelTotalCount();
+		Badge currentBadge = StatsFragment.getCurrentBadge();
+		if (currentBadge.requiredLevelProgression == totalCleared) {
+			Toast toast;
+			// In order to display 2 toasts (section then badge), one after the other
+			if (sectionUnlocked) {
+				View notificationLayout = getActivity().getLayoutInflater().inflate(
+						R.layout.toast_notification, null);
+				toast = Toast.makeText(getActivity(), "", Toast.LENGTH_LONG);
+				float density = getActivity().getResources().getDisplayMetrics().density;
+				toast.setGravity(Gravity.BOTTOM, 0, (int) (40 * density));
+				toast.setView(notificationLayout);
+			} else {
+				toast = mInfoToast;
+			}
+			
+			TextView content = (TextView) toast.getView().findViewById(R.id.toastText);
+			ImageView icon = (ImageView) toast.getView().findViewById(R.id.toastImage);
+			icon.setImageResource(currentBadge.icon);
+			content.setText(Html.fromHtml(String.format(getString(R.string.level_unlock_badge, 
+					getString(currentBadge.label)))));
+			toast.show();
+		}
 		/*
 		 * Not useful
 		 * 
