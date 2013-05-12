@@ -43,6 +43,7 @@
     <string name="medium_found">Medium found</string>
     <string name="hard_found">Hard found</string>
     <string name="used_hints">Used hints</string>
+   	<string name="stats_title_label">Your are currently:</string>
 
     <!-- Grid levels -->
     <string name="complete">cleared</string>
@@ -53,7 +54,7 @@
    	<string name="level_info_title">Information</string>
    	<string name="level_no_info_found">No information found.</string>
    	<string name="level_unlock_section">You\'ve unlocked the &lt;b>&lt;u>level %1$s&lt;/u>&lt;/b> !</string>
-   	<string name="level_unlock_badge">You are now a &lt;b>&lt;u>%1$s&lt;/u>&lt;/b> !</string>
+   	<string name="level_unlock_badge">You\'ve earned the title of &lt;b>&lt;u>%1$s&lt;/u>&lt;/b> !</string>
    	
    	<!-- sections list -->
    	<string name="unlock_section_requirement">Find X pictures to unlock</string>

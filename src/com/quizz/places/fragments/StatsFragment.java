@@ -86,7 +86,35 @@ public class StatsFragment extends BaseStatsFragment {
 		View customView = actionBar.getCustomViewContainer();
 		((TextView) customView.findViewById(R.id.ab_stat_middle_text))
 				.setText(R.string.ab_stats_title);
-
+		
+		Badge currentBadge = getCurrentBadge();
+		
+		TextView badgeLabel = (TextView) view.findViewById(R.id.BadgeLabel);
+		ImageView badgeIcon = (ImageView) view.findViewById(R.id.BadgeIcon);
+		SectionProgressView badgeProgress = (SectionProgressView) view.findViewById(R.id.BadgeProgress);
+		TextView badgeProgressLabel = (TextView) view.findViewById(R.id.BadgeProgressLabel);
+		
+		badgeLabel.setText(currentBadge.label);
+		badgeIcon.setImageResource(currentBadge.icon);
+		
+		int currentBadgeIndex = sBadges.indexOf(currentBadge);
+		boolean isLastBadge = (currentBadgeIndex == sBadges.size() - 1);
+		if (isLastBadge) {
+			badgeProgress.setVisibility(View.GONE);
+			badgeProgressLabel.setVisibility(View.GONE);
+		} else {
+			Badge nextBadge = sBadges.get(currentBadgeIndex + 1);
+			int requiredLevelsBeforeNextBadge = nextBadge.requiredLevelProgression - 
+					currentBadge.requiredLevelProgression;
+			int clearedLevelsNb = DataManager.getClearedLevelTotalCount();
+			int remainingLevelsBeforeNextBadge = nextBadge.requiredLevelProgression - clearedLevelsNb;
+			int levelsDone = requiredLevelsBeforeNextBadge - remainingLevelsBeforeNextBadge;
+			
+			float percentDone = (levelsDone / requiredLevelsBeforeNextBadge) * 100;
+			badgeProgress.setProgressValue(percentDone);
+			badgeProgressLabel.setText(levelsDone+" / "+requiredLevelsBeforeNextBadge);
+		}				
+/*
 		PlacesDAO dao = new PlacesDAO(this.getActivity());
 		List<Stat> stats = dao.getStats();
 		List<Stat> achievements = new ArrayList<Stat>();
@@ -100,12 +128,12 @@ public class StatsFragment extends BaseStatsFragment {
 				}
 			}
 		}
-		
-		ViewGroup parentGroup = (ViewGroup)view.findViewById(R.id.StatsAchievementsContainer);
+		*/
+		/*ViewGroup parentGroup = (ViewGroup)view.findViewById(R.id.StatsAchievementsContainer);
 		this.fillAchivementLinearLayout(inflater, parentGroup, achievements);
 		
 		parentGroup = (ViewGroup)view.findViewById(R.id.SimpleStatsContainer);
-		this.fillSimpleStatsLinearLayout(inflater, parentGroup, simples);		
+		this.fillSimpleStatsLinearLayout(inflater, parentGroup, simples);		*/
 		
 //		mSimpleAdapter.setItems(simples);
 //		mSimpleStatsListView = (ListView) view.findViewById(R.id.StatsSimpleListView);

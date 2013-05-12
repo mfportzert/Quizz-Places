@@ -9,6 +9,76 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/stats_title_label"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginTop="15dp"
+	        android:textSize="18dp"
+	        android:textStyle="bold"
+	        android:textColor="#444" />
+        
+        <RelativeLayout
+	        android:id="@+id/CurrentBadgeContainer"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded"
+	        android:layout_margin="10dp"
+	        android:padding="10dp" >
+	
+	        <ImageView
+	            android:id="@+id/BadgeIcon"
+	            android:layout_width="64dp"
+	            android:layout_height="64dp"
+	            android:layout_alignParentLeft="true"
+	            android:contentDescription="@null"
+	            android:gravity="center" />
+	
+            <TextView
+                android:id="@+id/BadgeLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:text="Niveaux débloqués"
+                android:layout_toRightOf="@+id/BadgeIcon"
+                android:textColor="#606060"
+                android:layout_marginBottom="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.quizz.core.widgets.SectionProgressView
+                android:id="@+id/BadgeProgress"
+                android:layout_width="match_parent"
+                android:layout_height="14dp"
+                android:layout_alignLeft="@+id/BadgeLabel"
+                android:layout_below="@+id/BadgeLabel"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_section_progress_small"
+                android:alpha="0.9" />
+            
+           <TextView
+                android:id="@+id/BadgeProgressLabel"
+                android:layout_width="match_parent"
+                android:layout_height="14dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:layout_above="@+id/BadgeProgress"
+                android:layout_alignRight="@+id/BadgeProgress"
+                android:layout_alignLeft="@+id/BadgeProgress"
+                android:src="@drawable/bg_section_progress_small"
+                android:textSize="12sp"
+                android:gravity="right"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="2dp"
+                android:text="56 / 86"
+                android:alpha="0.9" />
+	            
+	    </RelativeLayout>
+        
         <LinearLayout
             android:id="@+id/StatsAchievementsContainer"
             android:layout_width="match_parent"
