@@ -110,8 +110,10 @@ public class StatsFragment extends BaseStatsFragment {
 			int remainingLevelsBeforeNextBadge = nextBadge.requiredLevelProgression - clearedLevelsNb;
 			int levelsDone = requiredLevelsBeforeNextBadge - remainingLevelsBeforeNextBadge;
 			
-			float percentDone = (levelsDone / requiredLevelsBeforeNextBadge) * 100;
+			float percentDone = ((float) levelsDone / (float) requiredLevelsBeforeNextBadge) * 100;
 			badgeProgress.setProgressValue(percentDone);
+			badgeProgress.setPaddingProgress(2, 2, 2, 2);
+			badgeProgress.setProgressDrawable(getResources().getDrawable(R.drawable.fg_section_progress_yellow));
 			badgeProgressLabel.setText(levelsDone+" / "+requiredLevelsBeforeNextBadge);
 		}				
 /*
