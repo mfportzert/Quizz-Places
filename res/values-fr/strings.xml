@@ -38,14 +38,18 @@
    	
    	<!-- Stats -->
    	<string name="unlocked_lvl">Niveaux débloqués</string>
-   	<string name="places_found">Total reconnus</string>
+   	<string name="places_found">Images trouvées</string>
    	<string name="easy_found">Faciles reconnus</string>
    	<string name="medium_found">Moyens reconnus</string>
    	<string name="hard_found">Difficiles reconnus</string>
    	<string name="used_hints">Indices utilisés</string>
    	<string name="stats_title_label">Vous êtes actuellement:</string>
-   	
-   	<!-- Level grid -->
+    <string name="badge_congrats">Votre grade courrant est : </string>
+    <string name="levels_left_before_next_badge">Promotion dans %d images</string>
+    <string name="completed_sections">Niveaux complétés</string>
+    <string name="unlocked_sections">Niveaux débloqués</string>
+
+    <!-- Level grid -->
    	<string name="complete">réussi</string>
    	
    	<!-- Level -->
@@ -57,7 +61,7 @@
    	<string name="level_unlock_badge">Vous avez gagné le titre de &lt;b>&lt;u>%1$s&lt;/u>&lt;/b> !</string>
    	
    	<!-- sections list -->
-   	<string name="unlock_section_requirement">Trouve X images pour débloquer</string>
+   	<string name="unlock_section_requirement">Trouve %d images pour débloquer</string>
    	
    	<!-- Badges -->
    	<string name="badge_traveler">Voyageur occasionnel</string>

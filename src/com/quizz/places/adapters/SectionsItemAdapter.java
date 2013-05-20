@@ -125,9 +125,8 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 			
 			int levelCountToUnlockSection = section.remainingClearedLevelCount();
 			if (levelCountToUnlockSection != -1) {
-				String unlockLabel = mContext.getString(R.string.unlock_section_requirement);
-				unlockLabel = unlockLabel.replace("X", String.valueOf(levelCountToUnlockSection));
-				holder.sectionUnlockLabel.setText(unlockLabel);
+				holder.sectionUnlockLabel.setText(mContext.getString(R.string.unlock_section_requirement,
+						levelCountToUnlockSection));
 			}
 			
 		} else if (section.isComplete()) {

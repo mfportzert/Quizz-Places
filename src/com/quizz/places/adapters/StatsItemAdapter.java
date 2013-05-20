@@ -115,8 +115,8 @@ public class StatsItemAdapter extends BaseAdapter {
 						.findViewById(R.id.StatIcon);
 				holder.progress = (SectionProgressView) convertView
 						.findViewById(R.id.StatProgress);
-				holder.trophy = (ImageView) convertView
-						.findViewById(R.id.StatCupIcon);
+//				holder.trophy = (ImageView) convertView
+//						.findViewById(R.id.StatCupIcon);
 				break;
 			}
 			convertView.setTag(holder);
