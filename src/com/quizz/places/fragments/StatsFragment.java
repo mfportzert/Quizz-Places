@@ -121,53 +121,19 @@ public class StatsFragment extends BaseStatsFragment {
 			badgeProgress.setPaddingProgress(2, 2, 2, 2);
 			badgeProgress.setProgressDrawable(getResources().getDrawable(R.drawable.fg_section_progress_yellow));
 			badgeProgressLabel.setText(levelsDone+" / "+requiredLevelsBeforeNextBadge);
-		}				
-/*
-		PlacesDAO dao = new PlacesDAO(this.getActivity());
-		List<Stat> stats = dao.getStats();
-		List<Stat> achievements = new ArrayList<Stat>();
-		
-		if (stats != null && stats.size() > 0) {
-			for (Stat s : stats) {
-				if (s.isAchievement()) {
-					achievements.add(s);
-				} else {
-					simples.add(s);
-				}
-			}
 		}
-		*/
-		/*ViewGroup parentGroup = (ViewGroup)view.findViewById(R.id.StatsAchievementsContainer);
-		this.fillAchivementLinearLayout(inflater, parentGroup, achievements);
-		
-		parentGroup = (ViewGroup)view.findViewById(R.id.SimpleStatsContainer);
-		this.fillSimpleStatsLinearLayout(inflater, parentGroup, simples);		*/
-		
-//		mSimpleAdapter.setItems(simples);
-//		mSimpleStatsListView = (ListView) view.findViewById(R.id.StatsSimpleListView);
-//		mSimpleStatsListView.setAdapter(mSimpleAdapter);
-//
-//		ObjectAnimator listDisplay = ObjectAnimator.ofFloat(mSimpleStatsListView,
-//				"alpha", 0f, 1f);
-//		listDisplay.setDuration(300);
-//		listDisplay.start();
-		
-
 		List<Stat> simples = new ArrayList<Stat>();
 		
-		simples.add(new Stat(R.drawable.levels, this.getString(R.string.completed_sections),
-				DataManager.getCompletedSectionsCount(), DataManager.getSections().size(), false));
 		simples.add(new Stat(R.drawable.levels, this.getString(R.string.places_found),
 				DataManager.getClearedLevelTotalCount(), DataManager.getLevelTotalCount(), false));
 		simples.add(new Stat(R.drawable.sections, this.getString(R.string.unlocked_lvl),
 				DataManager.getUnlockedSectionsCount(), DataManager.getSections().size(), false));
+		simples.add(new Stat(R.drawable.levels, this.getString(R.string.completed_sections),
+				DataManager.getCompletedSectionsCount(), DataManager.getSections().size(), false));
 		simples.add(new Stat(R.drawable.hint, this.getString(R.string.used_hints),
 				PreferencesUtils.getUsedHintsCount(this.getActivity()), 0, false));
 		
-		ViewGroup parentGroup = (ViewGroup)view.findViewById(R.id.StatsAchievementsContainer);
-		this.fillBadgeView(inflater, parentGroup, getCurrentBadge());
-		
-		parentGroup = (ViewGroup)view.findViewById(R.id.SimpleStatsContainer);
+		ViewGroup parentGroup = (ViewGroup)view.findViewById(R.id.SimpleStatsContainer);
 		this.fillSimpleStatsLinearLayout(inflater, parentGroup, simples);
 		
 		return view;
@@ -196,83 +162,6 @@ public class StatsFragment extends BaseStatsFragment {
 			position++;
 		}
 	}
-	
-	private void fillBadgeView(LayoutInflater inflater, ViewGroup parentGroup, Badge badge)
-	{
-		int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f,
-				this.getActivity());
-		int horizontalPadding = (int) ConvertUtils.convertDpToPixels(3f,
-				this.getActivity());
-		View subview = inflater.inflate(R.layout.item_achievement_stat, null, true);
-		
-		((ImageView) subview.findViewById(R.id.BadgeImage))
-				.setImageDrawable(this.getActivity().getResources().getDrawable(badge.icon));
-		
-		((TextView) subview.findViewById(R.id.BadgeText)).setText(badge.label);
-		
-		((TextView) subview.findViewById(R.id.ImagesLeftForNextPromotion)).setText(
-			this.getActivity()
-			.getString(R.string.levels_left_before_next_badge, getRemainingLevelsForNextBadge()));
-	
-		((SectionProgressView) subview.findViewById(R.id.StatProgress))
-			.setPaddingProgress(horizontalPadding,verticalPadding,
-			horizontalPadding, verticalPadding);
-		
-		((SectionProgressView) subview.findViewById(R.id.StatProgress))
-			.setProgressRes(R.drawable.fg_section_progress_blue);
-		
-		((SectionProgressView) subview.findViewById(R.id.StatProgress))
-			.setProgressValue(
-					(getRemainingLevelsForNextBadge() * 100.0f) / DataManager.getLevelTotalCount());
-		
-		parentGroup.addView(subview);
-		parentGroup.invalidate();
-	}
-	
-//	@SuppressLint("NewApi")
-//	private void fillAchivementLinearLayout(LayoutInflater inflater, ViewGroup parentGroup,
-//			List<Stat> stats) {
-//		
-//		int verticalPadding = (int) ConvertUtils.convertDpToPixels(2.5f,
-//				this.getActivity());
-//		int horizontalPadding = (int) ConvertUtils.convertDpToPixels(3f,
-//				this.getActivity());
-//
-//		char position = 0; // guess we will never have more than 255 achievements
-//		for (Stat stat : stats) {
-//			View subview = inflater.inflate(R.layout.item_achievement_stat, null, true);
-//			((TextView) subview.findViewById(R.id.StatLabel)).setText(stat.getLabel() + " : " + 
-//					String.valueOf(stat.getDone()) + " / "
-//					+ String.valueOf(stat.getTotal()));
-////			((TextView) subview.findViewById(R.id.StatDoneOnTotal))
-////						.setText(String.valueOf(stat.getDone()) + " / "
-////						+ String.valueOf(stat.getTotal()));
-//			((ImageView) subview.findViewById(R.id.StatIcon))
-//						.setImageDrawable(this.getActivity().getResources()
-//						.getDrawable(stat.getIcon()));
-//			((SectionProgressView) subview.findViewById(R.id.StatProgress))
-//						.setPaddingProgress(horizontalPadding,verticalPadding,
-//						horizontalPadding, verticalPadding);
-//			((SectionProgressView) subview.findViewById(R.id.StatProgress))
-//						.setProgressRes(mProgressDrawables[position
-//			            % mProgressDrawables.length]/*R.drawable.fg_section_progress_blue_small*/);
-//			((SectionProgressView) subview.findViewById(R.id.StatProgress))
-//						.setProgressValue(stat.getProgressInPercent());
-//			if (stat.getDone() == stat.getTotal()) {
-//				((ImageView) subview.findViewById(R.id.StatCupIcon))
-//						.setImageDrawable(this.getActivity().getResources()
-//						.getDrawable(R.drawable.gold_cup));
-//				((ImageView) subview.findViewById(R.id.StatCupIcon)).setAlpha(1.0f);
-//			}
-//			if ((position + 1) == stats.size()) {
-//				subview.findViewById(R.id.AchievementItemSeparator).setVisibility(View.GONE);
-//			}
-//			parentGroup.addView(subview);
-//			position++;
-//		}
-//		
-//		parentGroup.invalidate();
-//	}
 	
 	private void initProgressDrawables() {
 		mProgressDrawables = new int[] { R.drawable.fg_section_progress_yellow };
