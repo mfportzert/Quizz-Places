@@ -38,12 +38,15 @@
    	
    	<!-- Stats -->
    	<string name="unlocked_lvl">Niveaux débloqués</string>
-   	<string name="places_found">Total reconnus</string>
+   	<string name="places_found">Images trouvées</string>
    	<string name="easy_found">Faciles reconnus</string>
    	<string name="medium_found">Moyens reconnus</string>
    	<string name="hard_found">Difficiles reconnus</string>
    	<string name="used_hints">Indices utilisés</string>
-   	
+    <string name="badge_congrats">Votre grade courrant est : </string>
+    <string name="levels_left_before_next_badge">Promotion dans %d images</string>
+    <string name="completed_sections">Niveaux complétés</string>
+    <string name="unlocked_sections">Niveaux débloqués</string>
    	<!-- Level grid -->
    	<string name="complete">réussi</string>
    	

@@ -38,12 +38,16 @@
     
     <!-- Stats -->
     <string name="unlocked_lvl">Unlocked level</string>
-    <string name="places_found">Total found</string>
+    <string name="places_found">Images found</string>
     <string name="easy_found">Easy found</string>
     <string name="medium_found">Medium found</string>
     <string name="hard_found">Hard found</string>
     <string name="used_hints">Used hints</string>
-
+    <string name="badge_congrats">Your current grade is : </string>
+    <string name="levels_left_before_next_badge">%d images left to get a promotion</string>
+    <string name="completed_sections">Completed levels</string>
+    <string name="unlocked_sections">Unlocked levels</string>
+    
     <!-- Grid levels -->
     <string name="complete">cleared</string>
 

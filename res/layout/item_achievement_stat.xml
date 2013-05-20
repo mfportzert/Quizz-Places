@@ -4,72 +4,97 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <RelativeLayout
-        android:id="@+id/AchievementItemDataContainer"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp" >
-
-        <!-- 42*58 -->
-
-        <ImageView
-            android:id="@+id/StatIcon"
-            android:layout_width="34dp"
-            android:layout_height="52dp"
-            android:layout_alignParentLeft="true"
-            android:contentDescription="@null"
-            android:gravity="center" />
-
+        android:orientation="vertical">
+        
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="6dp"
-            android:layout_toLeftOf="@+id/StatCupIcon"
-            android:layout_toRightOf="@+id/StatIcon"
-            android:orientation="vertical" >
+            android:orientation="horizontal">
+            
+		    <ImageView 
+		        android:id="@+id/BadgeImage"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:padding="5dp"
+		        android:maxHeight="60dp"
+		        android:adjustViewBounds="true"
+		        android:layout_marginLeft="2dp"
+		        android:src="@drawable/unlock"
+		        android:contentDescription="@null" />
 
-            <TextView
-                android:id="@+id/StatLabel"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_horizontal"
-                android:text="Niveaux débloqués"
-                android:textColor="#606060"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+           <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:layout_gravity="center_vertical|right">
 
-            <com.quizz.core.widgets.SectionProgressView
-                android:id="@+id/StatProgress"
-                android:layout_width="match_parent"
-                android:layout_height="14dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/bg_section_progress_small"
-                android:alpha="0.9" />
-        </LinearLayout>
+			    <TextView 
+			        android:id="@+id/badgeCongrats"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:gravity="center_vertical|left"
+			        android:textSize="13sp"
+			        android:textColor="#606060"
+			        android:text="@string/badge_congrats"
+			        android:paddingRight="10dp"
+			        android:paddingLeft="5dp"  />
+               
+               		    	        
+			    <TextView 
+			        android:id="@+id/BadgeText"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:gravity="center_vertical|left"
+			        android:textSize="13sp"
+			        android:textColor="#606060"
+			        android:textStyle="bold"
+			        android:text="Texte de badge"
+			        android:paddingRight="10dp"
+			        android:paddingLeft="5dp"  />
 
-        <ImageView
-            android:id="@+id/StatCupIcon"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:alpha="0.7"
-            android:contentDescription="@null"
-            android:src="@drawable/gray_cup" />
-    </RelativeLayout>
+			    </LinearLayout>
+			    
+	    </LinearLayout>
+		    
+ 	    <View
+	        android:id="@+id/AchievementItemSeparator"
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:background="#88aaaaaa" />
+	    
+	   	<LinearLayout
+	   	    android:id="@+id/NextBadgeContainer"
+	   	    android:layout_width="match_parent"
+	   	    android:layout_height="wrap_content"
+	   	    android:orientation="vertical"
+	   	    android:padding="10dp" >
+	
+		    <TextView
+	               android:id="@+id/ImagesLeftForNextPromotion"
+	               android:layout_width="fill_parent"
+	               android:layout_height="wrap_content"
+	               android:layout_marginBottom="3dp"
+	               android:layout_marginLeft="10dp"
+	               android:gravity="left"
+	               android:textColor="#606060"
+	               android:textSize="13sp" />
+	
+           <com.quizz.core.widgets.SectionProgressView
+               android:id="@+id/StatProgress"
+               android:layout_width="match_parent"
+               android:layout_height="14dp"
+               android:adjustViewBounds="true"
+               android:scaleType="fitXY"
+               android:src="@drawable/bg_section_progress_small"
+               android:alpha="0.9" />
 
-    <View
-        android:id="@+id/AchievementItemSeparator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/AchievementItemDataContainer"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#88aaaaaa" />
-
+		</LinearLayout>
+	    	    
+    </LinearLayout>
+    
 </RelativeLayout>
