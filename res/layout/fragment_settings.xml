@@ -172,7 +172,7 @@
                     android:textStyle="bold" />
             </RelativeLayout>
         </LinearLayout>
-        
+        <!-- 
         <LinearLayout
             android:id="@+id/support_us_group_container"
             android:layout_width="wrap_content"
@@ -297,7 +297,7 @@
                     android:textStyle="bold" />
             </RelativeLayout>
         </LinearLayout>
-        
+         -->
     </RelativeLayout>
 
 </ScrollView>

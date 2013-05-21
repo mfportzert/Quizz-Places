@@ -84,6 +84,7 @@ public class LevelFragment extends BaseLevelFragment {
 	private boolean mBackFromPicturesGrid = false;
 	
 	private MediaPlayer mSuccessPlayer;
+	private Toast mNotifToast;
 	private Toast mInfoToast;
 
 	private int mLettersTotal;
@@ -165,10 +166,11 @@ public class LevelFragment extends BaseLevelFragment {
 
 		View notificationLayout = getActivity().getLayoutInflater().inflate(
 				R.layout.toast_notification, null);
-		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_LONG);
+		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
+		mNotifToast = Toast.makeText(getActivity(), "", Toast.LENGTH_LONG);
 		float density = getActivity().getResources().getDisplayMetrics().density;
-		mInfoToast.setGravity(Gravity.BOTTOM, 0, (int) (40 * density));
-		mInfoToast.setView(notificationLayout);
+		mNotifToast.setGravity(Gravity.BOTTOM, 0, (int) (40 * density));
+		mNotifToast.setView(notificationLayout);
 		
 		initLayout(level);
 		initSounds();
@@ -462,13 +464,13 @@ public class LevelFragment extends BaseLevelFragment {
 		if (unlockedSectionNumber != -1) {
 			sectionUnlocked = true;
 			
-			TextView content = (TextView) mInfoToast.getView().findViewById(R.id.toastText);
-			ImageView icon = (ImageView) mInfoToast.getView().findViewById(R.id.toastImage);
+			TextView content = (TextView) mNotifToast.getView().findViewById(R.id.toastText);
+			ImageView icon = (ImageView) mNotifToast.getView().findViewById(R.id.toastImage);
 			icon.setImageResource(R.drawable.unlock);
 			String sectionNumber = String.valueOf(unlockedSectionNumber);
 			content.setText(Html.fromHtml(String.format(getString(
 					R.string.level_unlock_section, sectionNumber))));
-			mInfoToast.show();
+			mNotifToast.show();
 		}
 		
 		PreferencesUtils.removeUnlockedLetters(getActivity(), mCurrentLevel);
@@ -486,7 +488,7 @@ public class LevelFragment extends BaseLevelFragment {
 				toast.setGravity(Gravity.BOTTOM, 0, (int) (40 * density));
 				toast.setView(notificationLayout);
 			} else {
-				toast = mInfoToast;
+				toast = mNotifToast;
 			}
 			
 			TextView content = (TextView) toast.getView().findViewById(R.id.toastText);
@@ -578,7 +580,7 @@ public class LevelFragment extends BaseLevelFragment {
 	
 	private void addLetters() {
 		// LettersTotal just includes ... letters
-		int lettersToUnlock = mLettersTotal / 3;
+		int lettersToUnlock = /*mLettersTotal / 3*/ 1;
 		
 		// If we know that using a hint will reveal the answer..
 		if (lettersToUnlock > (mLettersTotal - mLettersFoundNb)) {

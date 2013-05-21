@@ -128,7 +128,7 @@ public class StatsFragment extends BaseStatsFragment {
 				DataManager.getClearedLevelTotalCount(), DataManager.getLevelTotalCount(), false));
 		simples.add(new Stat(R.drawable.sections, this.getString(R.string.unlocked_lvl),
 				DataManager.getUnlockedSectionsCount(), DataManager.getSections().size(), false));
-		simples.add(new Stat(R.drawable.levels, this.getString(R.string.completed_sections),
+		simples.add(new Stat(R.drawable._levels, this.getString(R.string.completed_sections),
 				DataManager.getCompletedSectionsCount(), DataManager.getSections().size(), false));
 		simples.add(new Stat(R.drawable.hint, this.getString(R.string.used_hints),
 				PreferencesUtils.getUsedHintsCount(this.getActivity()), 0, false));

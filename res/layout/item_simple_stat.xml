@@ -29,8 +29,7 @@
             android:layout_toRightOf="@+id/StatIcon"
             android:gravity="center"
             android:textColor="#606060"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/StatDoneOnTotal"
@@ -41,7 +40,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:textColor="#606060"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
 

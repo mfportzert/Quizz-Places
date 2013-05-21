@@ -3,34 +3,60 @@
     android:layout_width="wrap_content"
     android:layout_gravity="center"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="25dp"
-    android:layout_marginRight="25dp"
-    android:background="@drawable/dialog_border_white" >
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/dialog_border_white"
+    android:padding="18dp" >
 
     <TextView
         android:id="@+id/infoTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cultural Tip"
-        android:layout_marginTop="10dp"
         android:textColor="#666"
         android:textSize="18sp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         android:layout_centerHorizontal="true"
         android:textStyle="bold" />
+    
+    <View 
+        android:id="@+id/infoSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#aaa"
+        android:layout_below="@+id/infoTitle" />
 
+    <TextView 
+        android:id="@+id/infoNbHints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#555"
+        android:paddingBottom="10dp"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_below="@+id/infoUnlock" />
+    
+    <Button 
+        android:id="@+id/infoUnlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    	android:text="@string/level_unlock_info"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/infoSeparator" />
+    
     <TextView
         android:id="@+id/infoContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_below="@+id/infoTitle"
+        android:layout_below="@+id/infoSeparator"
         android:text="..."
         android:gravity="center"
         android:textColor="#666"
         android:layout_centerHorizontal="true"
-        android:textSize="14sp" 
-        android:padding="15dp" />
+        android:textSize="15sp"
+        android:padding="5dp" />
     
 </RelativeLayout>
