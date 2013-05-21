@@ -2,12 +2,15 @@ package com.quizz.places.activities;
 
 import java.util.List;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.animation.LinearInterpolator;
 
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Section;
@@ -29,6 +32,22 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		/* --- Campaigns tracking --- */
+	    Intent intent = this.getIntent();
+	    Uri uri = intent.getData();
+
+	    EasyTracker.getInstance().setContext(this);
+
+	    if (uri != null) {
+	      EasyTracker.getTracker().setCampaign(uri.getPath());
+          /*if(uri.getQueryParmeter("utm_source") != null) {    // Use campaign parameters if avaialble.
+            EasyTracker.getTracker().setCampaign(uri.getPath()); 
+          } else if (uri.getQueryParameter("referrer") != null) {    // Otherwise, try to find a referrer parameter.
+            EasyTracker.getTracker().setReferrer(uri.getQueryParameter("referrer"));
+          }*/
+	    }
+		/* ------ */
+		
 		if (savedInstanceState == null) {
 			// First launch of the activity, not a rotation change
 			getQuizzActionBar().hide(QuizzActionBar.MOVE_DIRECT);
@@ -105,5 +124,17 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		if (mGameDataLoadingListener != null) {
 			mGameDataLoadingListener.onGameLoadingFailure(e);
 		}		
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+	    EasyTracker.getInstance().activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+	    EasyTracker.getInstance().activityStop(this);
 	}
 }
