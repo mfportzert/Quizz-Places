@@ -24,7 +24,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/StatDoneOnTotal"
             android:layout_toRightOf="@+id/StatIcon"
             android:gravity="center"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:gravity="center"
             android:textColor="#606060"
             android:textSize="18sp"
@@ -51,6 +51,6 @@
         android:layout_below="@+id/SimpleStatItemDataContainer"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#88aaaaaa" />
+        android:background="#44aaaaaa" />
 
 </RelativeLayout>

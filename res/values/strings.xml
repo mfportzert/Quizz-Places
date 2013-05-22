@@ -67,7 +67,7 @@
     </plurals>
    	
    	<!-- sections list -->
-   	<string name="unlock_section_requirement">Find %d pictures to unlock</string>
+   	<string name="unlock_section_requirement">Answer &lt;b>%1$d&lt;/b> pictures to unlock</string>
    	
    	<!-- Badges -->
    	<string name="badge_traveler">Casual traveler</string>

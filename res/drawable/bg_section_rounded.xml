@@ -1,12 +1,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 	<item>
     	<shape >
-		    <solid android:color="#00FFFFFF" />
+		    <solid android:color="#bbFFFFFF" />
 		    <stroke android:width="1dp" android:color="#DDFFFFFF" />
 		    <corners android:radius="6dp" />
 		</shape>
 	</item>
-	<item >
+	<!-- <item >
     	<bitmap android:gravity="center" android:tileMode="disabled" android:src="@drawable/test" />
 	</item>
 	<item>
@@ -14,5 +14,5 @@
 		    <solid android:color="#bbFFFFFF" />
 		    <corners android:radius="6dp" />
 		</shape>
-	</item>
+	</item> -->
 </layer-list>

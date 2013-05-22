@@ -4,105 +4,102 @@
     android:paddingBottom="10dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:paddingTop="20dp" >
+    android:paddingTop="18dp" >
 
-    <View
-        android:id="@+id/section_content_bg"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/sectionProgressContainer"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/bg_section_rounded" />
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_rounded" >
 
-    <TextView
-        android:id="@+id/sectionNbLevels"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/sectionName"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@+id/sectionEnterButton"
-        android:shadowColor="#aaffffff"
-        android:shadowDx="-1"
-        android:shadowDy="1"
-        android:shadowRadius="1"
-        android:text=""
-        android:textColor="#666"
-        android:textSize="19sp"
-        android:textStyle="bold" />
-
-    <ImageView
-        android:id="@+id/sectionEnterButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/sectionNbLevels"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/sectionNbLevels"
-        android:layout_marginBottom="3dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="4dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/but_enter" />
-
-    <ViewSwitcher
-        android:id="@+id/sectionProgressSwitcher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/section_inner_separator"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:paddingBottom="15dp" >
-
-        <com.quizz.core.widgets.SectionProgressView
-            android:id="@+id/sectionProgress"
-            android:layout_width="match_parent"
-            android:layout_height="19dp"
-            android:layout_marginTop="12dp"
-            android:adjustViewBounds="true"
-            android:alpha="0.9"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_section_progress"
-            android:visibility="gone" />
-        
         <TextView
-	        android:id="@+id/sectionUnlockLabel"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text=""
-	        android:textColor="#666"
-	        android:textSize="18sp"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginLeft="5dp" />
-	        
-    </ViewSwitcher>
-    
-    <View
-        android:id="@+id/section_inner_separator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/sectionName"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:background="#88aaaaaa" />
+            android:id="@+id/sectionNbLevels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sectionName"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/sectionEnterButton"
+            android:shadowColor="#aaffffff"
+            android:shadowDx="-1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text=""
+            android:textColor="#666"
+            android:textSize="19sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/sectionName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:drawableLeft="@drawable/ic_lock"
-        android:drawablePadding="5dp"
-        android:gravity="bottom"
-        android:shadowColor="#c0ffffff"
-        android:shadowDx="-1"
-        android:shadowDy="1"
-        android:shadowRadius="1"
-        android:text="Level 1"
-        android:textColor="#777"
-        android:textSize="23sp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/sectionEnterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sectionNbLevels"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/sectionNbLevels"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="4dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/but_enter" />
+
+        <ViewSwitcher
+            android:id="@+id/sectionProgressSwitcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/section_inner_separator"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:paddingBottom="15dp" >
+
+            <com.quizz.core.widgets.SectionProgressView
+                android:id="@+id/sectionProgress"
+                android:layout_width="match_parent"
+                android:layout_height="19dp"
+                android:layout_marginTop="12dp"
+                android:adjustViewBounds="true"
+                android:alpha="0.9"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_section_progress"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/sectionUnlockLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="5dp"
+                android:text=""
+                android:textColor="#666"
+                android:textSize="16sp" />
+        </ViewSwitcher>
+
+        <View
+            android:id="@+id/section_inner_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/sectionName"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:background="#88aaaaaa" />
+
+        <TextView
+            android:id="@+id/sectionName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_lock"
+            android:drawablePadding="5dp"
+            android:gravity="bottom"
+            android:shadowColor="#c0ffffff"
+            android:shadowDx="-1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="Level 1"
+            android:textColor="#777"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
 </RelativeLayout>

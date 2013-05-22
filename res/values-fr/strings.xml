@@ -67,7 +67,7 @@
     </plurals>
    	
    	<!-- sections list -->
-   	<string name="unlock_section_requirement">Trouve %d images pour débloquer</string>
+   	<string name="unlock_section_requirement">Trouve &lt;b>%1$d&lt;/b> images pour débloquer</string>
    	
    	<!-- Badges -->
    	<string name="badge_traveler">Voyageur occasionnel</string>

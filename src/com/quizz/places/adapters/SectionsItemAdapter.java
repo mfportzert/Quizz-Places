@@ -2,6 +2,7 @@ package com.quizz.places.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,8 +126,9 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 			
 			int levelCountToUnlockSection = section.remainingClearedLevelCount();
 			if (levelCountToUnlockSection != -1) {
-				holder.sectionUnlockLabel.setText(mContext.getString(R.string.unlock_section_requirement,
-						levelCountToUnlockSection));
+				holder.sectionUnlockLabel.setText(
+						Html.fromHtml(mContext.getString(R.string.unlock_section_requirement,
+								levelCountToUnlockSection)));
 			}
 			
 		} else if (section.isComplete()) {

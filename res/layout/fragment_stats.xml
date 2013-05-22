@@ -9,49 +9,58 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView 
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/badge_title_label"
-	        android:layout_marginLeft="17dp"
-	        android:layout_marginTop="15dp"
-	        android:textSize="18sp"
-	        android:textStyle="bold"
-	        android:shadowColor="#fff"
-	        android:shadowDx="-1"
-	        android:shadowDy="1"
-	        android:shadowRadius="1"
-	        android:textColor="#565656" />
-        
         <RelativeLayout
-	        android:id="@+id/CurrentBadgeContainer"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
+            android:id="@+id/CurrentBadgeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bg_rounded"
-	        android:layout_marginTop="10dp"
-	        android:layout_marginLeft="15dp"
-	        android:layout_marginRight="15dp"
-	        android:layout_marginBottom="15dp"
-	        android:padding="10dp" >
-	
-	        <ImageView
-	            android:id="@+id/BadgeIcon"
-	            android:layout_width="64dp"
-	            android:layout_height="64dp"
-	            android:layout_alignParentLeft="true"
-	            android:contentDescription="@null"
-	            android:gravity="center" />
-	
+            android:paddingTop="10dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="15dp" >
+
+            <TextView
+                android:id="@+id/badge_title_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/badge_title_label"
+                android:textColor="#888"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/badge_title_label_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/badge_title_label"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="16dp"
+                android:background="#ccc" />
+
+            <ImageView
+                android:id="@+id/BadgeIcon"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/badge_title_label_separator"
+                android:contentDescription="@null"
+                android:gravity="center" />
+
             <TextView
                 android:id="@+id/BadgeLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/badge_title_label_separator"
+                android:layout_marginBottom="25dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp"
-                android:gravity="center_horizontal"
                 android:layout_toRightOf="@+id/BadgeIcon"
+                android:gravity="center_horizontal"
                 android:textColor="#606060"
-                android:layout_marginBottom="20dp"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -62,53 +71,57 @@
                 android:layout_alignLeft="@+id/BadgeLabel"
                 android:layout_below="@+id/BadgeLabel"
                 android:adjustViewBounds="true"
+                android:alpha="0.9"
                 android:scaleType="fitXY"
-                android:src="@drawable/bg_section_progress_small"
-                android:alpha="0.9" />
-            
-           <TextView
+                android:src="@drawable/bg_section_progress_small" />
+
+            <TextView
                 android:id="@+id/BadgeProgressLabel"
                 android:layout_width="match_parent"
                 android:layout_height="14dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
                 android:layout_above="@+id/BadgeProgress"
-                android:layout_alignRight="@+id/BadgeProgress"
                 android:layout_alignLeft="@+id/BadgeProgress"
+                android:layout_alignRight="@+id/BadgeProgress"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="8dp"
+                android:adjustViewBounds="true"
+                android:alpha="0.9"
+                android:gravity="right"
                 android:src="@drawable/bg_section_progress_small"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:gravity="right"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:alpha="0.9" />
-	            
-	    </RelativeLayout>
-        
-        <TextView 
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/stats_title_label"
-	        android:layout_marginLeft="17dp"
-	        android:layout_marginTop="15dp"
-	        android:textSize="18sp"
-	        android:textStyle="bold"
-	        android:shadowColor="#fff"
-	        android:shadowDx="-1"
-	        android:shadowDy="1"
-	        android:shadowRadius="1"
-	        android:textColor="#565656" />
-        
+                android:textStyle="bold" />
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/SimpleStatsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-	        android:layout_marginTop="10dp"
-	        android:layout_marginLeft="15dp"
-	        android:layout_marginRight="15dp"
-	        android:layout_marginBottom="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/bg_rounded"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/stats_title_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/stats_title_label"
+                android:textColor="#888"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/stats_title_label_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="8dp"
+                android:background="#ccc" />
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>
