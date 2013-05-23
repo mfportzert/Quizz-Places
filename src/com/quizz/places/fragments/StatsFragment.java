@@ -121,7 +121,7 @@ public class StatsFragment extends BaseStatsFragment {
 			badgeProgress.setProgressValue(percentDone);
 			badgeProgress.setPaddingProgress(2, 2, 2, 2);
 			badgeProgress.setProgressDrawable(getResources().getDrawable(R.drawable.fg_section_progress_yellow));
-			badgeProgressLabel.setText((levelsDone / requiredLevelsBeforeNextBadge * 100) + " %");
+			badgeProgressLabel.setText(((int) percentDone) + " %");
 		}
 		List<Stat> simples = new ArrayList<Stat>();
 		

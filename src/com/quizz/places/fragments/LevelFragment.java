@@ -643,6 +643,7 @@ public class LevelFragment extends BaseLevelFragment {
 			// update action bar and shared preferences
 			mHintsNbView.setText(String.valueOf(hints));
 			PreferencesUtils.setHintsAvailable(getActivity(), hints);
+			PreferencesUtils.incrementUsedHintsCount(getActivity(), 1);
 			// Add letters to partial response
 			addLetters();
 		} else {

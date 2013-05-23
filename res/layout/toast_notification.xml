@@ -17,7 +17,7 @@
         android:paddingTop="2dp"
         android:textStyle="bold"
         android:textColor="#FFF"
-        android:text="Congrats"
+        android:text="Bravo"
         android:gravity="center_horizontal"
         android:layout_alignRight="@+id/toastText"
         android:layout_toRightOf="@+id/toastImage" />

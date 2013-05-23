@@ -36,11 +36,13 @@
 
         <TextView
             android:id="@+id/StatDoneOnTotal"
-            android:layout_width="55dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:gravity="center"
             android:textColor="#606060"
             android:textSize="18sp"

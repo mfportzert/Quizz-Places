@@ -64,6 +64,7 @@ public class HintsDialog extends Activity {
 					if (hints > 1) {
 						PreferencesUtils.setInformationUnlocked(HintsDialog.this, mLevel, true);
 						PreferencesUtils.setHintsAvailable(HintsDialog.this, hints - 2);
+						PreferencesUtils.incrementUsedHintsCount(HintsDialog.this, 2);
 						showInformation();						
 					} else {
 						mInfoToast.show();
