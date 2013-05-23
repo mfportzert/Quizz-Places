@@ -102,6 +102,7 @@ public class StatsFragment extends BaseStatsFragment {
 		
 		badgeLabel.setText(currentBadge.label);
 		badgeIcon.setImageResource(currentBadge.icon);
+		badgeProgress.setDisplayInitialProgressIfEmpty(true);
 		
 		int currentBadgeIndex = sBadges.indexOf(currentBadge);
 		boolean isLastBadge = (currentBadgeIndex == sBadges.size() - 1);

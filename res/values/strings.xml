@@ -65,6 +65,7 @@
         <item quantity="one">You currently have %1$d hint</item>
         <item quantity="other">You currently have %1$d hints</item>
     </plurals>
+   	<string name="level_success_gain_hint">You gain 1 hint</string>
    	
    	<!-- sections list -->
    	<string name="unlock_section_requirement">Answer &lt;b>%1$d&lt;/b> pictures to unlock</string>

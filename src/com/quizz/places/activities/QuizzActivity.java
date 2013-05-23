@@ -15,6 +15,7 @@ import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Section;
 import com.quizz.core.utils.NavigationUtils;
+import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
 import com.quizz.places.db.GameDataLoading;
@@ -70,6 +71,11 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 
 	private void initAsyncGameLoading() {
 		GameDataLoading gdl = new GameDataLoading(this);
+		if (gdl.isFirstLaunch()) {
+			 PreferencesUtils.setHintsAvailable(this, 
+					 PreferencesUtils.PREF_DEFAULT_UNLOCKED_HINTS_COUNT_VALUE);
+		}
+
 		gdl.executeAsyncGameLoading(gdl.isFirstLaunch());
 	}
 

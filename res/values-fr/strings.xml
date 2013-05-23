@@ -65,9 +65,10 @@
         <item quantity="one">Vous avez %1$d indice en stock</item>
         <item quantity="other">Vous avez %1$d indices en stock</item>
     </plurals>
+   	<string name="level_success_gain_hint">Vous gagnez 1 indice</string>
    	
    	<!-- sections list -->
-   	<string name="unlock_section_requirement">Trouve &lt;b>%1$d&lt;/b> images pour débloquer</string>
+   	<string name="unlock_section_requirement">Trouvez &lt;b>%1$d&lt;/b> images pour accéder</string>
    	
    	<!-- Badges -->
    	<string name="badge_traveler">Voyageur occasionnel</string>

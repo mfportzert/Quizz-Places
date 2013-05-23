@@ -199,6 +199,15 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 	
 	@Override
+	public void onResume() {
+		super.onResume();
+		if (mHintsNbView != null) {
+			// Refresh after spending hints inside HintsDialog
+			mHintsNbView.setText(String.valueOf(PreferencesUtils.getHintsAvailable(getActivity())));
+		}
+	}
+	
+	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable(STATE_CURRENT_LEVEL, mCurrentLevel);
 		super.onSaveInstanceState(outState);
@@ -442,7 +451,8 @@ public class LevelFragment extends BaseLevelFragment {
 	}
 	
 	private void onSuccess() {
-		int newHintsAvailableNb = PreferencesUtils.getHintsAvailable(getActivity()) + 2;
+		int newHintsAvailableNb = PreferencesUtils.getHintsAvailable(getActivity()) + 
+				PreferencesUtils.PREF_DEFAULT_NB_HINTS_ONSUCCESS_VALUE;
 		PreferencesUtils.setHintsAvailable(getActivity(), newHintsAvailableNb);
 		
 		// update actionBar hints number
