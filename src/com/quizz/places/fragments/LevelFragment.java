@@ -71,6 +71,7 @@ public class LevelFragment extends BaseLevelFragment {
 
 	private TextView mHintsNbView;
 	private TextView mLevelCompletedLabel;
+	private TextView mWikiLinkLabel;
 	
 	private Level mCurrentLevel;
 	private StringBuilder mPartialResponse;
@@ -111,6 +112,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mLevelCompletedLabel = (TextView) view.findViewById(R.id.levelPictureFoundLabel);
 		//mLettersTableLayout = (TableLayout) view.findViewById(R.id.tableLetters);
 		mHintsNbView = (TextView) view.findViewById(R.id.levelNbHints);
+		mWikiLinkLabel = (TextView) view.findViewById(R.id.levelWikiLink);
 		
 		// Init actionBar
 		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
@@ -262,14 +264,17 @@ public class LevelFragment extends BaseLevelFragment {
 		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + mCurrentLevel.imageName, 
 				mPictureBig, ImageType.MEDIUM);
 		
-		Section section = DataManager.getSection(mCurrentLevel.sectionId);
-		int levelNumber = section.levels.indexOf(mCurrentLevel) + 1;
-		mCurrentLevelNumber.setText(""+levelNumber);
+		mCurrentLevelNumber.setText(""+DataManager.getLevelNumber(mCurrentLevel));
 		
 		if (mCurrentLevel.status == Level.STATUS_LEVEL_CLEAR) {
 			mLevelTitle.setText(mCurrentLevel.response);
 			mInputText.setVisibility(View.GONE);
 			mCheckButton.setVisibility(View.GONE);
+			mWikiLinkLabel.setVisibility(View.VISIBLE);
+			if (mCurrentLevel.moreInfosLink != null) {
+				mWikiLinkLabel.setText(Html.fromHtml(getString(R.string.level_success_wiki_link)));
+				mWikiLinkLabel.setOnClickListener(mWikiLinkClickListener);
+			}
 			mLevelCompletedLabel.setVisibility(View.VISIBLE);
 			mHintLettersButton.setVisibility(View.GONE);
 		} else {
@@ -675,6 +680,25 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 	};
 
+	OnClickListener mWikiLinkClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			FragmentContainer container = (FragmentContainer) getActivity();
+			FragmentManager fragmentManager = getActivity()
+					.getSupportFragmentManager();
+
+			FragmentTransaction transaction = fragmentManager
+					.beginTransaction();
+			
+			Bundle args = new Bundle();
+			args.putString(WikiFragment.ARG_WIKI_LINK, mCurrentLevel.moreInfosLink);
+			args.putString(WikiFragment.ARG_LEVEL_NAME, mCurrentLevel.response);
+			NavigationUtils.directNavigationTo(WikiFragment.class,
+					fragmentManager, container, true, transaction, args);
+		}
+	};
+	
 	OnClickListener mInfoButtonClickListener = new OnClickListener() {
 
 		@Override

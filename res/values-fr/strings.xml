@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Quiz - Tour du Monde</string>
-    <string name="hello_world">Hello world!</string>
 	<string name="yes">Oui</string>
 	<string name="no">Non</string>
     
@@ -67,6 +66,9 @@
     </plurals>
    	<string name="level_success_gain_hint">Tu gagnes 1 indice</string>
   	<string name="level_success_section_cleared">Section completée !</string>
+   	<string name="level_success_picture_found_label">Image trouvée !</string>
+   	<string name="level_success_no_wiki_link">Aucun lien Wikipédia disponible…</string>
+   	<string name="level_success_wiki_link">&lt;a href="">Page Wikipédia&lt;/a></string>   	
    	
    	<!-- sections list -->
    	<plurals name="unlock_section_requirement">

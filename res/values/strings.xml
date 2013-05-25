@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Word Tour Quiz</string>
-    <string name="hello_world">Hello world!</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
@@ -55,7 +54,7 @@
 
     <!-- Level -->
     <string name="level_success_title">Well done !</string>
-    <string name="level_not_enough_hints">You don\'t have enough hints left!</string>
+    <string name="level_not_enough_hints">You don\'t have enough hints left !</string>
    	<string name="level_info_title">Information</string>
    	<string name="level_no_info_found">No information found.</string>
    	<string name="level_unlock_section">You\'ve unlocked the &lt;b>&lt;u>level %1$s&lt;/u>&lt;/b> !</string>
@@ -66,7 +65,10 @@
         <item quantity="other">You currently have %1$d hints</item>
     </plurals>
    	<string name="level_success_gain_hint">You gain 1 hint</string>
-   	<string name="level_success_section_cleared">Section completed!</string>
+   	<string name="level_success_section_cleared">Section completed !</string>
+   	<string name="level_success_picture_found_label">Picture found !</string>
+   	<string name="level_success_no_wiki_link">No Wikipedia page available…</string>
+   	<string name="level_success_wiki_link">&lt;a href="">Wikipedia page&lt;/a></string>   	
    	
    	<!-- sections list -->
    	<plurals name="unlock_section_requirement">

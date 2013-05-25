@@ -165,12 +165,33 @@
             android:shadowDx="-1"
             android:shadowDy="1"
             android:shadowRadius="1"
-            android:text="Picture found !"
+            android:text="@string/level_success_picture_found_label"
             android:textColor="#34C924"
             android:textSize="26sp"
             android:textStyle="bold"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/levelWikiLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/levelPictureFoundLabel"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:drawableLeft="@drawable/ic_wiki"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:shadowColor="#666"
+            android:shadowDx="-1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="@string/level_success_no_wiki_link"
+            android:textColor="#666"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:linksClickable="false" />
+        
         <View
             android:id="@+id/levelTutorialMask"
             android:layout_width="match_parent"
