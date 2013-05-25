@@ -2,18 +2,17 @@ package com.quizz.places.adapters;
 
 import java.util.Random;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,11 +24,10 @@ import com.quizz.core.imageloader.ImageLoader.ImageType;
 import com.quizz.core.models.Level;
 import com.quizz.places.R;
 import com.quizz.places.application.QuizzPlacesApplication;
-import com.quizz.places.widgets.AntiAliasPicture;
 
 public class LevelsItemAdapter extends ArrayAdapter<Level> {
 
-	private static final float DEFAULT_RANDOM_ROTATION_RANGE = 12f;
+	private static final float DEFAULT_RANDOM_ROTATION_RANGE = 10f;
 
 	private int mLineLayout;
 	private LayoutInflater mInflater;

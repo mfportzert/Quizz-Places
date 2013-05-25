@@ -28,12 +28,12 @@
  	<string name="setting_game_data">Données du jeu</string>
 	<string name="clear_cache">Effacer le cache</string>
 	<string name="setting_global_setup">Configuration générale</string>
-   	<string name="confirm_reset">Votre progression et tous vos indices débloqués seront effacés.\nÊtes vous sur de vouloir réinitialiser le jeu ?</string>
+   	<string name="confirm_reset">La progression et tous les indices débloqués seront effacés.\nConfirmer la réinitialisation du jeu ?</string>
    	<string name="rate_app">Noter l\'application</string>
-    <string name="rate_app_info">Donnez votre avis et aidez-nous à améliorer cette application ;)</string>
+    <string name="rate_app_info">N\'hésite pas à donner ton avis pour nous aider à améliorer cette application ;)</string>
     <string name="rate_app_button">Noter</string>
     <string name="remove_ads">Enlever les pubs</string>
-    <string name="remove_ads_info">Soit vous voulez nous soutenir, soit les pubs vous rendent fous…</string>
+    <string name="remove_ads_info">Supprimer les pubs, et nous soutenir au passage!</string>
     <string name="remove_ads_button">Soutenir</string>
    	
    	<!-- Stats -->
@@ -55,20 +55,24 @@
    	
    	<!-- Level -->
    	<string name="level_success_title">Bien joué !</string>
-   	<string name="level_not_enough_hints">Vous n\'avez pas assez d\'indices en stock!</string>
+   	<string name="level_not_enough_hints">Il ne te reste pas assez d\'indices!</string>
    	<string name="level_info_title">Description</string>
    	<string name="level_no_info_found">Pas d\'informations trouvées.</string>
-   	<string name="level_unlock_section">Vous avez débloqué le &lt;b>&lt;u>niveau %1$s&lt;/u>&lt;/b> !</string>
-   	<string name="level_unlock_badge">Vous avez gagné le titre de &lt;b>&lt;u>%1$s&lt;/u>&lt;/b> !</string>
+   	<string name="level_unlock_section">Tu as débloqué le &lt;b>&lt;u>niveau %1$s&lt;/u>&lt;/b> !</string>
+   	<string name="level_unlock_badge">Tu as gagné le titre de &lt;b>&lt;u>%1$s&lt;/u>&lt;/b> !</string>
    	<string name="level_unlock_info">Débloquer (coûte 2 indices)</string>
    	<plurals name="level_nb_hints_label">
-        <item quantity="one">Vous avez %1$d indice en stock</item>
-        <item quantity="other">Vous avez %1$d indices en stock</item>
+        <item quantity="one">Tu as %1$d indice en stock</item>
+        <item quantity="other">Tu as %1$d indices en stock</item>
     </plurals>
-   	<string name="level_success_gain_hint">Vous gagnez 1 indice</string>
+   	<string name="level_success_gain_hint">Tu gagnes 1 indice</string>
    	
    	<!-- sections list -->
-   	<string name="unlock_section_requirement">Trouvez &lt;b>%1$d&lt;/b> images pour accéder</string>
+   	<plurals name="unlock_section_requirement">
+        <item quantity="one">Trouve encore &lt;b>%1$d&lt;/b> image pour débloquer</item>
+        <item quantity="other">Trouve encore &lt;b>%1$d&lt;/b> images pour débloquer</item>
+    </plurals>
+   	<string name="unlock_section_requirement"></string>
    	
    	<!-- Badges -->
    	<string name="badge_traveler">Voyageur occasionnel</string>

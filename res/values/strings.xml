@@ -68,7 +68,10 @@
    	<string name="level_success_gain_hint">You gain 1 hint</string>
    	
    	<!-- sections list -->
-   	<string name="unlock_section_requirement">Answer &lt;b>%1$d&lt;/b> pictures to unlock</string>
+   	<plurals name="unlock_section_requirement">
+        <item quantity="one">Answer &lt;b>%1$d&lt;/b> picture to unlock</item>
+        <item quantity="other">Answer &lt;b>%1$d&lt;/b> pictures to unlock</item>
+    </plurals>
    	
    	<!-- Badges -->
    	<string name="badge_traveler">Casual traveler</string>

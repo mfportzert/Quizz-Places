@@ -46,6 +46,7 @@ import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Badge;
 import com.quizz.core.models.Level;
+import com.quizz.core.models.Section;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.utils.StringUtils;
@@ -79,8 +80,9 @@ public class LevelFragment extends BaseLevelFragment {
 	private ImageButton mPreviousButton;
 	private ImageButton mNextButton;
 	private ImageButton mPictureGridButton;
+	private TextView mCurrentLevelNumber;
 	
-	private TableLayout mLettersTableLayout;
+	//private TableLayout mLettersTableLayout;
 	private boolean mBackFromPicturesGrid = false;
 	
 	private MediaPlayer mSuccessPlayer;
@@ -108,7 +110,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mCheckButton = (Button) view.findViewById(R.id.levelCheckButton);
 		mInputText = (EditText) view.findViewById(R.id.levelInputResponse);
 		mLevelCompletedLabel = (TextView) view.findViewById(R.id.levelPictureFoundLabel);
-		mLettersTableLayout = (TableLayout) view.findViewById(R.id.tableLetters);
+		//mLettersTableLayout = (TableLayout) view.findViewById(R.id.tableLetters);
 		mHintsNbView = (TextView) view.findViewById(R.id.levelNbHints);
 		
 		// Init actionBar
@@ -119,6 +121,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mPreviousButton = (ImageButton) customView.findViewById(R.id.previous_level_button);
 		mNextButton = (ImageButton) customView.findViewById(R.id.next_level_button);
 		mPictureGridButton = (ImageButton) customView.findViewById(R.id.grid_pictures_button);
+		mCurrentLevelNumber = (TextView) customView.findViewById(R.id.current_level_number);
 		
 		mPreviousButton.setOnClickListener(mOnPreviousButtonClickListener);
 		mNextButton.setOnClickListener(mOnNextButtonClickListener);
@@ -128,6 +131,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mCheckButton.setOnClickListener(mCheckButtonClickListener);
 		mInfoButton.setOnClickListener(mInfoButtonClickListener);
 		mHintLettersButton.setOnClickListener(mHintLettersClickListener);
+		mLevelTitle.setOnClickListener(mLevelTitleClickListener);
 		
 		// Load special font
 		Typeface face = Typeface.createFromAsset(getActivity().getAssets(),
@@ -149,20 +153,6 @@ public class LevelFragment extends BaseLevelFragment {
 				level = getArguments().getParcelable(ARG_LEVEL);
 			}
 		}
-		
-		mLevelTitle.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// focus response input
-				mInputText.requestFocus();
-				InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
-					      Context.INPUT_METHOD_SERVICE);
-				if (imm != null){
-			        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-			          }
-			}
-		});
 
 		View notificationLayout = getActivity().getLayoutInflater().inflate(
 				R.layout.toast_notification, null);
@@ -272,6 +262,10 @@ public class LevelFragment extends BaseLevelFragment {
 		mCurrentLevel = level;
 		mImageLoader.displayImage(QuizzPlacesApplication.IMAGES_DIR + mCurrentLevel.imageName, 
 				mPictureBig, ImageType.MEDIUM);
+		
+		Section section = DataManager.getSection(mCurrentLevel.sectionId);
+		int levelNumber = section.levels.indexOf(mCurrentLevel);
+		mCurrentLevelNumber.setText("n°"+levelNumber);
 		
 		if (mCurrentLevel.status == Level.STATUS_LEVEL_CLEAR) {
 			mLevelTitle.setText(mCurrentLevel.response);
@@ -426,7 +420,8 @@ public class LevelFragment extends BaseLevelFragment {
 	// TODO: Move to BaseLevelFragment
 	private void checkResponse(String inputContent) {
 		// Normalize and uppercase: Colisée => COLISEE
-		inputContent = StringUtils.removeDiacritic(inputContent).toUpperCase(Locale.getDefault());
+		inputContent = StringUtils.removeDiacritic(
+				inputContent.trim().replaceAll(" +", " ")).toUpperCase(Locale.getDefault());
 		
 		// We will replace all letters from partial response to the corresponding
 		// input response characters, except GIVEN and UNLOCKED letters
@@ -656,6 +651,23 @@ public class LevelFragment extends BaseLevelFragment {
 	// Listeners
 	// ===========================================================
 
+	OnClickListener mLevelTitleClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			// focus response input
+			if (mCurrentLevel != null 
+					&& mCurrentLevel.status == Level.STATUS_LEVEL_UNCLEAR) {
+				mInputText.requestFocus();
+				InputMethodManager imm = (InputMethodManager) getActivity()
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				if (imm != null) {
+					imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+				}
+			}
+		}
+	};
+	
 	OnClickListener mCheckButtonClickListener = new OnClickListener() {
 
 		@Override

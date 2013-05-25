@@ -121,13 +121,17 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		boolean sectionLocked = (section.status == Section.SECTION_LOCKED);
 		Drawable sectionDrawable = null;
 		
+		holder.sectionUnlockLabel.setText("");
+		
 		if (sectionLocked) {
 			sectionDrawable = mLockDrawable;
 			
 			int levelCountToUnlockSection = section.remainingClearedLevelCount();
 			if (levelCountToUnlockSection != -1) {
+				holder.sectionUnlockLabel.setVisibility(View.VISIBLE);
 				holder.sectionUnlockLabel.setText(
-						Html.fromHtml(mContext.getString(R.string.unlock_section_requirement,
+						Html.fromHtml(mContext.getResources().getQuantityString(
+								R.plurals.unlock_section_requirement, levelCountToUnlockSection, 
 								levelCountToUnlockSection)));
 			}
 			
