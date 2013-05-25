@@ -83,7 +83,6 @@ public class LevelFragment extends BaseLevelFragment {
 	private TextView mCurrentLevelNumber;
 	
 	//private TableLayout mLettersTableLayout;
-	private boolean mBackFromPicturesGrid = false;
 	
 	private MediaPlayer mSuccessPlayer;
 	private Toast mNotifToast;
@@ -144,9 +143,8 @@ public class LevelFragment extends BaseLevelFragment {
 		mInputText.setText("");
 		
 		Level level;
-		if (mBackFromPicturesGrid) {
+		if (mCurrentLevel != null) {
 			level = mCurrentLevel;
-			mBackFromPicturesGrid = false;
 		} else {
 			if (savedInstanceState != null && savedInstanceState.containsKey(STATE_CURRENT_LEVEL)) {
 				level = savedInstanceState.getParcelable(STATE_CURRENT_LEVEL);
@@ -154,7 +152,7 @@ public class LevelFragment extends BaseLevelFragment {
 				level = getArguments().getParcelable(ARG_LEVEL);
 			}
 		}
-
+		
 		View notificationLayout = getActivity().getLayoutInflater().inflate(
 				R.layout.toast_notification, null);
 		mInfoToast = Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT);
@@ -797,11 +795,7 @@ public class LevelFragment extends BaseLevelFragment {
 	OnClickListener mOnPictureGridButtonClickListener = new OnClickListener() {
 		
 		@Override
-		public void onClick(View v) {
-			// We set a flag indicating that on the next onCreateView, we'll be back from the 
-			// pictures grid
-			mBackFromPicturesGrid = true;
-			
+		public void onClick(View v) {			
 			FragmentContainer container = (FragmentContainer) getActivity();
 			FragmentManager fragmentManager = getActivity()
 					.getSupportFragmentManager();
