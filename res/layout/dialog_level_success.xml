@@ -13,16 +13,17 @@
         android:layout_alignRight="@+id/level_success_content"
         android:layout_alignTop="@+id/level_success_content" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/level_success_content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/level_success_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:shadowColor="#888"
             android:shadowDx="-1"
@@ -37,14 +38,11 @@
 
         <View
             android:id="@+id/level_success_title_divider"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="1dp"
-            android:layout_alignLeft="@+id/level_success_title"
-            android:layout_alignRight="@+id/level_success_title"
-            android:layout_below="@+id/level_success_title"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:layout_marginTop="5dp"
             android:background="#ccc" />
 
@@ -52,8 +50,6 @@
             android:id="@+id/level_success_response"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/level_success_title_divider"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
@@ -68,8 +64,6 @@
             android:id="@+id/level_success_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/level_success_response"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="@string/level_success_gain_hint"
@@ -77,15 +71,26 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/level_success_section_cleared"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:drawableLeft="@drawable/ic_complete"
+            android:text="@string/level_success_section_cleared"
+            android:visibility="gone"
+            android:textColor="#aaa"
+            android:textSize="16sp"
+            android:textStyle="bold|italic" />
+        
         <LinearLayout
             android:id="@+id/level_success_buttons_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/level_success_message"
             android:layout_marginTop="2dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_centerHorizontal="true"
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -145,6 +150,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

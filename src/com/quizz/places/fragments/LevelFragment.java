@@ -30,7 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -264,8 +263,8 @@ public class LevelFragment extends BaseLevelFragment {
 				mPictureBig, ImageType.MEDIUM);
 		
 		Section section = DataManager.getSection(mCurrentLevel.sectionId);
-		int levelNumber = section.levels.indexOf(mCurrentLevel);
-		mCurrentLevelNumber.setText("n°"+levelNumber);
+		int levelNumber = section.levels.indexOf(mCurrentLevel) + 1;
+		mCurrentLevelNumber.setText(""+levelNumber);
 		
 		if (mCurrentLevel.status == Level.STATUS_LEVEL_CLEAR) {
 			mLevelTitle.setText(mCurrentLevel.response);
@@ -662,7 +661,7 @@ public class LevelFragment extends BaseLevelFragment {
 				InputMethodManager imm = (InputMethodManager) getActivity()
 						.getSystemService(Context.INPUT_METHOD_SERVICE);
 				if (imm != null) {
-					imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+					imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
 				}
 			}
 		}

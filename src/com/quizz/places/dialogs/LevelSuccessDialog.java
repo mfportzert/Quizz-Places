@@ -15,6 +15,7 @@ import com.actionbarsherlock.internal.nineoldandroids.animation.ValueAnimator.An
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Level;
 import com.quizz.core.models.Section;
+import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.places.R;
 import com.quizz.places.widgets.RotatingSunEffect;
 
@@ -36,21 +37,26 @@ public class LevelSuccessDialog extends Activity {
 		getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 		Level level = getIntent().getExtras().getParcelable(EXTRA_LEVEL);
+
+		PreferencesUtils.setInformationUnlocked(this, level, true);
 		
 		setContentView(R.layout.dialog_level_success);
 		Button closeButton = (Button) findViewById(R.id.level_success_close_button);
 		Button nextButton = (Button) findViewById(R.id.level_success_next_button);
 		Button backButton = (Button) findViewById(R.id.level_success_back_button);
 		TextView levelName = (TextView) findViewById(R.id.level_success_response);
+		TextView sectionClearedLabel = (TextView) findViewById(R.id.level_success_section_cleared);
 		closeButton.setOnClickListener(mOnCloseButtonClickListener);
 		levelName.setText(level.response);
-		
+				
 		Section section = DataManager.getSection(level.sectionId);
 		if (section == null || !section.isComplete()) {
+			sectionClearedLabel.setVisibility(View.GONE);
 			nextButton.setOnClickListener(mOnNextButtonClickListener);
 		} else {
 			nextButton.setVisibility(View.GONE);
 			backButton.setVisibility(View.VISIBLE);
+			sectionClearedLabel.setVisibility(View.VISIBLE);
 			backButton.setOnClickListener(mOnBackButtonClickListener);
 		}
 		

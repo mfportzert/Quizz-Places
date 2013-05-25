@@ -66,6 +66,7 @@
         <item quantity="other">Tu as %1$d indices en stock</item>
     </plurals>
    	<string name="level_success_gain_hint">Tu gagnes 1 indice</string>
+  	<string name="level_success_section_cleared">Section completée !</string>
    	
    	<!-- sections list -->
    	<plurals name="unlock_section_requirement">
