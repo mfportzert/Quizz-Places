@@ -104,7 +104,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-			//if (mAdapter.getItem(position).status == Section.SECTION_UNLOCKED) {
+			if (mAdapter.getItem(position).status == Section.SECTION_UNLOCKED) {
 				mHideActionBarOnDestroyView = false;
 				FragmentContainer container = (FragmentContainer) getActivity();
 				FragmentManager fragmentManager = getActivity()
@@ -139,7 +139,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 				args.putParcelable(BaseLevelFragment.ARG_LEVEL, levelToDisplay);
 				NavigationUtils.directNavigationTo(LevelFragment.class, 
 						fragmentManager, container, true, transaction, args);
-			//}
+			}
 		}
 	};
 }
