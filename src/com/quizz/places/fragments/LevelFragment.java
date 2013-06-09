@@ -273,11 +273,11 @@ public class LevelFragment extends BaseLevelFragment {
 			mLevelTitle.setText(mCurrentLevel.response);
 			mInputText.setVisibility(View.GONE);
 			mCheckButton.setVisibility(View.GONE);
-			mWikiLinkLabel.setVisibility(View.VISIBLE);
 			mLevelCompletedLabel.setVisibility(View.VISIBLE);
 			mHintLettersButton.setVisibility(View.GONE);
 			
 			if (mCurrentLevel.moreInfosLink != null) {
+				mWikiLinkLabel.setVisibility(View.VISIBLE);
 				mWikiLinkLabel.setText(Html.fromHtml(getString(R.string.level_success_wiki_link)));
 				mWikiLinkLabel.setOnClickListener(mWikiLinkClickListener);
 			}
@@ -471,6 +471,12 @@ public class LevelFragment extends BaseLevelFragment {
 		mInputText.setVisibility(View.GONE);
 		mCheckButton.setVisibility(View.GONE);
 		mLevelCompletedLabel.setVisibility(View.VISIBLE);
+		
+		if (mCurrentLevel.moreInfosLink != null) {
+			mWikiLinkLabel.setVisibility(View.VISIBLE);
+			mWikiLinkLabel.setText(Html.fromHtml(getString(R.string.level_success_wiki_link)));
+			mWikiLinkLabel.setOnClickListener(mWikiLinkClickListener);
+		}
 
 		// Unlock next section if necessary
 		boolean sectionUnlocked = false;
