@@ -99,7 +99,7 @@ public class SectionsItemAdapter extends ArrayAdapter<Section> {
 		holder.progress.setProgressDrawable(mProgressDrawables[position
 				% mProgressDrawables.length]);
 		
-		holder.levels.setText(this.nbDoneLevels(section) + " / " + section.levels.size());
+		holder.levels.setText(this.nbDoneLevels(section) + "/" + section.levels.size());
 		
 		if (section.levels != null && section.levels.size() > 0) {
 			int nbLevelsCleared = 0;

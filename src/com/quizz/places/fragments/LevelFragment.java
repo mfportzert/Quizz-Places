@@ -33,9 +33,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
-import com.actionbarsherlock.internal.nineoldandroids.animation.Animator.AnimatorListener;
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.Animator.AnimatorListener;
+import com.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.fragments.BaseLevelFragment;
@@ -45,7 +45,6 @@ import com.quizz.core.interfaces.FragmentContainer;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Badge;
 import com.quizz.core.models.Level;
-import com.quizz.core.models.Section;
 import com.quizz.core.utils.NavigationUtils;
 import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.utils.StringUtils;
@@ -55,6 +54,7 @@ import com.quizz.places.activities.PictureFullscreenActivity;
 import com.quizz.places.application.QuizzPlacesApplication;
 import com.quizz.places.dialogs.HintsDialog;
 import com.quizz.places.dialogs.LevelSuccessDialog;
+import com.quizz.places.dialogs.TutorialDialog;
 
 public class LevelFragment extends BaseLevelFragment {
 	public static final int LEVEL_SUCCESS_REQUEST_CODE = 1;
@@ -112,7 +112,7 @@ public class LevelFragment extends BaseLevelFragment {
 		//mLettersTableLayout = (TableLayout) view.findViewById(R.id.tableLetters);
 		mHintsNbView = (TextView) view.findViewById(R.id.levelNbHints);
 		mWikiLinkLabel = (TextView) view.findViewById(R.id.levelWikiLink);
-		
+
 		// Init actionBar
 		QuizzActionBar actionBar = ((BaseQuizzActivity) getActivity()).getQuizzActionBar();
 		actionBar.setCustomView(R.layout.ab_view_level);
@@ -122,7 +122,7 @@ public class LevelFragment extends BaseLevelFragment {
 		mNextButton = (ImageButton) customView.findViewById(R.id.next_level_button);
 		mPictureGridButton = (ImageButton) customView.findViewById(R.id.grid_pictures_button);
 		mCurrentLevelNumber = (TextView) customView.findViewById(R.id.current_level_number);
-		
+				
 		mPreviousButton.setOnClickListener(mOnPreviousButtonClickListener);
 		mNextButton.setOnClickListener(mOnNextButtonClickListener);
 		mPictureGridButton.setOnClickListener(mOnPictureGridButtonClickListener);
@@ -183,6 +183,11 @@ public class LevelFragment extends BaseLevelFragment {
 		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
 			      Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(mInputText.getWindowToken(), 0);
+		/*
+		if (!PreferencesUtils.isTutorialDone(getActivity())) {
+			Intent intent = new Intent(getActivity(), TutorialDialog.class);
+			startActivity(intent);
+		}*/
 		
 		return view;
 	}
@@ -269,12 +274,13 @@ public class LevelFragment extends BaseLevelFragment {
 			mInputText.setVisibility(View.GONE);
 			mCheckButton.setVisibility(View.GONE);
 			mWikiLinkLabel.setVisibility(View.VISIBLE);
+			mLevelCompletedLabel.setVisibility(View.VISIBLE);
+			mHintLettersButton.setVisibility(View.GONE);
+			
 			if (mCurrentLevel.moreInfosLink != null) {
 				mWikiLinkLabel.setText(Html.fromHtml(getString(R.string.level_success_wiki_link)));
 				mWikiLinkLabel.setOnClickListener(mWikiLinkClickListener);
 			}
-			mLevelCompletedLabel.setVisibility(View.VISIBLE);
-			mHintLettersButton.setVisibility(View.GONE);
 		} else {
 			// Init partial response
 			int totalLetters = mCurrentLevel.response.length();
@@ -284,7 +290,7 @@ public class LevelFragment extends BaseLevelFragment {
 			
 			// we offer the first letter
 			if (mCurrentLevel.response != null && mCurrentLevel.response.length() > 0) {
-				mPartialResponse.append(StringUtils.removeDiacritic(mCurrentLevel.response.charAt(0)));
+				mPartialResponse.append(mCurrentLevel.response.charAt(0));
 				mLetterStateArray[0] = LetterState.GIVEN;
 				mLettersFoundNb = 1;
 				mLettersTotal = 1;
@@ -324,6 +330,7 @@ public class LevelFragment extends BaseLevelFragment {
 			mInputText.setVisibility(View.VISIBLE);
 			mCheckButton.setVisibility(View.VISIBLE);
 			mLevelCompletedLabel.setVisibility(View.GONE);
+			mWikiLinkLabel.setVisibility(View.GONE);
 			mHintLettersButton.setVisibility(View.VISIBLE);
 			
 			/*

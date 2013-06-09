@@ -7,10 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.google.ads.AdView;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Section;
@@ -28,6 +30,7 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 	
 	private ObjectAnimator mBgAnimation;
 	private GameDataLoadingListener mGameDataLoadingListener;
+	private AdView mAdView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 
 	    EasyTracker.getInstance().setContext(this);
 
+	    mAdView = (AdView) findViewById(R.id.adView);
+	    
 	    if (uri != null) {
 	      EasyTracker.getTracker().setCampaign(uri.getPath());
           /*if(uri.getQueryParmeter("utm_source") != null) {    // Use campaign parameters if avaialble.
@@ -68,6 +73,10 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		
 		initBackground();
 	}
+	
+	public void displayAd(boolean display) {
+		mAdView.setVisibility((display) ? View.VISIBLE : View.GONE);
+	}
 
 	private void initAsyncGameLoading() {
 		GameDataLoading gdl = new GameDataLoading(this);
@@ -82,14 +91,6 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 	public void setGameDataLoadingListener(GameDataLoadingListener listener) {
 		mGameDataLoadingListener = listener;
 	}
-	
-	@Override
-	protected void onDestroy() {
-		if (mBgAnimation != null && mBgAnimation.isRunning()) {
-			mBgAnimation.end();
-		}
-		super.onDestroy();
-	}
 
 	private void initBackground() {
 		getBackgroundAnimatedImage().setBackgroundResource(R.drawable.clouds);
@@ -99,7 +100,6 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 		mBgAnimation.setDuration(30000);
 		mBgAnimation.setInterpolator(new LinearInterpolator());
 		mBgAnimation.setRepeatCount(ObjectAnimator.INFINITE);
-		mBgAnimation.start();
 	}
 
 	@Override
@@ -135,12 +135,18 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 	@Override
 	protected void onStart() {
 		super.onStart();
-	    EasyTracker.getInstance().activityStart(this);
+		if (mBgAnimation != null && !mBgAnimation.isRunning()) {
+			mBgAnimation.start();
+		}
+		EasyTracker.getInstance().activityStart(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
+		if (mBgAnimation != null && mBgAnimation.isRunning()) {
+			mBgAnimation.end();
+		}
 	    EasyTracker.getInstance().activityStop(this);
 	}
 }

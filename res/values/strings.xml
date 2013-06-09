@@ -71,6 +71,7 @@
    	<string name="level_success_wiki_link">&lt;a href="">Wikipedia page&lt;/a></string>   	
    	
    	<!-- sections list -->
+   	<string name="level_label">Level</string>  
    	<plurals name="unlock_section_requirement">
         <item quantity="one">Answer &lt;b>%1$d&lt;/b> picture to unlock</item>
         <item quantity="other">Answer &lt;b>%1$d&lt;/b> pictures to unlock</item>

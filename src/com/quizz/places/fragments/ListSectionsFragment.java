@@ -9,13 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.activities.BaseQuizzActivity;
-import com.quizz.core.fragments.BaseGridLevelsFragment;
 import com.quizz.core.fragments.BaseLevelFragment;
 import com.quizz.core.fragments.BaseListSectionsFragment;
 import com.quizz.core.interfaces.FragmentContainer;
@@ -51,7 +50,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 		List<Section> sections = DataManager.getSections();
 		int unlockedCount = 0;
 		for (Section section : sections) {
-			section.name = "Level "+section.number;
+			section.name = getString(R.string.level_label)+" "+section.number;
 			mAdapter.add(section);
 			unlockedCount += (section.status == Section.SECTION_UNLOCKED) ? 1 : 0;
 		}
@@ -66,7 +65,7 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 
 		return view;
 	}
-
+	
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
@@ -123,13 +122,16 @@ public class ListSectionsFragment extends BaseListSectionsFragment {
 				int lastPlayedLevelId = PreferencesUtils.getLastPlayedLevel(getActivity(), section.id);
 
 				Level levelToDisplay = null;
-				if (lastPlayedLevelId > -1 && lastPlayedLevelId < section.levels.size()) {
+				if (lastPlayedLevelId > -1) {
 					for (Level level : section.levels) {
 						if (level.id == lastPlayedLevelId) {
 							levelToDisplay = level;
 						}
 					}
-				} else {
+				}
+				
+				// If didn't found the last level played
+				if (levelToDisplay == null) {
 					levelToDisplay = (section.isComplete()) ? section.levels.get(0) :
 						DataManager.getFirstOpenedLevelInSection(section);
 				}

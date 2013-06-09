@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
-import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorSet;
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.dialogs.ConfirmQuitDialog;
 import com.quizz.core.dialogs.ConfirmQuitDialog.Closeable;
 import com.quizz.core.fragments.BaseMenuFragment;
@@ -161,5 +159,17 @@ public class MenuFragment extends BaseMenuFragment implements Closeable, GameDat
 		AnimatorSet uiHidingAnimation = new AnimatorSet();
 		uiHidingAnimation.playTogether(signHiding, footerHiding, buttonsHiding);
 		return uiHidingAnimation;
+	}
+	
+	@Override
+	public void onStart() {
+		((QuizzActivity) getActivity()).displayAd(false);
+		super.onStart();
+	}
+
+	@Override
+	public void onStop() {
+		((QuizzActivity) getActivity()).displayAd(true);
+		super.onStart();
 	}
 }

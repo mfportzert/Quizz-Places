@@ -143,6 +143,7 @@ public class GameDataLoading {
 
 		@Override
 		protected List<Section> doInBackground(Void... arg0) {
+			Log.e("ASYNC", "doInBackground: "+System.currentTimeMillis());
 			List<Section> sections = DataManager.getSections();
 			DataManager.dataLoaded = true;
 			return sections;

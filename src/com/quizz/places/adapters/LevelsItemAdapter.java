@@ -17,7 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 import com.quizz.core.imageloader.ImageLoader;
 import com.quizz.core.imageloader.ImageLoader.ImageLoaderListener;
 import com.quizz.core.imageloader.ImageLoader.ImageType;
@@ -85,14 +86,12 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 						float pivotX = picture.getLeft() + (picture.getWidth() / 2);
 						float pivotY = picture.getTop() + (picture.getHeight() / 2);
 
-						AnimationSet animationSet = new AnimationSet(false);
-						animationSet.addAnimation(new ScaleAnimation(1f, 1.1f, 1f, 1.1f,
-								pivotX, pivotY));
-						animationSet.addAnimation(new RotateAnimation(0f, 0.5f));
-						animationSet.setDuration(0);
-						animationSet.setInterpolator(new LinearInterpolator());
-						animationSet.setFillAfter(true);
-						picture.startAnimation(animationSet);
+						AnimatorSet animSet = new AnimatorSet();
+						animSet.playTogether(
+								ObjectAnimator.ofFloat(picture, "scaleX", 1f, 1.1f),
+								ObjectAnimator.ofFloat(picture, "scaleY", 1f, 1.1f));
+						animSet.setDuration(0);
+						animSet.start();
 					} else if (event.getAction() == MotionEvent.ACTION_UP
 							|| event.getAction() == MotionEvent.ACTION_OUTSIDE
 							|| event.getAction() == MotionEvent.ACTION_CANCEL) {
@@ -108,14 +107,12 @@ public class LevelsItemAdapter extends ArrayAdapter<Level> {
 						float pivotX = picture.getLeft() + (picture.getWidth() / 2);
 						float pivotY = picture.getTop() + (picture.getHeight() / 2);
 
-						AnimationSet animationSet = new AnimationSet(false);
-						animationSet.addAnimation(new ScaleAnimation(1.1f, 1f, 1.1f, 1f,
-								pivotX, pivotY));
-						animationSet.addAnimation(new RotateAnimation(0.5f, 0f));
-						animationSet.setDuration(0);
-						animationSet.setInterpolator(new LinearInterpolator());
-						animationSet.setFillAfter(true);
-						picture.startAnimation(animationSet);
+						AnimatorSet animSet = new AnimatorSet();
+						animSet.playTogether(
+								ObjectAnimator.ofFloat(picture, "scaleX", 1.1f, 1f),
+								ObjectAnimator.ofFloat(picture, "scaleY", 1.1f, 1f));
+						animSet.setDuration(0);
+						animSet.start();
 					}
 					return true;
 				}

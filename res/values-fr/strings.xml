@@ -54,28 +54,39 @@
    	
    	<!-- Level -->
    	<string name="level_success_title">Bien joué !</string>
-   	<string name="level_not_enough_hints">Il ne te reste pas assez d\'indices!</string>
+   	<string name="level_not_enough_hints">Il ne vous reste pas assez d\'indices!</string>
    	<string name="level_info_title">Description</string>
    	<string name="level_no_info_found">Pas d\'informations trouvées.</string>
-   	<string name="level_unlock_section">Tu as débloqué le &lt;b>&lt;u>niveau %1$s&lt;/u>&lt;/b> !</string>
-   	<string name="level_unlock_badge">Tu as gagné le titre de &lt;b>&lt;u>%1$s&lt;/u>&lt;/b> !</string>
+   	<string name="level_unlock_section">Vous avez débloqué le &lt;b>&lt;u>niveau %1$s&lt;/u>&lt;/b> !</string>
+   	<string name="level_unlock_badge">Vous avez gagné le titre de &lt;b>&lt;u>%1$s&lt;/u>&lt;/b> !</string>
    	<string name="level_unlock_info">Débloquer (coûte 2 indices)</string>
    	<plurals name="level_nb_hints_label">
-        <item quantity="one">Tu as %1$d indice en stock</item>
-        <item quantity="other">Tu as %1$d indices en stock</item>
+        <item quantity="one">Vous avez %1$d indice en stock</item>
+        <item quantity="other">Vous avez %1$d indices en stock</item>
     </plurals>
    	<string name="level_success_gain_hint">Tu gagnes 1 indice</string>
   	<string name="level_success_section_cleared">Section completée !</string>
    	<string name="level_success_picture_found_label">Image trouvée !</string>
    	<string name="level_success_no_wiki_link">Aucun lien Wikipédia disponible…</string>
-   	<string name="level_success_wiki_link">&lt;a href="">Page Wikipédia&lt;/a></string>   	
+   	<string name="level_success_wiki_link">&lt;a href="">Page Wikipédia&lt;/a></string>
+   	<string name="level_tutorial_title">Tutoriel:</string>
+   	<string name="level_tutorial_picture">Bienvenue! Voici quelques explications rapides.\n\n
+   	    Le but du jeu est de regarder l\'image (il s\'agit d\'un lieu connu), et de chercher à le reconnaître pour me donner son nom.</string>
+   	<string name="level_tutorial_description">Pour vous aider, une description est accessible à partir de ce bouton.</string>
+   	<string name="level_tutorial_input">Quand vous entrez une réponse, la couleur des lettres indique vert: un lettre correcte, et en rouge: une lettre fausse.</string>
+   	<string name="level_tutorial_hints">Pour vous aider, ce bouton peut dévoiler des lettres du nom.\n\nComme pour la description, 
+   	    celles ci sont déblocables avec des \'indices\', une forme de monnaie qui vous sera distribuée à chaque image trouvée.\n\nPour l\'instant, vous en avez 3.</string>
+   	<string name="level_tutorial_goodbye">Grâces aux boutons de la barre d\'action en haut de l\'écran, vous allez pouvoir naviguer d\'image en image, 
+   	    ou bien visualiser les miniatures de l\'ensemble des images du niveau!\n\n
+   	    Tout est dit, amusez-vous bien :)</string>
+   	<string name="level_tutorial_button_label">Suivant</string>
    	
    	<!-- sections list -->
    	<plurals name="unlock_section_requirement">
-        <item quantity="one">Trouve encore &lt;b>%1$d&lt;/b> image pour débloquer</item>
-        <item quantity="other">Trouve encore &lt;b>%1$d&lt;/b> images pour débloquer</item>
+        <item quantity="one">Trouvez encore &lt;b>%1$d&lt;/b> image pour débloquer</item>
+        <item quantity="other">Trouvez encore &lt;b>%1$d&lt;/b> images pour débloquer</item>
     </plurals>
-   	<string name="unlock_section_requirement"></string>
+   	<string name="level_label">Niveau</string>
    	
    	<!-- Badges -->
    	<string name="badge_traveler">Voyageur occasionnel</string>
