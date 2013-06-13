@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -118,9 +117,7 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 
 	@Override
 	public void onGameLoadingSuccess(List<Section> sections) {
-		Log.e("ASYNC", "onGameLoadingSuccess: "+System.currentTimeMillis());
 		if (mGameDataLoadingListener != null) {
-			Log.e("ASYNC", "onGameLoadingSuccess mGameDataLoadingListener: "+System.currentTimeMillis());
 			mGameDataLoadingListener.onGameLoadingSuccess(sections);
 		}
 	}

@@ -6,10 +6,7 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.util.Log;
 
-import com.google.ads.c;
 import com.quizz.core.db.DbHelper;
 import com.quizz.core.db.QuizzDAO;
 import com.quizz.core.models.Level;

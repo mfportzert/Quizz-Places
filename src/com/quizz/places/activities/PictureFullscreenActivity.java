@@ -8,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.FloatMath;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -136,7 +135,7 @@ public class PictureFullscreenActivity extends Activity implements
 		case MotionEvent.ACTION_DOWN: // first finger down only
 			savedMatrix.set(matrix);
 			start.set(event.getX(), event.getY());
-			Log.d(TAG, "mode=DRAG"); // write to LogCat
+//			Log.d(TAG, "mode=DRAG"); // write to LogCat
 			mode = DRAG;
 			mHasMoved = false;
 			mTouchDuration = System.currentTimeMillis();
@@ -153,20 +152,20 @@ public class PictureFullscreenActivity extends Activity implements
 		case MotionEvent.ACTION_POINTER_UP: // second finger lifted
 
 			mode = NONE;
-			Log.d(TAG, "mode=NONE");
+//			Log.d(TAG, "mode=NONE");
 			mCurrentScale *= mTmpScale;
 			break;
 
 		case MotionEvent.ACTION_POINTER_DOWN: // first and second finger down
 			
 			oldDist = spacing(event);
-			Log.d(TAG, "oldDist=" + oldDist);
+//			Log.d(TAG, "oldDist=" + oldDist);
 			if (oldDist > 5f) {
 				savedMatrix.set(matrix);
 				mTmpScale = 1f;
 				midPoint(mid, event);
 				mode = ZOOM;
-				Log.d(TAG, "mode=ZOOM");
+//				Log.d(TAG, "mode=ZOOM");
 			}
 			break;
 
@@ -180,7 +179,7 @@ public class PictureFullscreenActivity extends Activity implements
 			} else if (mode == ZOOM) {
 				// pinch zooming
 				float newDist = spacing(event);
-				Log.d(TAG, "newDist=" + newDist);
+//				Log.d(TAG, "newDist=" + newDist);
 				if (newDist > 5f) {
 					matrix.set(savedMatrix);
 					mTmpScale = newDist / oldDist; // setting the scaling of the
@@ -265,6 +264,6 @@ public class PictureFullscreenActivity extends Activity implements
 		}
 
 		sb.append("]");
-		Log.d("Touch Events ---------", sb.toString());
+//		Log.d("Touch Events ---------", sb.toString());
 	}
 }

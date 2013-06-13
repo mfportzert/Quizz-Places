@@ -16,7 +16,6 @@ import com.quizz.core.fragments.BaseStatsFragment;
 import com.quizz.core.managers.DataManager;
 import com.quizz.core.models.Badge;
 import com.quizz.core.models.Stat;
-import com.quizz.core.utils.ConvertUtils;
 import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.core.widgets.SectionProgressView;
@@ -63,20 +62,11 @@ public class StatsFragment extends BaseStatsFragment {
 		return requiredLevel;
 	}
 	
-	private StatsItemAdapter mAchievementAdapter;
-	private ListView mAchievementStatsListView;
-	private StatsItemAdapter mSimpleAdapter;
-	private ListView mSimpleStatsListView;
 	private boolean mHideActionBarOnDestroyView = true;
 	
-	private int[] mProgressDrawables;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		initProgressDrawables();
-		mAchievementAdapter = new StatsItemAdapter(getActivity());
-		mSimpleAdapter = new StatsItemAdapter(getActivity());
 	}
 
 	@Override
@@ -164,9 +154,6 @@ public class StatsFragment extends BaseStatsFragment {
 		}
 	}
 	
-	private void initProgressDrawables() {
-		mProgressDrawables = new int[] { R.drawable.fg_section_progress_yellow };
-	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {

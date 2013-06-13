@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.quizz.core.db.QuizzDAO;
 import com.quizz.core.managers.DataManager;
@@ -121,7 +120,6 @@ public class GameDataLoading {
 		protected void onPreExecute() {
 			mGameDataLoadingListener.onGameLoadingStart();
 			initPreferences();
-			Log.e("ASYNC", "onPreExecute: "+System.currentTimeMillis());
 		}
 
 		@Override
@@ -133,7 +131,6 @@ public class GameDataLoading {
 
 		@Override
 		protected void onPostExecute(List<Section> result) {
-			Log.e("ASYNC", "onPostExecute: "+System.currentTimeMillis());
 			if (mException != null) {
 				mGameDataLoadingListener.onGameLoadingFailure(mException);
 			} else {
@@ -143,7 +140,6 @@ public class GameDataLoading {
 
 		@Override
 		protected List<Section> doInBackground(Void... arg0) {
-			Log.e("ASYNC", "doInBackground: "+System.currentTimeMillis());
 			List<Section> sections = DataManager.getSections();
 			DataManager.dataLoaded = true;
 			return sections;

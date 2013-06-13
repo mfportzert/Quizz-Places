@@ -19,7 +19,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +53,6 @@ import com.quizz.places.activities.PictureFullscreenActivity;
 import com.quizz.places.application.QuizzPlacesApplication;
 import com.quizz.places.dialogs.HintsDialog;
 import com.quizz.places.dialogs.LevelSuccessDialog;
-import com.quizz.places.dialogs.TutorialDialog;
 
 public class LevelFragment extends BaseLevelFragment {
 	public static final int LEVEL_SUCCESS_REQUEST_CODE = 1;
@@ -230,7 +228,7 @@ public class LevelFragment extends BaseLevelFragment {
 			mSuccessPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
 			mSuccessPlayer.prepare();
 		} catch (IOException e) {
-			Log.d("IOException : ", e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -415,9 +413,7 @@ public class LevelFragment extends BaseLevelFragment {
 		}
 		
 		mLevelTitle.setText(coloredUserResponse);		
-		
-		Log.e("level", "LETTERS FOUND: "+mLettersFoundNb+", LETTERS TOTAL: "+mLettersTotal);
-		
+				
 		// if we didn't find any error, display success dialog
 		if (mLettersFoundNb == mLettersTotal) {
 			onSuccess();
