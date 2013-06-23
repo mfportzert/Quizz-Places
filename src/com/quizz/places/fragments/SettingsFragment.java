@@ -2,6 +2,8 @@ package com.quizz.places.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,12 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.quizz.core.activities.BaseQuizzActivity;
-import com.quizz.core.application.BaseQuizzApplication;
 import com.quizz.core.fragments.BaseSettingsFragment;
 import com.quizz.core.managers.DataManager;
+import com.quizz.core.utils.IntentUtils;
 import com.quizz.core.utils.PreferencesUtils;
 import com.quizz.core.widgets.QuizzActionBar;
 import com.quizz.places.R;
-import com.quizz.places.application.QuizzPlacesApplication;
 import com.quizz.places.db.PlacesDAO;
 
 public class SettingsFragment extends BaseSettingsFragment {
@@ -28,6 +29,7 @@ public class SettingsFragment extends BaseSettingsFragment {
 	private ToggleButton mVibrationOption;
 	private ToggleButton mExitPopupOption;
 	private Button mResetButton;
+	private Button mRateAppButton;
 //	private Button clearCacheButton;
 	
 	@Override
@@ -53,11 +55,17 @@ public class SettingsFragment extends BaseSettingsFragment {
 		mVibrationOption = (ToggleButton) pView.findViewById(R.id.VibrationOption);
 		mExitPopupOption = (ToggleButton) pView.findViewById(R.id.ExitPopupOption);
 		mResetButton = (Button) pView.findViewById(R.id.ResetButton);
+		mRateAppButton = (Button) pView.findViewById(R.id.RateAppButton);
 
 		mAudioOption.setOnClickListener(mAudioListener);
 		mVibrationOption.setOnClickListener(mVibrationListener);
 		mExitPopupOption.setOnClickListener(mExitPopupListener);
 		mResetButton.setOnClickListener(mResetListener);
+		mRateAppButton.setOnClickListener(mRateAppListener);
+		
+		if (!IntentUtils.isPlayStoreInstalled(getActivity())) {
+			pView.findViewById(R.id.rateAppContainer).setVisibility(View.INVISIBLE);
+		}
 
 		// init Audio
 		if (!PreferencesUtils.containsAudioPreference(this.getActivity())) {
@@ -169,6 +177,19 @@ public class SettingsFragment extends BaseSettingsFragment {
 			builder.setMessage(R.string.confirm_reset)
 				.setPositiveButton(R.string.yes, mDialogClickListener)
 			    .setNegativeButton(R.string.no, mDialogClickListener).show();
+		}
+	};	
+	
+	private View.OnClickListener mRateAppListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			final Uri uri = Uri.parse("market://details?id=" + getActivity().getApplicationContext().getPackageName());
+			final Intent rateAppIntent = new Intent(Intent.ACTION_VIEW, uri);
+
+			if (getActivity().getPackageManager().queryIntentActivities(rateAppIntent, 0).size() > 0)
+			{
+			    startActivity(rateAppIntent);
+			}
 		}
 	};	
 	
