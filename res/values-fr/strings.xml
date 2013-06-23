@@ -29,7 +29,7 @@
 	<string name="setting_global_setup">Configuration générale</string>
    	<string name="confirm_reset">La progression et tous les indices débloqués seront effacés.\nConfirmer la réinitialisation du jeu ?</string>
    	<string name="rate_app">Noter l\'application</string>
-    <string name="rate_app_info">N\'hésite pas à donner ton avis pour nous aider à améliorer cette application ;)</string>
+    <string name="rate_app_info">N\'hésite pas à donner votre avis pour nous aider à améliorer cette application !</string>
     <string name="rate_app_button">Noter</string>
     <string name="remove_ads">Enlever les pubs</string>
     <string name="remove_ads_info">Supprimer les pubs, et nous soutenir au passage!</string>
