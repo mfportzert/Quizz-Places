@@ -1,5 +1,6 @@
 package com.quizz.places.activities;
 
+import com.crashlytics.android.Crashlytics;
 import java.util.List;
 
 import android.content.Intent;
@@ -35,6 +36,7 @@ public class QuizzActivity extends BaseQuizzActivity implements GameDataLoadingL
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Crashlytics.start(this);
 		/* --- Campaigns tracking --- */
 	    Intent intent = this.getIntent();
 	    Uri uri = intent.getData();
